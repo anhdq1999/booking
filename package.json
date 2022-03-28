@@ -4,6 +4,7 @@
   "description": "do an chuyen nganh",
   "main": "index.js",
   "scripts": {
+    "beautiful":"prettier --single-quote --trailing-comma all --tab-width 4 --write 'src/*.js'",
     "start": "nodemon --inspect index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +19,7 @@
   },
   "homepage": "https://github.com/anhdq1999/booking#readme",
   "lint-staged":{
-    "src/**/*.{js,json}":"prettier --single-quote --trailing-comma all --tab-width --write"
+    "src/**/*.{js,json}":"prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
   "husky":{
     "hook":{
