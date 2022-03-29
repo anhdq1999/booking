@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+
+const database = require('./config/database/index.js')
+
+database.connect();
+
                         const morgan = require('morgan');
 
                                 app.use(morgan('combined'));
