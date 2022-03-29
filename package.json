@@ -4,7 +4,7 @@
   "description": "do an chuyen nganh",
   "main": "index.js",
   "scripts": {
-    "beautiful":"lint-staged",
+    "beautiful": "lint-staged",
     "start": "nodemon --inspect index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,11 +18,11 @@
     "url": "https://github.com/anhdq1999/booking/issues"
   },
   "homepage": "https://github.com/anhdq1999/booking#readme",
-  "lint-staged":{
+  "lint-staged": {
     "src/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
-  "husky":{
-    "hooks":{
+  "husky": {
+    "hooks": {
       "pre-commit": "lint-staged"
     }
   },
