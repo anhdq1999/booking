@@ -1,3 +1,3 @@
 const urlDatabase =
-    'mongodb+srv://booking:booking123@cluster0.cc4og.mongodb.net/test';
+    'mongodb+srv://booking:booking123@cluster0.cc4og.mongodb.net/booking';
 module.exports = { urlDatabase };
