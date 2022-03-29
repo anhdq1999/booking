@@ -7,4 +7,4 @@ class UserController{
     }
 
 }
-module.exports = {UserController}
+module.exports = new UserController

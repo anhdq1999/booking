@@ -14,5 +14,5 @@ app.use(morgan('combined'))
 app.get('/', (res, req) => {
     res.send('hello World')
 })
-app.get('/users/store',UserController.show())
+app.get('/users/store',UserController.show)
 app.listen(port, () => console.log(`Server is running at port :${port}`))
