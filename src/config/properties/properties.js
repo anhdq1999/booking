@@ -1,3 +1,4 @@
-const urlDatabase =
+const DBURL =
     'mongodb+srv://booking:booking123@cluster0.cc4og.mongodb.net/booking';
-module.exports = { urlDatabase };
+const PORT = 3000;
+    module.exports = { DBURL,PORT, };

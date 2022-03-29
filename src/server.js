@@ -3,16 +3,18 @@ const morgan = require('morgan');
 
 const database = require('./config/database/index.js');
 const app = express();
-const port = 3000;
+const port = require('./config/properties/properties.js').PORT;
 
 const UserController = require('./controllers/UserController');
 
+const route=require('./routes/index.js')
+
+//Connect mongodb
 database.connect();
 
 app.use(morgan('combined'));
 
-app.get('/', (req, res) => {
-    res.send('hello World');
-});
-app.get('/users/store', UserController.show);
+//Routes init
+route(app);
+
 app.listen(port, () => console.log(`Server is running at port :${port}`));

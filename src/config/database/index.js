@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const propertys = require('./../../resources/propertys.js');
-const urlDatabase = propertys.urlDatabase;
+const properties = require('../properties/properties');
+const urlDatabase = properties.DBURL;
 async function connect() {
     try {
         await mongoose.connect(urlDatabase);
