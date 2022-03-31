@@ -4,8 +4,8 @@
   "description": "do an chuyen nganh",
   "main": "index.js",
   "scripts": {
-    "beautiful":"prettier --single-quote --trailing-comma all --tab-width 4 --write \"src/**/*.{js,json}\"",
-    "start": "nodemon --inspect index.js",
+    "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write \"src/**/*.{js,json}\"",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,16 +18,19 @@
     "url": "https://github.com/anhdq1999/booking/issues"
   },
   "homepage": "https://github.com/anhdq1999/booking#readme",
-  "lint-staged":{
+  "lint-staged": {
     "src/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
-  "husky":{
-    "hooks":{
+  "husky": {
+    "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.9"
   },
   "devDependencies": {
     "husky": "^7.0.4",
