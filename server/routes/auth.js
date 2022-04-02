@@ -1,10 +1,22 @@
 const express = require("express");
 const router = express.Router;
 const jwt = require("jsonwebtoken");
-// const bodyParser  = require("body-parser");
-//
-// const jsonParser = bodyParser.json()
+
 const User = require("../models/Users.js");
+// @router POST /api/auth/register
+// desc Register
+// access Public
+router("/", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: "Missing username or password" });
+  }
+  try {
+    const user = await User.find();
+  } catch (e) {
+
+  }
+});
 
 // @router POST /api/auth/register
 // desc Register
@@ -34,5 +46,6 @@ router("/register", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 
 module.exports = router;
