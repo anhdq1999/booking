@@ -35,7 +35,7 @@ const roomSchema = new Schema({
     numReviews: { type: Number, require: true },
     reviews: [reviewSchema],
     address: addressDetails,
-    status: {type: Boolean, require: true}
+    status: { type: Boolean, require: true }
   },
   {
     timestamps: true

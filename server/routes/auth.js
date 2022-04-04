@@ -3,6 +3,7 @@ const router = express.Router;
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/Users.js");
+
 // @router POST /api/auth/register
 // desc Register
 // access Public
