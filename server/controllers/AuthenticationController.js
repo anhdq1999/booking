@@ -13,7 +13,8 @@ const create = async (req, res) => {
       });
   try {
     const user = await User.findOne({ username: username });
-    if (user) return res.status(400)
+    if (user) return res
+      .status(400)
       .json({
         success: false,
         message: "User is existed"
