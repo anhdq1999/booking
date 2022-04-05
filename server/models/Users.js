@@ -16,15 +16,15 @@ const userSchema = new Schema({
     email: {
       type: String,
       require: true,
-      // unique: true,
+      unique: true,
       trim: true
     },
-    phone: {
+    phone: [{
       type: String,
       require: true,
-      // unique: true,
+      unique: true,
       trim: true
-    },
+    }],
     fullName: {
       type: String,
       require: true,
@@ -45,5 +45,5 @@ const userSchema = new Schema({
     timestamps: true
   }
 );
-module.exports = mongoose.model("users", userSchema);
+module.exports = mongoose.model("Users", userSchema);
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const reviewSchema = new Schema({
     name: { type: String, require: true },
     comment: { type: String, require: true },
@@ -22,6 +23,7 @@ const addressDetails = new Schema({
   googleAddress: { type: String, require: true }
 });
 const roomSchema = new Schema({
+    slug: { type: String, require: true },
     name: { type: String, require: true },
     host: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     category: { type: String, require: true },
@@ -41,4 +43,4 @@ const roomSchema = new Schema({
     timestamps: true
   }
 );
-module.exports = mongoose.model("rooms", roomSchema);
+module.exports = mongoose.model("Rooms", roomSchema);
