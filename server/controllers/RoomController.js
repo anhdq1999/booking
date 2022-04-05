@@ -1,10 +1,10 @@
-const Room = require("../models/Room");
+const Room = require("../models/Rooms");
 
 class RoomController {
 
-  //[GET] /room/:roomid
+  //[GET] /room/:roomId
   show(req, res, next) {
-    const roomId = req.params.id;
+    const roomId = req.params.roomId;
     Room.findById({ roomId })
       .then((room) =>
         res.status(200).json({
@@ -15,13 +15,15 @@ class RoomController {
         })
       ).catch(() => {
       res.status(500).json({
+        action: "find room by id",
         success: false,
-        message: "Internal Server Error"
+        message: "Internal Server Error",
+        data: null
       });
     });
   }
 
-  // POST
+  // POST /create
   create(req, res, next) {
     const roomRequest = req.body;
     const newRoom = new Room(roomRequest);
@@ -32,8 +34,18 @@ class RoomController {
         message: "create room successfully",
         data: newRoom
       });
-    }).catch(() => {
+    }).catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        action: "create room",
+        success: false,
+        message: "Internal Server Error",
+        data: null
+      });
     });
+  }
+  // PUT /room:roomId
+  update(req, res, next) {
 
   }
 

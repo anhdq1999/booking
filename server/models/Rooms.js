@@ -10,10 +10,7 @@ const reviewSchema = new Schema({
     timestamps: true
   }
 );
-const constraint = new Schema({
-  numGuest: { type: Number, require: true }
 
-});
 const addressDetails = new Schema({
   country: { type: Number, require: true },
   province: { type: String, require: true },
@@ -27,7 +24,6 @@ const roomSchema = new Schema({
     name: { type: String, require: true },
     host: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     category: { type: String, require: true },
-    // constraint: {},
     shortDescription: { type: String, require: true },
     description: { type: String, require: true },
     image: { type: String, require: true },
@@ -43,4 +39,4 @@ const roomSchema = new Schema({
     timestamps: true
   }
 );
-module.exports = mongoose.model("Rooms", roomSchema);
+module.exports = mongoose.model("Room", roomSchema);
