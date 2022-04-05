@@ -1,24 +1,47 @@
 const Room = require("../models/Room");
 
 class RoomController {
-  createRoom(req, res, next) {
-    const roomRequest = req.body;
-    Room.findById(roomRequest.id);
+
+  //[GET] /room/:roomid
+  show(req, res, next) {
+    const roomId = req.params.id;
+    Room.findById({ roomId })
+      .then((room) =>
+        res.status(200).json({
+          action: "find room by id",
+          success: true,
+          message: "find successfully",
+          data: room
+        })
+      ).catch(() => {
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    });
   }
+
+  // POST
+  create(req, res, next) {
+    const roomRequest = req.body;
+    const newRoom = new Room(roomRequest);
+    newRoom.save().then(() => {
+      res.status(200).json({
+        action: "create room",
+        success: true,
+        message: "create room successfully",
+        data: newRoom
+      });
+    }).catch(() => {
+    });
+
+  }
+
+  index(req, res, next) {
+    res.send("hello ! this is rooms");
+  }
+
 }
 
-const createRoom = async (req, res) => {
-  const {
-    name, host, category, shortDescription,
-    description, image, images, price, rating, numReviews,
-    reviews, address, status
-  } = req.body;
+module.exports = new RoomController;
 
-
-  if (!name || !host || !category || !shortDescription || !description
-    || !image || !images || !price || !rating || !numReviews || !reviews
-    || !address || !status) return res.status(400)
-    .json({ success: false, message: "Missing required fields" });
-
-
-};
