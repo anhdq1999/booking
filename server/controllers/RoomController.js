@@ -3,7 +3,7 @@ const Room = require("../models/Room");
 class RoomController {
   createRoom(req, res, next) {
     const roomRequest = req.body;
-
+    Room.findById(roomRequest.id);
   }
 }
 
