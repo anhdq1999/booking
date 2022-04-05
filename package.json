@@ -2,10 +2,10 @@
   "name": "booking_room",
   "version": "1.0.0",
   "description": "do an chuyen nganh",
-  "main": "src/server.js",
+  "main": "server/server.js",
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write \"src/**/*.{js,json}\"",
-    "start": "nodemon --inspect src/server.js",
+    "start": "nodemon --inspect server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
     }
   },
   "dependencies": {
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "mongoose": "^6.2.9"
