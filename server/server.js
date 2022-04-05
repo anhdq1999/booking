@@ -6,7 +6,7 @@ const bodyParser=require('body-parser');
 const route=require('./routes/index.js')
 
 const database = require('./config/database/index.js');
-const PORT = process.env.PORT;
+const port = process.env.PORT;
 const cors = require('cors');
 const app = express();
 
@@ -23,4 +23,4 @@ app.use(morgan('combined'));
 //Routes init
 route(app);
 
-app.listen(PORT, () => console.log(`Server is running at port :${PORT}`));
+app.listen(port, () => console.log(`Server is running at port :${port}`));
