@@ -1,6 +1,6 @@
-srs -> use case ->
 
-- viết tài liệu mô tả yêu cầu phần mềm ( Software requirements specification)-> tai liệu kiênds trudc
-  + mô tả bài toán
-- mô tả use case
-- function requirements
+- viết tài liệu mô tả yêu cầu phần mềm ( Software requirements specification)
+- tài liệu kiến trúc phần mềm
+- tài liệu thiết kế
+ (mô tả use case
+function requirements)
