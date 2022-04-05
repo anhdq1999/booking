@@ -3,7 +3,7 @@ const route = express.Router();
 
 const User = require("../models/Users.js");
 
-const userController = require("../controllers/authController");
+const userController = require("../controllers/AuthenticationController");
 
 // @route: POST api/auth/register
 // desc: register

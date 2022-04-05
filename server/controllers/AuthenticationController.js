@@ -9,7 +9,7 @@ const create = async (req, res) => {
     return res.status(400)
       .json({
         success: false,
-        message: "Missing fields"
+        message: "Missing required fields"
       });
   try {
     const user = await User.findOne({ username: username });
