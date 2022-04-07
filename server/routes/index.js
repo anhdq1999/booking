@@ -1,17 +1,16 @@
+const userRouter = require('./users.js');
 
-const userRouter = require('./users');
-const roomRouter = require("./rooms");
+const authRouter = require('./auth.js');
 
 
+function route(app){
 
-function route(app) {
-  app.use("/users", userRouter);
-  app.use("/rooms", roomRouter);
+    app.use('/users',userRouter);
 
-  app.get('/', (req, res) => {
-    res.send('hello World');
-  });
-
+    app.use('/auth',authRouter);
+    
+    app.get('/', (req, res) => {
+        res.send('hello World');
+    });
 }
-
-module.exports = route;
+module.exports = route

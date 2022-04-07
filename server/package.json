@@ -1,45 +1,44 @@
 {
-  "name": "booking_room",
-  "version": "1.0.0",
-  "description": "do an chuyen nganh",
-  "main": "server.js",
-  "scripts": {
-    "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write \"src/**/*.{js,json}\"",
-    "start": "nodemon --inspect server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anhdq1999/booking.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/anhdq1999/booking/issues"
-  },
-  "homepage": "https://github.com/anhdq1999/booking#readme",
-  "lint-staged": {
-    "src/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+    "name": "booking_room",
+    "version": "1.0.0",
+    "description": "do an chuyen nganh",
+    "main": "server.js",
+    "scripts": {
+        "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write \"./**/*.{js,json}\"",
+        "start": "nodemon --inspect server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/anhdq1999/booking.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/anhdq1999/booking/issues"
+    },
+    "homepage": "https://github.com/anhdq1999/booking#readme",
+    "lint-staged": {
+        "./**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "dependencies": {
+        "body-parser": "^1.20.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.2.9"
+    },
+    "devDependencies": {
+        "husky": "^7.0.4",
+        "lint-staged": "^12.3.7",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.15",
+        "prettier": "^2.6.1"
     }
-  },
-  "dependencies": {
-    "body-parser": "^1.20.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.9",
-    "mongoose-delete": "^0.5.4"
-  },
-  "devDependencies": {
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.6.1"
-  }
 }
