@@ -1,18 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-<<<<<<< HEAD
-
-const reviewSchema = new Schema({
-    name: { type: String, require: true },
-    comment: { type: String, require: true },
-    rating: { type: Number, require: true }
-  },
-  {
-    timestamps: true
-  }
-);
-
-=======
 const reviewSchema = new Schema(
     {
         name: { type: String, require: true },
@@ -26,7 +13,6 @@ const reviewSchema = new Schema(
 const constraint = new Schema({
     numGuest: { type: Number, require: true },
 });
->>>>>>> Doan
 const addressDetails = new Schema({
     country: { type: Number, require: true },
     province: { type: String, require: true },
@@ -35,27 +21,6 @@ const addressDetails = new Schema({
     street: { type: String, require: true },
     googleAddress: { type: String, require: true },
 });
-<<<<<<< HEAD
-const roomSchema = new Schema({
-    slug: { type: String, require: true },
-    name: { type: String, require: true },
-    host: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    category: { type: String, require: true },
-    shortDescription: { type: String, require: true },
-    description: { type: String, require: true },
-    image: { type: String, require: true },
-    images: [String],
-    price: { type: Number, require: true },
-    rating: { type: Number, require: true },
-    numReviews: { type: Number, require: true },
-    reviews: [reviewSchema],
-    address: addressDetails,
-    status: { type: Boolean, require: true }
-  },
-  {
-    timestamps: true
-  }
-=======
 const roomSchema = new Schema(
     {
         name: { type: String, require: true },
@@ -76,6 +41,5 @@ const roomSchema = new Schema(
     {
         timestamps: true,
     },
->>>>>>> Doan
 );
 module.exports = mongoose.model('Room', roomSchema);
