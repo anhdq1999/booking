@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
+const bcrypt =require('bcrypt');
+
 
 const User = new Schema(
     {
@@ -10,7 +12,7 @@ const User = new Schema(
             unique: true,
             trim: true,
         },
-        password: {
+        hash_password: {
             type: String,
             require: true,
             trim: true,
@@ -47,9 +49,13 @@ const User = new Schema(
     {
         timestamps: true,
     },
+
 );
 User.plugin(mongooseDelete, {
     deleteAt: true,
     overrideMethods: true,
 });
+User.methods.comparePassword =function(password){
+    return bcrypt.compareSync(password, this.hash_password);
+  };;
 module.exports = mongoose.model('User', User);
