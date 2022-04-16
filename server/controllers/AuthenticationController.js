@@ -1,8 +1,11 @@
 const User = require('../models/Users');
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken');
+const config = require('../config/auth.config');
+const auth = require('../middlewares')
 
 class AuthenticationController {
+    // [POST] /auth/register
     register(req, res, next) {
         User.findOne({ username: req.body.username })
             .then((user) => {
@@ -40,38 +43,44 @@ class AuthenticationController {
                 });
             });
     }
-    login(req, res, next) {
+    //[POST] /auth/login
+    login(req, res, next) {        
         User.findOne({
             username: req.body.username,
         })
             .then((user) => {
                 if (user){
                     if(user.comparePassword(req.body.password)) res.status(200).json({
-                        sucess: true,
+                        success: true,
                         message: 'Login sucessfully',
                         data:{
-                            token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id}, 'RESTFULAPIs')
+                            id:user._id,
+                            username:user.username,
+                            email:user.email,
+                            role:user.roles,
+                            accessToken: auth.authJwt.generateToken(user)
                         }
     
                     });
                     else{
-                        res.status(401).json({
-                            sucess: false,
+                        res.status(200).json({
+                            success: false,
                             message: 'Wrong username or password',
                             data: {},
                         }); 
                     }
                 }
                 else
-                    res.status(401).json({
-                        sucess: false,
+                    res.status(200).json({
+                        
+                        success: false,
                         message: 'User is not found',
                         data: {},
                     });
             })
             .catch((error) => {
                 res.status(500).json({
-                    sucess: false,
+                    success: false,
                     message: 'Internal server error',
                 });
                 throw error;

@@ -1,18 +1,17 @@
 require('dotenv').config();
 
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const route = require('./routes/index.js');
-
-const database = require('./config/database/index.js');
-const port = process.env.PORT;
-const cors = require('cors');
-const app = express();
-
+const express = require('express'),
+    morgan = require('morgan'),
+    bodyParser = require('body-parser'),
+    route = require('./routes/index'),
+    database = require('./config/db.config'),
+    port = process.env.PORT,
+    cors = require('cors'),
+    app = express();
 //Connect mongodb
 database.connect();
 
+//use authMiddlewares
 app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
