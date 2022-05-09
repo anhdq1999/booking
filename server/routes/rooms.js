@@ -3,7 +3,7 @@ const router = express.Router();
 
 const RoomController = require('../controllers/RoomController');
 
-router.post('/', RoomController.create);
+router.post('/create', RoomController.create);
 
 router.get('/store', RoomController.store);
 
