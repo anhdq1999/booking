@@ -1,5 +1,6 @@
 const userRouter = require('./users.js');
 const authRouter = require('./auth.js');
+const roomRouter = require('./rooms.js');
 
 function route(app) {
     app.use(function(req, res, next) {
@@ -11,6 +12,8 @@ function route(app) {
     });
 
     app.use('/users', userRouter);
+
+    app.use('/rooms',roomRouter);
 
     app.use('/auth', authRouter);
 
