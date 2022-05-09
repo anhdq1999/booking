@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@reduxjs/toolkit": "^1.8.1",
     "browserslist": "^4.20.2",
     "caniuse-lite": "^1.0.30001325",
@@ -18,7 +20,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "react-slick": "^0.25.2",
-    "reactstrap": "^8.1.1",
+    "reactstrap": "^8.10.1",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
     "simple-react-google-maps": "^1.1.2",

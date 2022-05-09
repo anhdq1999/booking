@@ -4,7 +4,7 @@ import 'react-animated-slider/build/horizontal.css';
 import { Link } from 'react-router-dom';
 import Slick from './Slick';
 import TopPlaces from './../Element/TopPlaces';
-import Header from './../Layout/Header';
+import {Header} from './../Layout/Header';
 import Footer from './../Layout/Footer';
 
 

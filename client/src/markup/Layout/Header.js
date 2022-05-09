@@ -1,12 +1,14 @@
+import { userActions } from 'actions';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { userService } from 'services';
 
 // import {} from 'react-router-dom'
 
 
 
 class Header extends Component {
-
     componentDidMount() {
 
         // sidebar open/close
@@ -34,6 +36,7 @@ class Header extends Component {
 
     }
     render() {
+        const {user,loggedIn,logout}=this.props;
         return (
             <header className="site-header mo-left header">
                 <div className="top-bar bg-dark">
@@ -51,10 +54,18 @@ class Header extends Component {
                                 </ul>
                             </div>
                             <div className="dlab-topbar-right top-login">
+                               {!loggedIn &&
                                 <ul>
                                     <li><Link to={'/login'} className="site-button-link">Login</Link></li>
                                     <li><Link to={'/register'} className="site-button-link">Register</Link></li>
                                 </ul>
+                                 } 
+                               {loggedIn &&
+                                <ul>
+                                    <li><Link to={'/profile'} className="site-button-link">{user.fullName}</Link></li>
+                                    <li><Link to={'/'} onClick={logout} className="site-button-link">Logout</Link></li>
+                                </ul>
+                                }
                             </div>
                         </div>
                     </div>
@@ -127,4 +138,13 @@ class Header extends Component {
         )
     }
 }
-export default Header;
+function mapState(state) {
+    const { loggedIn,user } = state.authentication;
+    return { loggedIn,user };
+}
+
+const actionCreators = {
+    logout: userActions.logout
+};
+const connectedHeaderPage = connect(mapState, actionCreators)(Header);
+export { connectedHeaderPage as Header }

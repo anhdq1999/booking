@@ -22,6 +22,14 @@ const User = new Schema(
             // unique: true,
             trim: true,
         },
+        dateOfBirth: {
+            type:Date,
+            require: true,
+        },
+        sex:{
+            type:String, 
+            require: true,
+        },
         phone: {
             type: String,
             require: true,
