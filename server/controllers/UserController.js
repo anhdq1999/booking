@@ -42,8 +42,14 @@ class UserController {
     //[DELETE] /users/:id/delete
     delete(req, res, next) {
         User.delete({ _id: req.params.id })
-            .then(() => res.status(200).json({ status: 'success' }))
+            .then(() => res.status(200).json({ status: 'success',message:'Delete user succesful'}))
             .catch(next);
+    }
+    //[GET] /users/garbage
+    garbage(req,res,next){
+        User.findDeleted({})
+        .then(users => res.json(users))
+        .catch(next);
     }
 }
 module.exports = new UserController();

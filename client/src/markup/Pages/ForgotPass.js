@@ -8,8 +8,6 @@ import Slick3 from './Slick3';
 class ForgotPass extends Component {
 
     render() {
-
-
         return (
             <div>
                 <div class="page-content dlab-login font-roboto">

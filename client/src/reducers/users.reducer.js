@@ -8,7 +8,7 @@ export function users(state = {}, action) {
       };
     case userConstants.GETALL_SUCCESS:
       return {
-        items: action.users
+        items:action.users
       };
     case userConstants.GETALL_FAILURE:
       return { 
@@ -26,9 +26,9 @@ export function users(state = {}, action) {
       };
     case userConstants.DELETE_SUCCESS:
       // remove deleted user from state
-      return {
-        items: state.items.filter(user => user.id !== action.id)
-      };
+        let items = state.items
+        items= items.filter(user => user.id !== action.id)
+      return {...state,items};
     case userConstants.DELETE_FAILURE:
       // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
       return {

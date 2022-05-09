@@ -15,7 +15,6 @@ generateToken = (user) => {
         algorithm: 'HS256',
         expiresIn: config.tokenLife,
       });
-  
 }
 
 verifyToken = (req, res, next) => {

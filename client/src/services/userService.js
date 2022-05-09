@@ -7,20 +7,15 @@ export const userService = {
     register,
     getAll,
     getById,
+    getAllDeleted,
     update,
-   
+    deleteUser,
+    getCurrentUser,
 };
 
 function login(username, password) {
     const url = "/auth/login";
-
-    return axiosClient.post(url, {username, password})
-        .then(user => {
-            if (user.accessToken) {
-                localStorage.setItem("user", JSON.stringify(user));
-            }
-            return user;
-        })
+    return axiosClient.post(url, {username, password});
 }
 
 function logout() {
@@ -37,18 +32,24 @@ function getById(id) {
     const url = `/users/${id}`;
     return axiosClient.get(url);
 }
+function getAllDeleted() {
+    const url = `/users/garbage`;
+    return axiosClient.get(url);
+}
 
 function register(user) {
     const url = "/auth/register";
-    return axiosClient.post(url, user.username,user.password)
+    return axiosClient.post(url,user)
 }
 
 function update(user) {
     const url = `/users/${user._id}`;
     return axiosClient.put(url);
 }
-
-
+function deleteUser(id){
+    const url =`users/${id}/delete`;
+    return axiosClient.delete(url);
+}
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;
 }
