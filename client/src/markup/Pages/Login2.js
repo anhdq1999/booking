@@ -1,29 +1,24 @@
 import { userActions } from 'actions';
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Slick3 from './Slick3'
+import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required')
+})
 
 function Login2(props) {
-    const [user, setUser] = useState({
-        username: '',
-        password: '',
-        submitted: false
-    })
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setUser({ ...user, [name]: value })
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+
+    const onSubmit = (username, password) => {
+        props.login(username, password);
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setUser({...user, submitted: true });
-        const { username, password } = user;
-        if (username && password) {
-            props.login(username, password);
-        }
-    }
-    const { loggingIn, alert } = props;
-    const { username, password, submitted } = user
+    const { alert } = props;
     return (
         <div>
             <div className="page-content dlab-login font-roboto">
@@ -35,7 +30,7 @@ function Login2(props) {
                                     <Link to={'./'}><img src={require('./../../images/logo-2.png')} alt="" /></Link>
                                 </div>
                                 <div id="login" className="tab-pane">
-                                    <form className="dlab-form" onSubmit={handleSubmit} >
+                                    <form onSubmit={handleSubmit(onSubmit)} className="dlab-form">
                                         <div className="form-head">
                                             <h3 className="form-title m-t0">We Are <span className="text-primary">Triper</span></h3>
                                             <p className="title-text">Welcome back, please login<br /> to your account</p>
@@ -48,28 +43,30 @@ function Login2(props) {
                                             <div className="form-group input-form">
                                                 <label>Email Address</label>
                                                 <input
-                                                    name="username"
-                                                    required=""
-                                                    value={username}
-                                                    onChange={handleChange}
-                                                    className="form-control" placeholder="Type email" type="text" />
+                                                    {...register("username")}
+
+                                                    className="form-control"
+                                                    placeholder="Type email"
+                                                    type="text"
+
+                                                />
 
                                             </div>
-                                            {submitted && !username &&
-                                                <div className="alert-warning">Username is required</div>
+                                            {errors.username &&
+                                                <div className="alert-warning">{errors.username.message}</div>
                                             }
                                             <div className="form-group input-form">
                                                 <label>Password</label>
                                                 <input
-                                                    name="password"
-                                                    onChange={handleChange}
-                                                    value={password}
-                                                    required=""
+
                                                     className="form-control "
-                                                    placeholder="Type password" type="password" />
+                                                    placeholder="Type password"
+                                                    type="password"
+                                                    {...register("password")}
+                                                />
                                             </div>
-                                            {submitted && !password &&
-                                                <div className="alert-warning">Password is required</div>
+                                            {errors.password &&
+                                                <div className="alert-warning">{errors.password.message}</div>
                                             }
                                         </div>
                                         <div className="form-group field-btn text-left">
@@ -81,8 +78,8 @@ function Login2(props) {
                                         </div>
                                         <div className="form-group">
                                             <button
-                                                // onClick={}
-                                                className="site-button black m-r10"  >login</button>
+                                                className="site-button black m-r10"
+                                                type="submit"  >login</button>
                                             <Link to={'./register'} className="site-button outline">Sign Up</Link>
                                         </div>
                                     </form>

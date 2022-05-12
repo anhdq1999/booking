@@ -6,6 +6,8 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@hookform/error-message": "^2.0.0",
+    "@hookform/resolvers": "^2.8.8",
     "@reduxjs/toolkit": "^1.8.1",
     "browserslist": "^4.20.2",
     "caniuse-lite": "^1.0.30001325",
@@ -13,7 +15,9 @@
     "query-string": "^7.1.1",
     "react": "^16.12.0",
     "react-animated-slider": "^1.1.4",
+    "react-data-table-component": "^7.5.1",
     "react-dom": "^16.12.0",
+    "react-hook-form": "^7.30.0",
     "react-image-lightbox": "^5.1.1",
     "react-redux": "^7.2.8",
     "react-rev-slider": "^1.0.1",
@@ -24,7 +28,8 @@
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
     "simple-react-google-maps": "^1.1.2",
-    "simple-react-lightbox": "^3.3.4-2"
+    "simple-react-lightbox": "^3.3.4-2",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

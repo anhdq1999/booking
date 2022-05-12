@@ -1,58 +1,87 @@
 import { userActions } from 'actions';
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Table } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { userService } from 'services';
-
-const header = [
-  'STT',
-  'Username',
-  'Email',
-  'Phone Number',
-  'Full Name',
-  'Address',
-  'Role'
-];
+import DataTable from 'react-data-table-component';
+import './styles.css'
 
 function Garbage(props) {
   const [users, setUsers] = useState([]);
-  
-  useEffect( () => {
+  useEffect(() => {
     userService.getAllDeleted()
-    .then(users =>  setUsers(users));
-   
-  }, [])
+      .then(x => setUsers(x));
+  }, []);
+  function handleDelete(user) {
+    userService.removeUser(user._id)
+      .then(res => {
+        if (res.success) setUsers(users => users.filter(x => x._id !== user._id))
+      })
+  }
+  function handleRestore(user) {
+    userService.restoreUser(user._id)
+      .then(res => {
+        if (res.success) setUsers(users => users.filter(u => u._id !== user._id))
+      })
+  }
+  const columns = useMemo(
+    () => [
+      {
+        name: 'Username',
+        selector: row => row.username
+      },
+      {
+        name: 'Email',
+        selector: row => row.email
+      },
+      {
+        name: 'Phone Number',
+        selector: row => row.phone
+      },
+      {
+        name: 'Full Name',
+        selector: row => row.fullname,
+        sortable: true
+      },
+      {
+        name: 'Address',
+        selector: row => row.address
+      },
+      {
+        name: 'Role',
+        selector: row => row.roles,
+      },
+      {
+        cell: (column) =>
+        (<>
+          <Button onClick={() => handleRestore(column)}>Restore</Button>
+          <Button onClick={() => handleDelete(column)}>Delete</Button>
+        </>
+        ),
+        buttons: true,
+        allowOverflow: true,
+      }
+    ])
+
+  const handleEdit = () => {
+
+  }
+  const handleChange = ({ selectedRows }) => {
+    // You can set state or dispatch with something like Redux so we can use the retrieved data
+    console.log('Selected Rows: ', selectedRows);
+  };
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/users-manager">Quay lại</Link>
-      <Table responsive>
-        <thead>
-          <tr>
-            {header.map((item) => (
-              <th key={item}>{item}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {users && users.length > 0 &&
-            users.map((item, index) => {
-              return (
-                <tr key={item._id}>
-                  <th scope="row">{index + 1}</th>
-                  <td key={item.username}>{item.username}</td>
-                  <td key={item.email}>{item.email}</td>
-                  <td key={item.phone}>{item.phone}</td>
-                  <td key={item.fullName}>{item.fullName}</td>
-                  <td key={item.address}>{item.address}</td>
-                  <td key={item.roles}>{item.roles}</td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-
-      </Table>
+      <DataTable
+        title='User Garbage'
+        columns={columns}
+        data={users}
+        selectableRows
+        onSelectedRowsChange={handleChange}
+        pagination
+        theme="dark" />
     </div>
   )
 }
