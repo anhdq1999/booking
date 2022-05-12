@@ -33,7 +33,7 @@ function UsersManager(props) {
     },
     {
       name: 'Phone Number',
-      selector: row => row.phone
+      selector: row => row.phoneNumber
     },
     {
       name: 'Full Name',

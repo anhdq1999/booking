@@ -3,7 +3,6 @@ import { Router, Route, Switch } from 'react-router-dom';
 
 import Homepage from './Pages/Homepage';
 import { Login2 } from './Pages/Login2';
-// import Register from './Pages/Register';
 import Register from './Pages/Register-react-hook-form';
 
 import Register2 from './Pages/Register2';

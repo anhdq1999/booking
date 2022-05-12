@@ -37,7 +37,7 @@ function Garbage(props) {
       },
       {
         name: 'Phone Number',
-        selector: row => row.phone
+        selector: row => row.phoneNumber
       },
       {
         name: 'Full Name',
@@ -62,7 +62,7 @@ function Garbage(props) {
         buttons: true,
         allowOverflow: true,
       }
-    ])
+    ],[])
 
   const handleEdit = () => {
 
