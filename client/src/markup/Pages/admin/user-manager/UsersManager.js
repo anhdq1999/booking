@@ -68,7 +68,8 @@ function UsersManager(props) {
           columns={columns}
           data={users}
           theme="dark"
-          selectableRows />
+          selectableRows
+          pagination />
       </div>
     </div>
   )
