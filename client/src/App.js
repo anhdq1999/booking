@@ -18,7 +18,8 @@ import { alertActions } from 'actions';
 import { connect } from 'react-redux';
 import { UsersManager } from 'markup/Pages/admin/user-manager/UsersManager';
 import { Garbage } from 'markup/Pages/admin/user-manager/Garbage';
-
+import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
+import {RoomsManager} from 'markup/Pages/admin/room-manager/RoomsManager'
 
 
 class App extends Component {
@@ -47,7 +48,8 @@ class App extends Component {
             <Route path='/forgot' exact component={ForgotPass} />
             <Route path='/admin/users-manager' exact component={UsersManager}/>
             <Route path='/admin/users-manager/garbage' exact component={Garbage}/>
-
+            <Route path= '/admin/rooms-manager' exact component={RoomsManager}/>
+            <Route path= '/admin/room-manager/garbage' exact component={GarbageRoom} />
           </Switch>
         </div>
         

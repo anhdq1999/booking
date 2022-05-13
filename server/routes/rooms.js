@@ -6,6 +6,7 @@ const RoomController = require('../controllers/RoomController');
 router.post('/create', RoomController.create);
 
 router.get('/store', RoomController.store);
+console.log(RoomController.store)
 
 router.put('/:roomId', RoomController.update);
 

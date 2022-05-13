@@ -62,9 +62,10 @@ class RoomController {
 
   store(req, res, next) {
     Room.find({}).then((rooms) => {
-      res.status(200).json({
-        action: "Get all room", success: true, message: "Get all room successfully", data: rooms
-      });
+      // res.status(200).json({
+      //   action: "Get all room", success: true, message: "Get all room successfully", data: [rooms]
+      // });
+      res.json(rooms)
     }).catch(error => {
       res.status(500).json({
         action: "Get all room", success: false, message: `Internal Server Error : ${error}`, data: null
