@@ -10,12 +10,14 @@ export const userService = {
     getAllDeleted,
     update,
     deleteUser,
+    removeUser,
+    restoreUser,
     getCurrentUser,
 };
 
 function login(username, password) {
     const url = "/auth/login";
-    return axiosClient.post(url, {username, password});
+    return axiosClient.post(url, username, password);
 }
 
 function logout() {
@@ -49,6 +51,14 @@ function update(user) {
 function deleteUser(id){
     const url =`users/${id}/delete`;
     return axiosClient.delete(url);
+}
+function removeUser(id){
+    const url =`users/remove/${id}`;
+    return axiosClient.delete(url);
+}
+function restoreUser(id){
+    const url =`users/restore/${id}`;
+    return axiosClient.post(url);
 }
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;

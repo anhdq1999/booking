@@ -3,17 +3,17 @@ const authRouter = require('./auth.js');
 const roomRouter = require('./rooms.js');
 
 function route(app) {
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
         res.header(
-          "Access-Control-Allow-Headers",
-          "x-access-token, Origin, Content-Type, Accept"
+            'Access-Control-Allow-Headers',
+            'x-access-token, Origin, Content-Type, Accept',
         );
         next();
     });
 
     app.use('/users', userRouter);
 
-    app.use('/rooms',roomRouter);
+    app.use('/rooms', roomRouter);
 
     app.use('/auth', authRouter);
 

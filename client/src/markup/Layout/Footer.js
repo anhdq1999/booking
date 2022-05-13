@@ -5,8 +5,8 @@ import {SRLWrapper} from 'simple-react-lightbox';
 
 var bg3 = require('./../../images/background/bg6.jpg');
 
-class Footer extends Component {
-    render() {
+function Footer(){
+    
         return (
             <footer className="site-footer style1">
                 <div className="footer-top" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
@@ -129,6 +129,6 @@ class Footer extends Component {
                 </div>
             </footer>
         )
-    }
+    
 }
 export default Footer;

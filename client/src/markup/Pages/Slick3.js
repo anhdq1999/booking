@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
 
@@ -20,48 +20,46 @@ const destination = [
 
 
 
-class Slick3 extends Component {
+function Slick3(props) {
 
-    render() {
-        const settings = {
-            dots: false,
-            slidesToShow: 1,
-            infinite: true,
-            autoplay: true,
-            speed: 2000,
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 1,
-                    }
-                },
-                {
-                    breakpoint: 991,
-                    settings: {
-                        slidesToShow: 1,
-                    }
-                },
-                {
-                    breakpoint: 576,
-                    settings: {
-                        slidesToShow: 1,
-                    }
+    const settings = {
+        dots: false,
+        slidesToShow: 1,
+        infinite: true,
+        autoplay: true,
+        speed: 2000,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 1,
                 }
-            ]
-        };
-        return (
-            <Slider className="slider-carousel" {...settings}>
-                {destination.map((item, index) => (
-                    <div className="item" key={index}>
-                        <div className="dlab-box overlay-black-middle">
-                            <img src={item.image} alt="" />
-                        </div>
+            },
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    };
+    return (
+        <Slider className="slider-carousel" {...settings}>
+            {destination.map((item, index) => (
+                <div className="item" key={index}>
+                    <div className="dlab-box overlay-black-middle">
+                        <img src={item.image} alt="" />
                     </div>
-                ))}
-            </Slider>
+                </div>
+            ))}
+        </Slider>
 
-        )
-    }
+    )
 }
 export default Slick3;

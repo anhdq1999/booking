@@ -42,14 +42,42 @@ class UserController {
     //[DELETE] /users/:id/delete
     delete(req, res, next) {
         User.delete({ _id: req.params.id })
-            .then(() => res.status(200).json({ status: 'success',message:'Delete user succesful'}))
+            .then(() =>
+                res
+                    .status(200)
+                    .json({
+                        success: true,
+                        message: 'Delete user succesful',
+                    }),
+            )
             .catch(next);
     }
     //[GET] /users/garbage
-    garbage(req,res,next){
+    garbage(req, res, next) {
         User.findDeleted({})
-        .then(users => res.json(users))
-        .catch(next);
+            .then((users) => res.json(users))
+            .catch(next);
+    }
+    //[PUT] /users/restore/:id
+    restore(req, res, next){
+        User.restore({_id:req.params.id})
+            .then(()=>
+            res.status(200).json({
+                action: 'restore user',
+                success: true,
+                message: 'Restore user successful '
+            }))
+    }
+    //[DELETE] /users/remove/:id
+    completeDelete(req, res, next) {
+        User.remove({ _id: req.params.id })
+            .then(() =>
+                res.status(200).json({
+                    action: 'remove user',
+                    success: true,
+                    message: 'Remove user successful '
+                }))
+            .catch(next)
     }
 }
 module.exports = new UserController();

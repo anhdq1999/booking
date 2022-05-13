@@ -2,7 +2,7 @@ const User = require('../models/Users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config/auth.config');
-const auth = require('../middlewares')
+const auth = require('../middlewares');
 
 class AuthenticationController {
     // [POST] /auth/register
@@ -15,7 +15,10 @@ class AuthenticationController {
                         message: 'User is existed',
                     });
                 else {
-                    const hash_password = bcrypt.hashSync(req.body.password, 10);
+                    const hash_password = bcrypt.hashSync(
+                        req.body.password,
+                        10,
+                    );
                     req.body.hash_password = hash_password;
                     const newUser = new User(req.body);
                     console.log(newUser);
@@ -25,14 +28,14 @@ class AuthenticationController {
                             success: true,
                             message: 'User created successfully',
                             data: {
-                                username: newUser.username
-                            }
+                                username: newUser.username,
+                            },
                         });
-                    }
-                    else {
+                    } else {
                         res.status(400).json({
                             success: false,
-                            message: 'Something is wrong when create a user, please try again',
+                            message:
+                                'Something is wrong when create a user, please try again',
                         });
                     }
                 }
@@ -52,19 +55,19 @@ class AuthenticationController {
         })
             .then((user) => {
                 if (user) {
-                    if (user.comparePassword(req.body.password)) res.status(200).json({
-                        success: true,
-                        message: 'Login sucessfully',
-                        data: {
-                            id: user._id,
-                            fullName: user.fullName,
-                            username: user.username,
-                            email: user.email,
-                            role: user.roles,
-                            accessToken: auth.authJwt.generateToken(user)
-                        }
-
-                    });
+                    if (user.comparePassword(req.body.password))
+                        res.status(200).json({
+                            success: true,
+                            message: 'Login sucessfully',
+                            data: {
+                                id: user._id,
+                                fullname: user.fullname,
+                                username: user.username,
+                                email: user.email,
+                                role: user.roles,
+                                accessToken: auth.authJwt.generateToken(user),
+                            },
+                        });
                     else {
                         res.status(200).json({
                             success: false,
@@ -72,10 +75,8 @@ class AuthenticationController {
                             data: {},
                         });
                     }
-                }
-                else
+                } else
                     res.status(200).json({
-
                         success: false,
                         message: 'User is not found',
                         data: {},
@@ -87,7 +88,6 @@ class AuthenticationController {
                     message: 'Internal server error',
                 });
                 throw error;
-
             });
     }
 }
