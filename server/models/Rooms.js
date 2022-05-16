@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const reviewSchema = new Schema(
     {
@@ -21,9 +24,9 @@ const addressDetails = new Schema({
     street: { type: String, require: true },
     googleAddress: { type: String, require: true },
 });
-const roomSchema = new Schema(
+const Room = new Schema(
     {
-        slug: { type: String, require: true },
+        slug: { type: String, slug: 'name' },
         name: { type: String, require: true },
         host: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         category: { type: String, require: true },
@@ -42,8 +45,9 @@ const roomSchema = new Schema(
         timestamps: true,
     },
 );
-roomSchema.plugin(mongooseDelete, {
+
+Room.plugin(mongooseDelete, {
     deleteAt: true,
     overrideMethods: true,
 });
-module.exports = mongoose.model('Room', roomSchema);
+module.exports = mongoose.model('Room', Room);

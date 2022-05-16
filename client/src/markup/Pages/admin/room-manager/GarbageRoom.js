@@ -25,9 +25,10 @@ function handleDelete(rooms) {
     })
 }
 function handleRestore(rooms) {
-  roomsService.restoreRoom(rooms._id)
+  const id = rooms._id;
+  roomsService.restoreRoom(id)
     .then(res => {
-      if (res.success) setRooms(rooms => rooms.filter(u => u._id !== rooms._id))
+      if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
     })
 }
 const columns = useMemo(
@@ -44,10 +45,6 @@ const columns = useMemo(
     {
       name: 'Type',
       selector: row => row.category
-    },
-    {
-      name: 'Description',
-      selector: row => row.shortDescription
     },
     {
       name: 'Price',
