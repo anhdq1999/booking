@@ -13,18 +13,21 @@ function Garbage(props) {
     userService.getAllDeleted()
       .then(x => setUsers(x));
   }, []);
+
   function handleDelete(user) {
     userService.removeUser(user._id)
       .then(res => {
         if (res.success) setUsers(users => users.filter(x => x._id !== user._id))
       })
   }
+
   function handleRestore(user) {
     userService.restoreUser(user._id)
       .then(res => {
         if (res.success) setUsers(users => users.filter(u => u._id !== user._id))
       })
   }
+
   const columns = useMemo(
     () => [
       {
@@ -62,7 +65,7 @@ function Garbage(props) {
         buttons: true,
         allowOverflow: true,
       }
-    ],[])
+    ], [])
 
   const handleEdit = () => {
 
@@ -81,7 +84,8 @@ function Garbage(props) {
         selectableRows
         onSelectedRowsChange={handleChange}
         pagination
-        theme="dark" />
+        theme="dark"
+      />
     </div>
   )
 }

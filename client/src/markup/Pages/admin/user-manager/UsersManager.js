@@ -6,6 +6,7 @@ import { userService } from 'services';
 import DataTable from 'react-data-table-component';
 import { Button } from 'reactstrap';
 
+
 function UsersManager(props) {
 
   const [users, setUsers] = useState([]);
@@ -20,6 +21,9 @@ function UsersManager(props) {
       .then(res => {
         if (res.success) setUsers(users => users.filter(users => users._id !== id))
       })
+  }
+  const handleEdit = () => {
+    console.log('>>check handle Edit');
   }
 
   const columns = [
@@ -51,7 +55,7 @@ function UsersManager(props) {
       buttons: true,
       cell: (column) =>
       (<>
-        <Button>Edit</Button>
+        <Button onClick={() => handleEdit()}>Edit</Button>
         <Button onClick={() => handleDelete(column)}>Delete</Button>
       </>
       ),

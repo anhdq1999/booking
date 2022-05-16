@@ -19,7 +19,7 @@ function login(username, password) {
             .then(res => {
                 if (res.success) {
                     dispatch(success(res.data));
-                    localStorage.setItem('user', JSON.stringify(res.data))
+                    localStorage.setItem('USER', JSON.stringify(res.data))
                     history.push('/');
                 } else {
                     dispatch(failure(res.message));
@@ -76,7 +76,7 @@ function getAllDeleted() {
         userService.getAllDeleted()
             .then(
                 users => {
-                    if (users.length>0) {
+                    if (users.length > 0) {
                         dispatch(success(users))
                     } else {
                         dispatch(failure())
@@ -95,7 +95,7 @@ function getAll() {
         userService.getAll()
             .then(
                 users => {
-                    if (users.length>0) {
+                    if (users.length > 0) {
                         dispatch(success(users))
                     } else {
                         dispatch(failure())

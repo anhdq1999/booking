@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';
 import Footer from './../Layout/Footer';
+import { roomService } from 'services';
+import { useDispatch } from 'react-redux';
 
 const hotelContent = [
     {
@@ -51,6 +53,15 @@ const hotelContent = [
 const bg3 = require('./../../images/banner/bnr1.jpg');
 
 function Hotel(props) {
+    const dispatch = useDispatch();
+    const [rooms,setRooms]= useState([])
+    useEffect(() => {
+       roomService.getAll().then(res => { 
+           const rooms =res.data;
+           setRooms(rooms.slice(2,8))
+       })
+    }, [])
+    // const popularHotel= rooms.slice(2,5)||[];
     return (
         <div>
             <Header2 />
@@ -74,13 +85,14 @@ function Hotel(props) {
                         <p className="font-18">If you’re looking for a truly memorable family break, here you find the lowest price on the right hotel for you. It's indescribable.</p>
                     </div>
                     <div className="row">
-                        {hotelContent.map((item, index) => (
+                        {rooms.map((item, index) => (
+
                             <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={index}>
                                 <div className="dlab-box hotal-box" data-tilt data-tilt-max="10" data-tilt-speed="1">
                                     <div className="dlab-media dlab-img-effect dlab-img-overlay2">
-                                        <img src={item.image} alt="" />
+                                        <img src={ require('./../../images/gallery/img7.jpg')} alt="" />
                                         <div className="dlab-info-has p-a20 text-white no-hover">
-                                            <h4 className="m-t0 m-b10">{item.title}</h4>
+                                            <h4 className="m-t0 m-b10">{item.name}</h4>
                                             <span>{item.offer}</span>
                                             <h2 className="m-t10 m-b20">$ {item.price}</h2>
                                             <Link to={'./hotelbooking'} className="site-button outline outline-2 radius-xl">Book Now</Link>
@@ -88,13 +100,16 @@ function Hotel(props) {
                                     </div>
                                 </div>
                             </div>
+
+
+
                         ))}
 
                     </div>
                 </div>
             </div>
             <Footer />
-        </div>
+        </div >
     )
 }
 export default Hotel;

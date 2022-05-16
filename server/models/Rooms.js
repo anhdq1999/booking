@@ -20,7 +20,7 @@ const addressDetails = new Schema({
     street: { type: String, require: true },
     googleAddress: { type: String, require: true },
 });
-const roomSchema = new Schema(
+const Room = new Schema(
     {
         slug: { type: String, require: true },
         name: { type: String, require: true },
@@ -41,4 +41,4 @@ const roomSchema = new Schema(
         timestamps: true,
     },
 );
-module.exports = mongoose.model('Room', roomSchema);
+module.exports = mongoose.model('Room', Room);

@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import Popupss from './Tab';
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';

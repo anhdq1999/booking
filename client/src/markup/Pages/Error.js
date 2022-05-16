@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const bg3 = require('./../../images/background/bg5.jpg');
 
