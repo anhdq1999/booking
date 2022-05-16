@@ -18,7 +18,7 @@ function RoomsManager(props) {
   }, [])
 
 
-
+// 
   function handleDelete(rooms) {
     const id = rooms._id;
     // console.log(id);
