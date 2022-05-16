@@ -1,62 +1,84 @@
 import { roomActions } from 'actions';
-import React, { Component, useEffect, useState } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Table } from 'reactstrap';
+import DataTable from 'react-data-table-component';
+import { Button } from 'reactstrap';
 import { roomsService } from 'services';
+import './styles.css'
 
-const header = [
-    'STT',
-    'NameRoom',
-    'HostRoom',
-    'Address',
-    'Category',
-    'shortDescription',
-    'Description',
-    'Image',
-    'Price',
-];
 
 function GarbageRooom(props) {
-  const [rooms, setrooms] = useState([]);
+  const [rooms, setRooms] = useState([]);
   
   useEffect( () => {
+  
     roomsService.getAllDeleted()
-    .then(rooms =>  setrooms(rooms));
+    .then(x =>  console.log(setRooms(x)));
    
-  }, [])
+  }, []);
+
+function handleDelete(rooms) {
+  roomsService.removeRoom(rooms._id)
+    .then(res => {
+      if (res.success) setRooms(rooms => rooms.filter(x => x._id !== rooms._id))
+    })
+}
+function handleRestore(rooms) {
+  roomsService.restoreRoom(rooms._id)
+    .then(res => {
+      if (res.success) setRooms(rooms => rooms.filter(u => u._id !== rooms._id))
+    })
+}
+const columns = useMemo(
+  () => [
+    {
+      name: 'Room Name',
+      selector: row => row.name
+    },
+    {
+      name: 'Host',
+      selector: row => row.host
+    },
+  
+    {
+      name: 'Type',
+      selector: row => row.category
+    },
+    {
+      name: 'Description',
+      selector: row => row.shortDescription
+    },
+    {
+      name: 'Price',
+      selector: row => row.price
+    },
+    {
+      cell: (column) =>
+      (<>
+        <Button onClick={() => handleRestore(column)}>Restore</Button>
+        <Button onClick={() => handleDelete(column)}>Delete</Button>
+      </>
+      ),
+      buttons: true,
+      allowOverflow: true,
+    }
+  ],[])
+  const handleChange = ({ selectedRows }) => {
+    // You can set state or dispatch with something like Redux so we can use the retrieved data
+    console.log('Selected Rows: ', selectedRows);
+  };
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/rooms-manager">Quay lại</Link>
-      <Table responsive>
-        <thead>
-          <tr>
-            {header.map((item) => (
-              <th key={item}>{item}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rooms && rooms.length > 0 &&
-            rooms.map((item, index) => {
-              return (
-                <tr key={item._id}>
-                <td key={item.name}>{item.name}</td>
-                      <td key={item.host}>{item.host}</td>
-                      <td key={item.address.province}>{item.address.province}</td>
-                      <td key={item.category}>{item.category}</td>
-                      <td key={item.shortDescription}>{item.shortDescription}</td>
-                      <td key={item.description}>{item.description}</td>
-                      <td key={item.image}>{item.image}</td>
-                      <td key={item.price}>{item.price}</td>
-                      
-                </tr>
-              )
-            })
-          }
-        </tbody>
-
-      </Table>
+      <DataTable
+        title='Room Garbage'
+        columns={columns}
+        data={rooms}
+        selectableRows
+        onSelectedRowsChange={handleChange}
+        pagination
+        theme="dark" />
     </div>
   )
 }

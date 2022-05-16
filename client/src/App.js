@@ -87,7 +87,7 @@ class App extends Component {
               <Route path='/popup' exact component={Popupss} />
               <Route path='/listing' exact component={ListingDetails} />
               <Route path= '/admin/rooms-manager' exact component={RoomsManager}/>
-            <Route path= '/admin/room-manager/garbage' exact component={GarbageRoom} />
+            <Route path= '/admin/rooms-manager/garbage' exact component={GarbageRoom} />
             </Switch>
           </div>
 

@@ -1,7 +1,7 @@
 import axiosClient from "../api/axiosClient";
 import { authHeader } from 'helpers';
 
-export const userService = {
+export const    userService = {
     login,
     logout,
     register,

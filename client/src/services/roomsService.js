@@ -7,33 +7,44 @@ export const roomsService = {
     getAllDeleted,
     update,
     deleteRoom,
+    removeRoom,
+    restoreRoom
  
 };
 
 
 
 function getAll() {
-    const url = "/rooms/store";
+    const url = `/rooms/store`;
     return axiosClient.get(url);
     
 }
 
 function getById(id) {
-    const url = "/rooms/${id}";
+    const url = `/rooms/${id}`;
     return axiosClient.get(url);
 }
 function getAllDeleted() {
-    const url = "/rooms/garbage";
+    const url = `/rooms/garbage`;
     return axiosClient.get(url);
 }
     
 
 function update(room) {
-    const url = "/rooms/${room._id}";
+    const url = `/rooms/${room._id}`;
     return axiosClient.put(url);
 }
 function deleteRoom(id){
-    const url ="rooms/${id}/delete";
+    const url =`rooms/${id}`;
     return axiosClient.delete(url);
+}
+
+function removeRoom(id){
+    const url =`rooms/remove/${id}`;
+    return axiosClient.delete(url);
+}
+function restoreRoom(id){
+    const url =`rooms/restore/${id}`;
+    return axiosClient.post(url);
 }
 

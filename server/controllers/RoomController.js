@@ -70,27 +70,25 @@ class RoomController {
                 });
             });
     }
-
+    //[GET] /rooms/garbage
+    garbage(req, res, next) {
+        Room.findDeleted({})
+            .then((rooms) => res.json(rooms))
+            .catch(next);
+    }
     // DELETE /:roomId
     delete(req, res, next) {
-        const roomRequestId = req.params.roomId;
-        Room.findByIdAndDelete(roomRequestId)
-            .then((room) => {
-                res.status(200).json({
-                    action: 'delete room',
-                    success: true,
-                    message: 'delete room successfully',
-                    data: room,
-                });
-            })
-            .catch((error) => {
-                res.status(500).json({
-                    action: 'create room',
-                    success: false,
-                    message: `Internal Server Error : ${error}`,
-                    data: null,
-                });
-            });
+        console.log(req.params.id);
+        Room.delete({ _id: req.params.id })
+            .then(() =>
+                res
+                    .status(200)
+                    .json({
+                        success: true,
+                        message: 'Delete room succesful',
+                    }),
+            )
+            .catch(next);
     }
 
     store(req, res, next) {
@@ -111,6 +109,27 @@ class RoomController {
                     data: null,
                 });
             });
+    }
+    //[PUT] /users/restore/:id
+    restore(req, res, next) {
+        Room.restore({ _id: req.params.id })
+            .then(() =>
+                res.status(200).json({
+                    action: 'restore room',
+                    success: true,
+                    message: 'Restore room successful '
+                }))
+    }
+    //[DELETE] /rooms/remove/:id
+    completeDelete(req, res, next) {
+        Room.remove({ _id: req.params.id })
+            .then(() =>
+                res.status(200).json({
+                    action: 'remove room',
+                    success: true,
+                    message: 'Remove room successful '
+                }))
+            .catch(next)
     }
 }
 

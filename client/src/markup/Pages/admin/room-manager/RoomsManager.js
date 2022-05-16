@@ -2,94 +2,80 @@ import { roomActions } from 'actions/room.actions';
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Table } from 'reactstrap';
-import { roomsService, userService } from 'services';
-import EditRoomsModal from './EditRoomsModal';
+import { roomsService } from 'services';
+import DataTable from 'react-data-table-component';
+import { Button } from 'reactstrap';
+
 
 function RoomsManager(props) {
 
+  
+   
     const [rooms, setRooms] = useState([]);
-    const [isShowModal, setIsShowModal] = useState(false);
     useEffect(() => {
       roomsService.getAll()
-      .then(rooms  => setRooms(rooms) )
-       
-    },[])
+        .then(res => setRooms(res.data))
+    }, [])
   
   
-    const handleEditRoomModal = () => {
-      setIsShowModal(true)
-    }
-    const toggle = () => {
-      setIsShowModal(false)
-    }
-    const header = [
-      'STT',
-      'Tên Phòng',
-      'Chủ Phòng',
-      'Thành Phố',
-      'Loại Phòng',
-      'Mô tả',
-      'Nội dung',
-      'Hình',
-      'Giá',
-      // 'Rating',
-      // 'NumReviews',
-      // 'Reviews',
-      'Chức năng'
+ 
+    function handleDelete (rooms){
+      const id = rooms._id;
       
-       
-    ];
-    // const handleDelete = (room) => {
-    //   props.delete(room)
-    // }
+      roomsService.deleteRoom(id).then(res => {
+        console.log(res);
+          if(res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
+        });
+    }
+
+    const columns = [
+      {
+        name: 'Room Name',
+        selector: row => row.name
+      },
+      {
+        name: 'Host',
+        selector: row => row.host
+      },
+    
+      {
+        name: 'Type',
+        selector: row => row.category
+      },
+      {
+        name: 'Description',
+        selector: row => row.shortDescription
+      },
+      {
+        name: 'Price',
+        selector: row => row.price
+      },
+      {
+        name: 'Action',
+        buttons: true,
+        cell: (column) =>
+        (<>
+          <Button >Edit</Button>
+          <Button onClick={() => handleDelete(column)}>Delete</Button>
+        </>
+        ),
+        allowOverflow: true,
+      }
+     
+    ]
+
+  
     return (
       <div>
-        <div className="title text-center"><h1>Manage Room</h1></div>
-        <div className="mt-3 mx-3">
-          <Link to='/admin/room-manager/garbage' variant= "contained">Thùng rác của tôi</Link>
-          <Table id="rooms" res ponsive>
-            <thead>
-              <tr className='text-center small' >
-                {header.map((item) => (
-                  <th key={item}>{item}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rooms && rooms.length > 0 &&
-                rooms.map((item, index) => {
-                  return (
-                    <tr className='small ' key={item._id}>
-                      <th scope="row" >{index + 1}</th>
-                      <td key={item.name}>{item.name}</td>
-                      <td key={item.host}>{item.host}</td>
-                      <td key={item.address.province}>{item.address.province}</td>
-                      <td key={item.category}>{item.category}</td>
-                      <td key={item.shortDescription}>{item.shortDescription}</td>
-                      <td key={item.description}>{item.description}</td>
-                      <td key={item.image}>{item.image}</td>
-                      <td key={item.price}>{item.price}</td>
-                      <td >
-                          <ul  style={{liststyle: 'none', backgroundColor: 'none'}} >
-                          <li > <button class = " btn-sm btn-default" onClick={handleEditRoomModal}><Link class= "fa fa-edit"></Link></button></li>
-                          <li ><button class=" btn-sm btn-default"  > <Link class= "fa fa-eraser"></Link></button></li>
-                          <EditRoomsModal
-                          isOpen={isShowModal}
-                          toggle={toggle}
-                          room={item}
-                        ></EditRoomsModal>
-                         
-                        </ul>
-                      </td>
-                    </tr>
-                  )
-                })
-              }
+        <div className="mt-5 mx-5">
   
-            </tbody>
-  
-          </Table>
+          <Link to='/admin/rooms-manager/garbage'>Thùng rác của tôi</Link>
+          <DataTable
+            columns={columns}
+            data={rooms}
+            theme="dark"
+            selectableRows
+            pagination />
         </div>
       </div>
     )
