@@ -7,10 +7,10 @@ router.post('/create', RoomController.create);
 
 router.get('/store', RoomController.store);
 
-router.put('/:roomId', RoomController.update);
+router.put('/:id', RoomController.update);
 
-router.delete('/:roomId', RoomController.delete);
+router.delete('/:id', RoomController.delete);
 
-router.get('/:roomId', RoomController.show);
+router.get('/:id', RoomController.show);
 
 module.exports = router;
