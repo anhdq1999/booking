@@ -1,11 +1,11 @@
 const Room = require('../models/Rooms');
 
 class RoomController {
-    //[GET] /:roomId
+    //[GET] /:id
     show(req, res, next) {
-        const roomId = req.params.roomId;
-        console.log(roomId);
-        Room.findById({ _id: roomId })
+        const id = req.params.id;
+        console.log(id);
+        Room.findById({ _id: id })
             .then((room) =>
                 res.status(200).json({
                     action: 'find room by id',
@@ -48,9 +48,9 @@ class RoomController {
             });
     }
 
-    // PUT /:roomId
+    // PUT /:id
     update(req, res, next) {
-        const roomRequestId = req.params.roomId;
+        const roomRequestId = req.params.id;
         const roomRequest = req.body;
         Room.findByIdAndUpdate(roomRequestId, roomRequest)
             .then((room) => {
@@ -70,11 +70,35 @@ class RoomController {
                 });
             });
     }
+<<<<<<< HEAD
     //[GET] /rooms/garbage
     garbage(req, res, next) {
         Room.findDeleted({})
             .then((rooms) => res.json(rooms))
             .catch(next);
+=======
+
+    // DELETE /:id
+    delete(req, res, next) {
+        const roomRequestId = req.params.id;
+        Room.findByIdAndDelete(roomRequestId)
+            .then((room) => {
+                res.status(200).json({
+                    action: 'delete room',
+                    success: true,
+                    message: 'delete room successfully',
+                    data: room,
+                });
+            })
+            .catch((error) => {
+                res.status(500).json({
+                    action: 'create room',
+                    success: false,
+                    message: `Internal Server Error : ${error}`,
+                    data: null,
+                });
+            });
+>>>>>>> master
     }
     // DELETE /:id
     delete(req, res, next) {
