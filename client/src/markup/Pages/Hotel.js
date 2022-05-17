@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';
 import Footer from './../Layout/Footer';
-import { roomService } from 'services';
 import { useDispatch } from 'react-redux';
 
 const hotelContent = [
@@ -56,10 +55,7 @@ function Hotel(props) {
     const dispatch = useDispatch();
     const [rooms,setRooms]= useState([])
     useEffect(() => {
-       roomService.getAll().then(res => { 
-           const rooms =res.data;
-           setRooms(rooms.slice(2,8))
-       })
+     
     }, [])
     // const popularHotel= rooms.slice(2,5)||[];
     return (
