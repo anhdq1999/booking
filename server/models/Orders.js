@@ -6,16 +6,16 @@ const mongooseDelete = require("mongoose-delete");
 const orderSchema = new Schema(
   {
     orderDetails: [{
-      type: mongoose.Schema.Type.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "orderDetail"
     }],
     paymentMethod: { type: String, required: true },
-    paymentResult: {
-      id: String,
-      status: String,
-      update_time: String,
-      email_address: String
-    },
+    // paymentResult: {
+    //   id: String,
+    //   status: String,
+    //   update_time: String,
+    //   email_address: String
+    // },
     taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     user: {
