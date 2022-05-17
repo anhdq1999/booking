@@ -36,8 +36,6 @@ function Header2(props) {
 
     const handleLogout=()=> {
         dispatch(userActions.logout());
-        console.log('>> check logout');
-        // setLoggingIn(loggingIn);
     }
     return (
         <header className="site-header mo-left header header-2">

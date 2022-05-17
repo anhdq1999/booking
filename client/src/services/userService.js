@@ -1,6 +1,6 @@
 import axiosClient from "../api/axiosClient";
 
-export const userService = {
+export const    userService = {
     login,
     logout,
     register,

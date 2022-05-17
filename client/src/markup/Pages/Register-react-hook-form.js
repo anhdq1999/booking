@@ -43,9 +43,9 @@ function Register(props) {
         handleSubmit,
         formState: { errors }
     } = useForm({
-         resolver: yupResolver(schema),
-         mode:'onBlur'
-         });
+        resolver: yupResolver(schema),
+        mode: 'onBlur'
+    }); 
     const onSubmit = data => {
         props.register(data)
     };
@@ -64,7 +64,7 @@ function Register(props) {
                             <div className="tab-content">
                                 <form onSubmit={handleSubmit(onSubmit)} className="tab-pane active">
                                     <h4 className="font-weight-700 text-center">PERSONAL INFORMATION</h4>
-                                    <p className="font-weight-600 text-center">If you have an account with us, login  
+                                    <p className="font-weight-600 text-center">If you have an account with us, login
                                         <Link to={'/login'} className="site-button-link ml-2"> HERE</Link>
                                         .</p>
                                     {alert.message &&
@@ -199,8 +199,6 @@ function Register(props) {
         </div>
     )
 }
-
-
 
 function mapState(state) {
     const { alert } = state;

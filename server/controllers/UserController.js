@@ -43,12 +43,10 @@ class UserController {
     delete(req, res, next) {
         User.delete({ _id: req.params.id })
             .then(() =>
-                res
-                    .status(200)
-                    .json({
-                        success: true,
-                        message: 'Delete user succesful',
-                    }),
+                res.status(200).json({
+                    success: true,
+                    message: 'Delete user succesful',
+                }),
             )
             .catch(next);
     }
@@ -59,14 +57,14 @@ class UserController {
             .catch(next);
     }
     //[PUT] /users/restore/:id
-    restore(req, res, next){
-        User.restore({_id:req.params.id})
-            .then(()=>
+    restore(req, res, next) {
+        User.restore({ _id: req.params.id }).then(() =>
             res.status(200).json({
                 action: 'restore user',
                 success: true,
-                message: 'Restore user successful '
-            }))
+                message: 'Restore user successful ',
+            }),
+        );
     }
     //[DELETE] /users/remove/:id
     completeDelete(req, res, next) {
@@ -75,9 +73,10 @@ class UserController {
                 res.status(200).json({
                     action: 'remove user',
                     success: true,
-                    message: 'Remove user successful '
-                }))
-            .catch(next)
+                    message: 'Remove user successful ',
+                }),
+            )
+            .catch(next);
     }
 }
 module.exports = new UserController();
