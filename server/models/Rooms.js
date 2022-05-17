@@ -24,7 +24,6 @@ const addressDetails = new Schema({
   street: { type: String, require: true },
   googleAddress: { type: String, require: true }
 });
-<<<<<<< HEAD
 const Room = new Schema(
     {
         slug: { type: String, slug: 'name' },
@@ -52,28 +51,3 @@ Room.plugin(mongooseDelete, {
     overrideMethods: true,
 });
 module.exports = mongoose.model('Room', Room);
-=======
-const roomSchema = new Schema(
-  {
-    slug: { type: String, require: true },
-    name: { type: String, require: true },
-    host: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    category: { type: String, require: true },
-    shortDescription: { type: String, require: true },
-    description: { type: String, require: true },
-    image: { type: String, require: true },
-    images: [String],
-    price: { type: Number, require: true },
-    rating: { type: Number, require: true },
-    numReviews: { type: Number, require: true },
-    reviews: [reviewSchema],
-    address: addressDetails,
-    status: { type: Boolean, require: true },
-    calender: []
-  },
-  {
-    timestamps: true
-  }
-);
-module.exports = mongoose.model("Room", roomSchema);
->>>>>>> master

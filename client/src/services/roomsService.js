@@ -9,7 +9,6 @@ export const roomsService = {
     deleteRoom,
     removeRoom,
     restoreRoom
- 
 };
 
 

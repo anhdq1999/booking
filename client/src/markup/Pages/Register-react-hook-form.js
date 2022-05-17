@@ -35,7 +35,6 @@ const schema = yup.object().shape({
     address: yup
         .string()
         .required("Address is required"),
-
 })
 function Register(props) {
 
@@ -43,7 +42,10 @@ function Register(props) {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onBlur'
+    }); 
     const onSubmit = data => {
         props.register(data)
     };
@@ -62,7 +64,7 @@ function Register(props) {
                             <div className="tab-content">
                                 <form onSubmit={handleSubmit(onSubmit)} className="tab-pane active">
                                     <h4 className="font-weight-700 text-center">PERSONAL INFORMATION</h4>
-                                    <p className="font-weight-600 text-center">If you have an account with us, login  
+                                    <p className="font-weight-600 text-center">If you have an account with us, login
                                         <Link to={'/login'} className="site-button-link ml-2"> HERE</Link>
                                         .</p>
                                     {alert.message &&
@@ -75,7 +77,7 @@ function Register(props) {
                                                 <input
                                                     className="form-control"
                                                     placeholder="Full Name"
-                                                    {...register("fullname", { required: true })}
+                                                    {...register("fullname")}
                                                     type="text" />
                                                 {errors?.fullname &&
                                                     <div className="alert-warning text-center">{errors.fullname?.message}</div>
@@ -88,7 +90,7 @@ function Register(props) {
                                                     name="email"
                                                     className="form-control"
                                                     placeholder="Your Email Id"
-                                                    {...register("email", { required: true })}
+                                                    {...register("email")}
                                                     type="email" />
                                                 {errors?.email &&
                                                     <div className="alert-warning text-center">{errors.email?.message}</div>
@@ -101,7 +103,7 @@ function Register(props) {
                                                     name="username"
                                                     className="form-control"
                                                     placeholder="Username"
-                                                    {...register("username", { required: true })}
+                                                    {...register("username")}
                                                     type="text" />
                                                 {errors?.username &&
                                                     <div className="alert-warning text-center">{errors.username?.message}</div>
@@ -197,8 +199,6 @@ function Register(props) {
         </div>
     )
 }
-
-
 
 function mapState(state) {
     const { alert } = state;

@@ -70,35 +70,11 @@ class RoomController {
                 });
             });
     }
-<<<<<<< HEAD
     //[GET] /rooms/garbage
     garbage(req, res, next) {
         Room.findDeleted({})
             .then((rooms) => res.json(rooms))
             .catch(next);
-=======
-
-    // DELETE /:id
-    delete(req, res, next) {
-        const roomRequestId = req.params.id;
-        Room.findByIdAndDelete(roomRequestId)
-            .then((room) => {
-                res.status(200).json({
-                    action: 'delete room',
-                    success: true,
-                    message: 'delete room successfully',
-                    data: room,
-                });
-            })
-            .catch((error) => {
-                res.status(500).json({
-                    action: 'create room',
-                    success: false,
-                    message: `Internal Server Error : ${error}`,
-                    data: null,
-                });
-            });
->>>>>>> master
     }
     // DELETE /:id
     delete(req, res, next) {

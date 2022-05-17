@@ -1,9 +1,9 @@
 import { userActions } from 'actions';
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Header2(props) {
-
     useEffect(() => {
 
         // sidebar open/close
@@ -29,9 +29,14 @@ function Header2(props) {
             current.classList.add('open');
         }
 
-    })
-    const { user, loggedIn, logout } = props;
-    console.log(loggedIn);
+    },[])
+    const dispatch = useDispatch();
+    const { user, loggedIn } = useSelector((state) => state.authentication)
+    // const[loggingIn,setLoggingIn] = useState(loggedIn)
+
+    const handleLogout=()=> {
+        dispatch(userActions.logout());
+    }
     return (
         <header className="site-header mo-left header header-2">
             <div className="top-bar">
@@ -58,7 +63,7 @@ function Header2(props) {
                             {loggedIn &&
                                 <ul>
                                     <li><Link to={'/profile'} className="site-button-link">{user.fullname}</Link></li>
-                                    <li><Link to={'/'} onClick={logout} className="site-button-link">Logout</Link></li>
+                                    <li><Link to={'/'} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
                                 </ul>
                             }
 
