@@ -1,8 +1,7 @@
-import { FormGroup } from 'reactstrap';
-import { roomsService } from 'services';
-import React, { useEffect, useState } from 'react'
 import { roomActions } from 'actions/room.actions';
-import { connect } from 'react-redux'
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Col, Form, Input, Label, Row } from 'reactstrap';
 
 // type FormValues = {
 //     nameRoom: String;
@@ -149,4 +148,4 @@ const actionCreators = {
     delete: roomActions.delete
 }
 const connectedRoomPage = connect(mapState, actionCreators)(RoomForm)
-export { connectedRoomPage as RoomForm }
+export { connectedRoomPage as RoomForm };
