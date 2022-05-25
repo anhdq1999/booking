@@ -1,32 +1,29 @@
-import { userActions } from 'actions';
-import React, { useEffect, useMemo, useState } from 'react'
-import { connect } from 'react-redux';
+import { alertActions, userActions } from 'actions';
+import React, { useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button } from 'reactstrap';
-import { userService } from 'services';
-import DataTable from 'react-data-table-component';
-import './styles.css'
+import './styles.css';
 
 function Garbage(props) {
-  const [users, setUsers] = useState([]);
+  const alert = useSelector(state => state.alert)
+  const users = useSelector(state => state.userReducer.items)
+  const pending = useSelector(state => state.userReducer.loading)
+  const dispatch = useDispatch();
+  const [selectedUsers, setSelectedUsers] = useState([])
   useEffect(() => {
-    userService.getAllDeleted()
-      .then(x => setUsers(x));
-  }, []);
+    dispatch(userActions.getAllDeleted())
+  }, [dispatch]);
+
   function handleDelete(user) {
-    userService.removeUser(user._id)
-      .then(res => {
-        if (res.success) setUsers(users => users.filter(x => x._id !== user._id))
-      })
+    dispatch(userActions.remove(user._id))
   }
+
   function handleRestore(user) {
-    userService.restoreUser(user._id)
-      .then(res => {
-        if (res.success) setUsers(users => users.filter(u => u._id !== user._id))
-      })
+    dispatch(userActions.restore(user._id))
   }
-  const columns = useMemo(
-    () => [
+  const columns =[
       {
         name: 'Username',
         selector: row => row.username
@@ -60,20 +57,31 @@ function Garbage(props) {
         </>
         ),
         buttons: true,
+        ignoreRowClick:true,
         allowOverflow: true,
       }
-    ],[])
-
-  const handleEdit = () => {
-
-  }
+    ]
   const handleChange = ({ selectedRows }) => {
-    // You can set state or dispatch with something like Redux so we can use the retrieved data
-    console.log('Selected Rows: ', selectedRows);
+    setSelectedUsers(selectedRows);
   };
+  const handleRestoreMany = () => {
+    if (selectedUsers.length > 0) {
+      selectedUsers.forEach((value) => {
+        handleRestore(value)
+      })
+    } else {
+      dispatch(alertActions.error("Chưa chọn user để restore"))
+    }
+  }
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/users-manager">Quay lại</Link>
+      <div className="text-right mb-5">
+        <Button onClick={() => handleRestoreMany()}>Restore</Button>
+      </div>
+      {alert.message &&
+        <div className={`alert ${alert.type}`}>{alert.message}</div>
+      }
       <DataTable
         title='User Garbage'
         columns={columns}
@@ -81,14 +89,12 @@ function Garbage(props) {
         selectableRows
         onSelectedRowsChange={handleChange}
         pagination
-        theme="dark" />
+        progressPending={pending}
+        theme="dark"
+      />
     </div>
   )
 }
-function mapState(state) {
-}
-const actionCreators = {
-  getAllDeleted: userActions.getAllDeleted,
-}
-const connectedGarbagePage = connect(mapState, actionCreators)(Garbage)
-export { connectedGarbagePage as Garbage }
+
+
+export default Garbage

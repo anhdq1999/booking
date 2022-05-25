@@ -1,24 +1,24 @@
 import { userActions } from 'actions';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Slick3 from './Slick3'
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const schema = yup.object().shape({
+const schemaValidation = yup.object().shape({
     username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required')
 })
 
 function Login2(props) {
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
-
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schemaValidation) });
+    const dispatch = useDispatch();
     const onSubmit = (username, password) => {
-        props.login(username, password);
+        dispatch(userActions.login(username, password));
     }
-    const { alert } = props;
+    const alert = useSelector(state => state.alert);
     return (
         <div>
             <div className="page-content dlab-login font-roboto">
@@ -97,15 +97,4 @@ function Login2(props) {
         </div>
     )
 }
-function mapState(state) {
-    const { alert } = state;
-    const { loggingIn } = state.authentication;
-    return { loggingIn, alert };
-}
-
-const actionCreators = {
-    login: userActions.login,
-    logout: userActions.logout
-};
-const connectedLoginPage = connect(mapState, actionCreators)(Login2);
-export { connectedLoginPage as Login2 }
+export default Login2

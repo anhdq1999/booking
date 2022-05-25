@@ -1,6 +1,6 @@
 import { userActions } from 'actions';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 
@@ -34,7 +34,13 @@ function Header(props) {
             current.classList.add('open');
         }
     }, [])
-    const { user, loggedIn, logout } = props;
+    const dispatch = useDispatch();
+
+    const { user, loggedIn } = useSelector(state => state.authentication);
+    function handleLogout() {
+        dispatch(userActions.logout());
+    }
+
     return (
         <header className="site-header mo-left header">
             <div className="top-bar bg-dark">
@@ -61,7 +67,7 @@ function Header(props) {
                             {loggedIn &&
                                 <ul>
                                     <li><Link to={'/profile'} className="site-button-link">{user.fullname}</Link></li>
-                                    <li><Link to={'/'} onClick={logout} className="site-button-link">Logout</Link></li>
+                                    <li><Link to={'/'} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
                                 </ul>
                             }
                         </div>
@@ -136,13 +142,5 @@ function Header(props) {
     )
 
 }
-function mapState(state) {
-    const { loggedIn, user } = state.authentication;
-    return { loggedIn, user };
-}
 
-const actionCreators = {
-    logout: userActions.logout
-};
-const connectedHeaderPage = connect(mapState, actionCreators)(Header);
-export { connectedHeaderPage as Header }
+export default Header;

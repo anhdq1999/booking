@@ -1,7 +1,6 @@
 import axiosClient from "../api/axiosClient";
-import { authHeader } from 'helpers';
 
-export const    userService = {
+export const userService = {
     login,
     logout,
     register,
@@ -41,23 +40,23 @@ function getAllDeleted() {
 
 function register(user) {
     const url = "/auth/register";
-    return axiosClient.post(url,user)
+    return axiosClient.post(url, user)
 }
 
-function update(user) {
+function update(user, newUser) {
     const url = `/users/${user._id}`;
-    return axiosClient.put(url);
+    return axiosClient.put(url, newUser);
 }
-function deleteUser(id){
-    const url =`users/${id}/delete`;
+function deleteUser(id) {
+    const url = `users/${id}`;
     return axiosClient.delete(url);
 }
-function removeUser(id){
-    const url =`users/remove/${id}`;
+function removeUser(id) {
+    const url = `users/remove/${id}`;
     return axiosClient.delete(url);
 }
-function restoreUser(id){
-    const url =`users/restore/${id}`;
+function restoreUser(id) {
+    const url = `users/restore/${id}`;
     return axiosClient.post(url);
 }
 function getCurrentUser() {

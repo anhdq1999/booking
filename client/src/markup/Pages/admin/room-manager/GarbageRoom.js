@@ -9,65 +9,80 @@ import './styles.css'
 
 
 function GarbageRooom(props) {
+  const noDataComponentContent = 'Thùng rác rỗng';
+  const [pending, setPending] = useState(true);
   const [rooms, setRooms] = useState([]);
-  
-  useEffect( () => {
-  
+  const [selectedRooms, setSelectedRooms] = useState([]);
+  useEffect(() => {
     roomsService.getAllDeleted()
-    .then(x =>  console.log(setRooms(x)));
-   
+      .then(rooms => {
+        setRooms(rooms)
+        setPending(false)
+      });
   }, []);
 
-function handleDelete(rooms) {
-  roomsService.removeRoom(rooms._id)
-    .then(res => {
-      if (res.success) setRooms(rooms => rooms.filter(x => x._id !== rooms._id))
-    })
-}
-function handleRestore(rooms) {
-  const id = rooms._id;
-  roomsService.restoreRoom(id)
-    .then(res => {
-      if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
-    })
-}
-const columns = useMemo(
-  () => [
-    {
-      name: 'Room Name',
-      selector: row => row.name
-    },
-    {
-      name: 'Host',
-      selector: row => row.host
-    },
-  
-    {
-      name: 'Type',
-      selector: row => row.category
-    },
-    {
-      name: 'Price',
-      selector: row => row.price
-    },
-    {
-      cell: (column) =>
-      (<>
-        <Button onClick={() => handleRestore(column)}>Restore</Button>
-        <Button onClick={() => handleDelete(column)}>Delete</Button>
-      </>
-      ),
-      buttons: true,
-      allowOverflow: true,
-    }
-  ],[])
+  function handleDelete(room) {
+    roomsService.removeRoom(room._id)
+      .then(res => {
+        if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== room._id))
+      })
+  }
+  function handleRestore(room) {
+    const id = room._id;
+    roomsService.restoreRoom(id)
+      .then(res => {
+        if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
+      })
+  }
+
+  const columns = useMemo(
+    () => [
+      {
+        name: 'Room Name',
+        selector: row => row.name
+      },
+      {
+        name: 'Host',
+        selector: row => row.host
+      },
+
+      {
+        name: 'Type',
+        selector: row => row.category
+      },
+      {
+        name: 'Price',
+        selector: row => row.price
+      },
+      {
+        cell: (column) =>
+        (<>
+          <Button onClick={() => handleRestore(column)}>Restore</Button>
+          <Button onClick={() => handleDelete(column)}>Delete</Button>
+        </>
+        ),
+        buttons: true,
+        allowOverflow: true,
+      }
+    ], [])
   const handleChange = ({ selectedRows }) => {
-    // You can set state or dispatch with something like Redux so we can use the retrieved data
-    console.log('Selected Rows: ', selectedRows);
+    setSelectedRooms(selectedRows)
   };
+  const handleRestoreMany = () => {
+    if (selectedRooms.length>0) {
+      selectedRooms.forEach((value) => {
+        handleRestore(value)
+      })
+    }else{
+      alert('Chưa chọn room cần hồi phục')
+    }
+  }
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/rooms-manager">Quay lại</Link>
+      <div className="text-right mb-5">
+        <Button onClick={() => handleRestoreMany()}>Restore</Button>
+      </div>
       <DataTable
         title='Room Garbage'
         columns={columns}
@@ -75,7 +90,9 @@ const columns = useMemo(
         selectableRows
         onSelectedRowsChange={handleChange}
         pagination
-        theme="dark" />
+        theme="dark"
+        noDataComponent={noDataComponentContent}
+        progressPending={pending} />
     </div>
   )
 }

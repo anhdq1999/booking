@@ -1,7 +1,7 @@
 import { userActions } from 'actions';
-import React, { useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function Header2(props) {
     useEffect(() => {
@@ -155,12 +155,4 @@ function Header2(props) {
     )
 
 }
-function mapState(state) {
-    const { loggedIn, user } = state.authentication;
-    return { loggedIn, user };
-}
-
-const actionCreators = {
-    logout: userActions.logout
-};
 export default Header2;

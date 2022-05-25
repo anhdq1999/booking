@@ -1,10 +1,10 @@
-import React, { } from 'react'
+import React from 'react'
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 import { Link } from 'react-router-dom';
 import Slick from './Slick';
 import TopPlaces from './../Element/TopPlaces';
-import { Header } from './../Layout/Header';
+import Header from './../Layout/Header';
 import Footer from './../Layout/Footer';
 
 
@@ -14,22 +14,22 @@ const content = [
     {
         title: 'Vulputate Mollis Ultricies Fermentum Parturient',
         button: 'Read More',
-        image: require('./../../images/main-slider/slide1.jpg'),
+        image: require('images/main-slider/slide1.jpg'),
     },
     {
         title: 'Tortor Dapibus Commodo Aenean Quam',
         button: 'Discover',
-        image: require('./../../images/main-slider/slide2.jpg'),
+        image: require('images/main-slider/slide2.jpg'),
     },
     {
         title: 'Tortor Dapibus Commodo Aenean Quam',
         button: 'Discover',
-        image: require('./../../images/main-slider/slide3.jpg'),
+        image: require('images/main-slider/slide3.jpg'),
     }
 ];
 
-const bg1 = require('./../../images/background/bg1.jpg');
-const bg3 = require('./../../images/background/bg3.jpg');
+const bg1 = require('images/background/bg1.jpg');
+const bg3 = require('images/background/bg3.jpg');
 
 function Homepage(props) {
 
@@ -151,7 +151,7 @@ function Homepage(props) {
                             <div className="col-lg-6 col-xl-3 col-sm-6 col-md-6 m-b30">
                                 <div className="dlab-box">
                                     <div className="dlab-media">
-                                        <Link><img src={require('./../../images/gallery/img4.jpg')} alt="" /></Link>
+                                        <Link><img src={require('images/gallery/img4.jpg')} alt="" /></Link>
                                     </div>
                                     <div className="dlab-info p-a15 border-1">
                                         <h4 className="dlab-title m-t0"><Link href="packages.html">Weekdays in Australia</Link></h4>
@@ -172,7 +172,7 @@ function Homepage(props) {
                             <div className="col-lg-6 col-xl-3 col-sm-6 col-md-6 m-b30">
                                 <div className="dlab-box">
                                     <div className="dlab-media">
-                                        <Link><img src={require('./../../images/gallery/img3.jpg')} alt="" /></Link>
+                                        <Link><img src={require('images/gallery/img3.jpg')} alt="" /></Link>
                                     </div>
                                     <div className="dlab-info p-a15 border-1">
                                         <h4 className="dlab-title m-t0"><Link href="packages.html">Weekdays in India</Link></h4>
@@ -193,7 +193,7 @@ function Homepage(props) {
                             <div className="col-lg-6 col-xl-3 col-sm-6 col-md-6 m-b30">
                                 <div className="dlab-box">
                                     <div className="dlab-media">
-                                        <Link><img src={require('./../../images/gallery/img5.jpg')} alt="" /></Link>
+                                        <Link><img src={require('images/gallery/img5.jpg')} alt="" /></Link>
                                     </div>
                                     <div className="dlab-info p-a15 border-1">
                                         <h4 className="dlab-title m-t0"><Link href="packages.html">Weekdays in South America</Link></h4>
@@ -214,7 +214,7 @@ function Homepage(props) {
                             <div className="col-lg-6 col-xl-3 col-sm-6 col-md-6 m-b30">
                                 <div className="dlab-box">
                                     <div className="dlab-media">
-                                        <Link><img src={require('./../../images/gallery/img6.jpg')} alt="" /></Link>
+                                        <Link><img src={require('images/gallery/img6.jpg')} alt="" /></Link>
                                     </div>
                                     <div className="dlab-info p-a15 border-1">
                                         <h4 className="dlab-title m-t0"><Link href="packages.html">Weekdays in Philippines</Link></h4>

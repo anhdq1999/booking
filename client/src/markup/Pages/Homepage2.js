@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 import Slick2 from './Slick2';

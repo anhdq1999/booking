@@ -1,6 +1,8 @@
 const userRouter = require('./users.js');
 const authRouter = require('./auth.js');
 const roomRouter = require('./rooms.js');
+const {authJwt} = require('../middlewares');
+const { isAdmin } = require('../middlewares/auth.middlewares.js');
 
 function route(app) {
     app.use(function (req, res, next) {
@@ -11,7 +13,7 @@ function route(app) {
         next();
     });
 
-    app.use('/users', userRouter);
+    app.use('/users',[authJwt.verifyToken,authJwt.isAdmin], userRouter);
 
     app.use('/rooms', roomRouter);
 
