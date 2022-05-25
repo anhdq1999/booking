@@ -8,26 +8,36 @@ import { Button } from 'reactstrap';
 
 
 function RoomsManager(props) {
-
-
-
+  const [selectedRooms, setSelectedRooms] = useState([]);
+  const [pending, setPending] = useState(true);
   const [rooms, setRooms] = useState([]);
   useEffect(() => {
     roomsService.getAll()
-      .then(res => setRooms(res.data))
+      .then(res => {
+        setRooms(res.data)
+        setPending(false)
+      })
   }, [])
 
-
-// 
   function handleDelete(rooms) {
     const id = rooms._id;
-    // console.log(id);
     roomsService.deleteRoom(id)
       .then(res => {
         if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
       });
   }
-
+  const handleDeleteMany = () => {
+    if (selectedRooms.length>0) {
+      selectedRooms.forEach((value) => {
+        handleDelete(value)
+      })
+    }else{
+      alert('Chưa chọn room cần xóa')
+    }
+  }
+  const handleChange = ({ selectedRows }) => {
+    setSelectedRooms(selectedRows)
+  };
   const columns = [
     {
       name: 'Room Name',
@@ -65,12 +75,21 @@ function RoomsManager(props) {
       <div className="mt-5 mx-5">
 
         <Link to='/admin/rooms-manager/garbage'>Thùng rác của tôi</Link>
+
+        <div className="text-right mb-5">
+          <Button>Add</Button>
+          <Button onClick={() => handleDeleteMany()}>Delete</Button>
+        </div>
         <DataTable
+          title='Room Store'
           columns={columns}
           data={rooms}
           theme="dark"
           selectableRows
-          pagination />
+          onSelectedRowsChange={handleChange}
+          pagination
+          progressPending={pending}
+        />
       </div>
     </div>
   )

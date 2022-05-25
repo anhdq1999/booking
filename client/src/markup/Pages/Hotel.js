@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Footer from './../Layout/Footer';
+import Header2 from './../Layout/Header2';
+
 
 const hotelContent = [
     {
@@ -53,9 +54,9 @@ const bg3 = require('./../../images/banner/bnr1.jpg');
 
 function Hotel(props) {
     const dispatch = useDispatch();
-    const [rooms,setRooms]= useState([])
+    const [rooms, setRooms] = useState([])
     useEffect(() => {
-     
+       
     }, [])
     // const popularHotel= rooms.slice(2,5)||[];
     return (
@@ -86,7 +87,7 @@ function Hotel(props) {
                             <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={index}>
                                 <div className="dlab-box hotal-box" data-tilt data-tilt-max="10" data-tilt-speed="1">
                                     <div className="dlab-media dlab-img-effect dlab-img-overlay2">
-                                        <img src={ require('./../../images/gallery/img7.jpg')} alt="" />
+                                        <img src={require(item.image)} alt="" />
                                         <div className="dlab-info-has p-a20 text-white no-hover">
                                             <h4 className="m-t0 m-b10">{item.name}</h4>
                                             <span>{item.offer}</span>

@@ -10,14 +10,14 @@ import { Router, Route, Switch } from 'react-router-dom';
 
 import Homepage from './markup/Pages/Homepage';
 import Login2 from './markup/Pages/Login2';
-import { Register } from './markup/Pages/Register-react-hook-form';
+import Register from './markup/Pages/Register-react-hook-form';
 import Register2 from './markup/Pages/Register2';
 import ForgotPass from './markup/Pages/ForgotPass';
 import { history } from 'helpers';
 import { alertActions } from 'actions';
 import {useDispatch } from 'react-redux';
-import { UsersManager } from 'markup/Pages/admin/user-manager/UsersManager';
-import { Garbage } from 'markup/Pages/admin/user-manager/Garbage';
+import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
+import Garbage from 'markup/Pages/admin/user-manager/Garbage';
 import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
 import {RoomsManager} from 'markup/Pages/admin/room-manager/RoomsManager'
 import Homepage2 from 'markup/Pages/Homepage2';

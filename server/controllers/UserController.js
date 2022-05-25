@@ -35,8 +35,15 @@ class UserController {
     }
     //[PUT] /users/:id
     update(req, res, next) {
-        User.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.send('update thanh cong'))
+        User.findOneAndUpdate({ _id: req.params.id }, req.body,{new:true})
+            .then((user) =>
+                res.status(200).json({
+                    action: 'update user',
+                    success: true,
+                    message: 'update thanh cong',
+                    data: user
+                })
+            )
             .catch(next);
     }
     //[DELETE] /users/:id/delete

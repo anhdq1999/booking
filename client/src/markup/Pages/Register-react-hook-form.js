@@ -1,9 +1,9 @@
-import { userActions } from 'actions';
-import React from 'react'
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
+import { userActions } from "actions";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -37,7 +37,8 @@ const schema = yup.object().shape({
         .required("Address is required"),
 })
 function Register(props) {
-
+    const dispatch = useDispatch();
+    const alert = useSelector(state => state.alert)
     const {
         register,
         handleSubmit,
@@ -47,9 +48,8 @@ function Register(props) {
         mode: 'onBlur'
     }); 
     const onSubmit = data => {
-        props.register(data)
+        dispatch(userActions.register(data))
     };
-    const { alert } = props
     return (
         <div className="section-full content-inner-2 shop-account bg-white">
             <div className="container">
@@ -200,13 +200,4 @@ function Register(props) {
     )
 }
 
-function mapState(state) {
-    const { alert } = state;
-    return { alert };
-}
-const actionCreators = {
-    register: userActions.register,
-
-};
-const connectedLoginPage = connect(mapState, actionCreators)(Register);
-export { connectedLoginPage as Register }
+export default Register ;

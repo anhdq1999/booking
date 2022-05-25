@@ -1,22 +1,31 @@
 import axios from "axios";
 import queryString from "query-string";
+import authHeader from 'helpers/auth'
 
 const axiosClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    headers:{
-        'content-type':'application/json',
+    headers: {
+        'content-type': 'application/json',
     },
-    paramsSerializer:params => queryString.stringify(params),
+    paramsSerializer: params => queryString.stringify(params),
 });
-axiosClient.interceptors.request.use(async (config)=>{ 
+axiosClient.interceptors.request.use(async (config) => {
+    const token = authHeader();
+    if (token) {
+        config.headers["x-access-token"] = token["x-access-token"]; // for Node.js Express back-end
+    }
     return config;
-})
-axiosClient.interceptors.response.use(response =>{ 
-    if(response && response.data){
+},
+    (error) => {
+        return Promise.reject(error);
+    }
+)
+axiosClient.interceptors.response.use(response => {
+    if (response && response.data) {
         return response.data;
     }
     return response;
-},(error) =>{ 
+}, (error) => {
     throw error;
 })
 export default axiosClient;

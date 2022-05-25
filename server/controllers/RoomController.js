@@ -121,13 +121,13 @@ class RoomController {
     }
     //[DELETE] /rooms/remove/:id
     completeDelete(req, res, next) {
-        Room.remove({ _id: req.params.id })
+        Room.deleteOne({ _id: req.params.id })
             .then(() =>
                 res.status(200).json({
                     action: 'remove room',
                     success: true,
                     message: 'Remove room successful ',
-                }),
+                })
             )
             .catch(next);
     }
