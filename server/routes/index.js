@@ -1,6 +1,7 @@
 const userRouter = require('./users.js');
 const authRouter = require('./auth.js');
 const roomRouter = require('./rooms.js');
+const orderRouter = require('./order.js');
 const {authJwt} = require('../middlewares');
 const { isAdmin } = require('../middlewares/auth.middlewares.js');
 
@@ -18,6 +19,7 @@ function route(app) {
     app.use('/rooms', roomRouter);
 
     app.use('/auth', authRouter);
+    // app.use('/order', orderRouter);
 
     app.get('/', (req, res) => {
         res.send('hello World');

@@ -36,7 +36,7 @@ const User = new Schema(
             // unique: true,
             trim: true,
         },
-        fullname: {
+        fullName: {
             type: String,
             require: true,
             // unique: true,

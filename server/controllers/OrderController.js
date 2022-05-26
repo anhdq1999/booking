@@ -1,4 +1,7 @@
-const Order = require('../models/Orders');
+const Order = require("../models/Orders");
+const Orderdetails = require("../models/OrderDetail");
+const { error } = require("lint-staged/lib/figures");
+
 
 class OrderController {
   //[GET] /:id
@@ -8,42 +11,42 @@ class OrderController {
     Order.findById({ _id: id })
       .then((room) =>
         res.status(200).json({
-          action: 'find room by id',
+          action: "find room by id",
           success: true,
-          message: 'find successfully',
-          data: room,
-        }),
+          message: "find successfully",
+          data: room
+        })
       )
       .catch((error) => {
         res.status(500).json({
-          action: 'find room by id',
+          action: "find room by id",
           success: false,
           message: `Internal Server Error : ${error}`,
-          data: null,
+          data: null
         });
       });
   }
 
   // POST /
   create(req, res, next) {
-    const roomRequest = req.body;
+    const oder = req.body;
     const newOrder = new Order(roomRequest);
     newOrder
       .save()
       .then(() => {
         res.status(200).json({
-          action: 'create room',
+          action: "create room",
           success: true,
-          message: 'create room successfully',
-          data: newOrder,
+          message: "create room successfully",
+          data: newOrder
         });
       })
       .catch((error) => {
         res.status(500).json({
-          action: 'create room',
+          action: "create room",
           success: false,
           message: `Internal Server Error : ${error}`,
-          data: null,
+          data: null
         });
       });
   }
@@ -55,18 +58,18 @@ class OrderController {
     Order.findByIdAndUpdate(roomRequestId, roomRequest)
       .then((room) => {
         res.status(200).json({
-          action: 'update room',
+          action: "update room",
           success: true,
-          message: 'update room successfully',
-          data: room,
+          message: "update room successfully",
+          data: room
         });
       })
       .catch((error) => {
         res.status(500).json({
-          action: 'create room',
+          action: "create room",
           success: false,
           message: `Internal Server Error : ${error}`,
-          data: null,
+          data: null
         });
       });
   }
@@ -77,18 +80,18 @@ class OrderController {
     Order.findByIdAndDelete(roomRequestId)
       .then((room) => {
         res.status(200).json({
-          action: 'delete room',
+          action: "delete room",
           success: true,
-          message: 'delete room successfully',
-          data: room,
+          message: "delete room successfully",
+          data: room
         });
       })
       .catch((error) => {
         res.status(500).json({
-          action: 'create room',
+          action: "create room",
           success: false,
           message: `Internal Server Error : ${error}`,
-          data: null,
+          data: null
         });
       });
   }
@@ -97,21 +100,47 @@ class OrderController {
     Order.find({})
       .then((rooms) => {
         res.status(200).json({
-          action: 'Get all room',
+          action: "Get all room",
           success: true,
-          message: 'Get all room successfully',
-          data: rooms,
+          message: "Get all room successfully",
+          data: rooms
         });
       })
       .catch((error) => {
         res.status(500).json({
-          action: 'Get all room',
+          action: "Get all room",
           success: false,
           message: `Internal Server Error : ${error}`,
-          data: null,
+          data: null
         });
       });
   }
+
+  saveOder(req, res, next) {
+
+      const { orderDetail } = data;
+      const newOrderDetail = new Orderdetails(orderDetail);
+
+      newOrderDetail.save()
+        .then((order) => {
+          res.status(200).json({
+            action: "save order detail",
+            success: true,
+            message: "save order detail successfully",
+            data: order
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            action: "save order detail",
+            success: false,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
+        });
+    };
+
 }
+
 
 module.exports = new OrderController();
