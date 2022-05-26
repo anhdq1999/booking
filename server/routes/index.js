@@ -18,7 +18,10 @@ function route(app) {
 
 
   app.use('/auth', authRouter);
-  // app.use('/order', orderRouter);
+
+  app.use('/rooms', roomRouter);
+
+  app.use('/order', orderRouter);
 
   app.use("/auth", authRouter);
 

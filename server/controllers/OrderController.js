@@ -3,154 +3,241 @@ const OrderDetail = require("../models/OrderDetail");
 
 class OrderController {
 
-  // POST
-  create(req, res, next) {
-    const { orderDetails } = req.body;
-    // res.json(orderDetails);
-    orderDetails.forEach((ordersDetails) => {
-      const newOrderDetails = new OrderDetail(ordersDetails);
-      newOrderDetails.save();
-    });
-    res.json("success");
-    // const orderRequest = req.body;
-    // const newOrderDetails = new OrderDetail(orderDetails);
-    // const newOrder = new Order(orderRequest);
-    // console.log(newOrder);
-    // newOrderDetails.save();
-    // newOrder.save()
-    // .then(() => {
-    //   res.status(200).json({
-    //     action: "create order",
-    //     success: true,
-    //     message: "create order successfully",
-    //     data: newOrder
-    //   });
-    // })
-    //   .catch((error) => {
-    //     res.status(500).json({
-    //       action: "create order",
-    //       success: false,
-    //       message: `Internal Server Error : ${error}`,
-    //       data: null
-    //     });
-    //   });
-
+  show(req, res, next) {
+    const _id = req.params.id;
+    Order
+      .findById({ _id })
+      .then((order) => {
+        res.status(200)
+          .json({
+            action: "find order by id",
+            success: true,
+            message: `find order by id successfully`,
+            data: order
+          });
+      })
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "find order by id",
+            success: false,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
+      });
   }
 
-  //[GET] /
-  // get all order
-  store(req, res, next) {
+  store(req, res) {
     Order.find({})
       .then((orders) => {
-        res.status(200).json({
-          action: "Get all orders",
-          success: true,
-          message: "Get all orders successfully",
-          data: orders
-        });
-      })
-      .catch((error) => {
-        res.status(500).json({
-          action: "Get all orders",
+          res.status(200)
+            .json({
+              action: "GET all order",
+              success: true,
+              message: "GET all order successfully",
+              data: orders
+            });
+        }
+      ).catch((error) => {
+      res.status(500)
+        .json({
+          action: "GET all order",
           success: false,
-          message: `Internal Server Error : ${error}`,
+          message: `GET all order failed : ${error}`,
           data: null
         });
-      });
+    });
   }
 
-  //[GET] /:id
-  show(req, res, next) {
-    const id = req.params.id;
-    console.log(id);
-    Order.findById({ _id: id })
-      .then((room) =>
-        res.status(200).json({
-          action: "find room by id",
-          success: true,
-          message: "find successfully",
-          data: room
-        })
-      )
-      .catch((error) => {
-        res.status(500).json({
-          action: "find room by id",
-          success: false,
-          message: `Internal Server Error : ${error}`,
-          data: null
-        });
-      });
-  }
-
-  // POST /
   create(req, res, next) {
-    const oder = req.body;
-    const newOrder = new Order(roomRequest);
-    newOrder
-      .save()
-      .then(() => {
-        res.status(200).json({
-          action: "create room",
-          success: true,
-          message: "create room successfully",
-          data: newOrder
-        });
+    const { orderDetails } = req.body;
+    let isSuccessSave = false;
+    orderDetails.forEach((order) => {
+      const newOrderDetail = new OrderDetail(order);
+      newOrderDetail.save();
+      isSuccessSave = true;
+    });
+    const order = req.body;
+    const newOrder = new Order(order);
+    newOrder.save()
+      .then((order) => {
+        if (isSuccessSave) {
+          res.status(200).json({
+            action: "create order",
+            success: true,
+            message: "create order successfully",
+            data: order
+          });
+        } else {
+          res.status(500).json({
+            action: "create order",
+            success: false,
+            message: "create OrderDetail error",
+            data: order
+          });
+        }
       })
-      .catch((error) => {
+      .catch(error => {
         res.status(500).json({
-          action: "create room",
+          action: "create order",
           success: false,
-          message: `Internal Server Error : ${error}`,
+          message: `create order error : ${error}`,
           data: null
         });
       });
+
   }
 
-  // PUT /:id
   update(req, res, next) {
-    const roomRequestId = req.params.id;
-    const roomRequest = req.body;
-    Order.findByIdAndUpdate(roomRequestId, roomRequest)
-      .then((room) => {
-        res.status(200).json({
-          action: "update room",
-          success: true,
-          message: "update room successfully",
-          data: room
-        });
+    // const _id = req.params.id;
+    //
+    // const orderRequest = req.body;
+    // let listOrderDetails;
+    // let isFindOrderDetails = false;
+    // Order
+    //   .findById({ _id })
+    //   .then((order) => {
+    //     listOrderDetails = order;
+    //     res.status(200)
+    //       .json({
+    //         action: "find order by id",
+    //         success: true,
+    //         message: `find order by id successfully`,
+    //         data: order
+    //       });
+    //   })
+    //   .catch(error => {
+    //     res.status(500)
+    //       .json({
+    //         action: "find order by id",
+    //         success: false,
+    //         message: `Internal Server Error : ${error}`,
+    //         data: null
+    //       });
+    //   });
+    //
+    // console.log({ listOrderDetails, isFindOrderDetails });
+
+  }
+
+  garbage(req, res, next) {
+    Order
+      .findDeleted({})
+      .then(orders => {
+        res.status(200)
+          .json({
+            action: "get all orders from garbage",
+            success: true,
+            message: "get all orders from garbage successfully",
+            data: orders
+          });
       })
-      .catch((error) => {
-        res.status(500).json({
-          action: "create room",
-          success: false,
-          message: `Internal Server Error : ${error}`,
-          data: null
-        });
+      .catch(error => {
+        res.status(200)
+          .json({
+            action: `get all orders from garbage`,
+            success: true,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
       });
   }
 
-  // DELETE /:id
   delete(req, res, next) {
-    const roomRequestId = req.params.id;
-    Order.findByIdAndDelete(roomRequestId)
-      .then((room) => {
-        res.status(200).json({
-          action: "delete room",
-          success: true,
-          message: "delete room successfully",
-          data: room
-        });
+    const _id = req.params.id;
+    Order
+      .delete({ _id })
+      .then((order) => {
+        res.status(200)
+          .json({
+            action: "delete order by id",
+            success: true,
+            message: `delete order by id successfully`,
+            data: order
+          });
       })
-      .catch((error) => {
-        res.status(500).json({
-          action: "create room",
-          success: false,
-          message: `Internal Server Error : ${error}`,
-          data: null
-        });
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "delete order by id",
+            success: false,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
       });
   }
 
+  completeDelete(req, res, next) {
+    const _id = req.params.id;
+    Order
+      .remove({ _id })
+      .then((order) => {
+        res.status(200)
+          .json({
+            action: "remove order by id",
+            success: true,
+            message: `remove order by id successfully`,
+            data: order
+          });
+      })
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "remove order by id",
+            success: false,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
+      });
+  }
+
+  restore(req, res, next) {
+    const _id = req.params.id;
+    Order
+      .restore({ _id })
+      .then((order) => {
+        res.status(200)
+          .json({
+            action: "restore order by id",
+            success: true,
+            message: `restore order by id successfully`,
+            data: order
+          });
+      })
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "restore order by id",
+            success: false,
+            message: `restore Server Error : ${error}`,
+            data: null
+          });
+      });
+  }
+
+//
+  showOrderDetail(req, res, next) {
+    OrderDetail
+      .find({})
+      .then((orderDetails) => {
+        res.status(200)
+          .json({
+            action: "get all order detail",
+            success: true,
+            message: `get all order detail successfully`,
+            data: orderDetails
+          });
+      })
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "get all order detail",
+            success: true,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
+      });
+  }
 
 }
 
