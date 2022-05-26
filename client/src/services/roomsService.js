@@ -14,7 +14,7 @@ export const roomsService = {
 
 
 function getAll() {
-    const url = `/rooms/store`;
+    const url = `/rooms`;
     return axiosClient.get(url);
     
 }
