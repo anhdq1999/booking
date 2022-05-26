@@ -1,4 +1,4 @@
-import { FormGroup } from 'reactstrap';
+import { Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { roomsService } from 'services';
 import React, { useEffect, useState } from 'react'
 import { roomActions } from 'actions/room.actions';

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';
 import Footer from './../Layout/Footer';
+import BookNowModal from './book-now-modal/BookNowModal';
 
 const hotelSlider = [
     {
@@ -38,6 +39,12 @@ const hotelSlider = [
 ]
 const bg3 = require('./../../images/banner/bnr1.jpg');
 function HotelBooking(props) {
+
+    const [isOpenModal,setIsOpenModal]=useState(false);
+
+    const handleOpenModal=()=>{
+        setIsOpenModal(!isOpenModal)
+    }
 
     const settings = {
         dots: false,
@@ -182,7 +189,7 @@ function HotelBooking(props) {
                                                 </div>
                                             </div>
                                             <div className="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12">
-                                                <Link ><button type="submit" className="site-button btn-block">Book Now</button></Link>
+                                                <Link ><button type="button" className="site-button btn-block" onClick={() =>handleOpenModal()}>Book Now</button></Link>
                                             </div>
                                         </div>
                                     </form>
@@ -324,7 +331,7 @@ function HotelBooking(props) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="modal fade submit-query" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
@@ -399,8 +406,11 @@ function HotelBooking(props) {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-
+                    </div>
+                    <BookNowModal
+                    isOpen={isOpenModal}
+                    toggle={handleOpenModal}
+                    />
                 </div>
 
             </div>

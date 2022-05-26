@@ -1,7 +1,8 @@
 import { userConstants } from '_constants';
 const initialState = {
   items: [],
-  editUser: {}
+  editUser: {},
+  createUser: {}
 }
 export function userReducer(state = initialState, action) {
   let items = state.items
@@ -33,7 +34,26 @@ export function userReducer(state = initialState, action) {
       return {
         error: action.error
       };
-      case userConstants.UPDATE_REQUEST:
+    case userConstants.GETALL_REQUEST:
+      return {
+        loading: true
+
+      };
+    case userConstants.CREATE_REQUEST:
+      state.createUser = action.user
+      return {
+        ...state
+      };
+    case userConstants.CREATE_SUCCESS:
+      items.push(action.user);
+      items=items.filter(user => user._id !=='')
+      return {
+        ...state,
+        items,
+        createUser: {}
+      };
+
+    case userConstants.UPDATE_REQUEST:
       return {
         ...state,
         editUser: action.user,

@@ -1,48 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { roomsService } from 'services';
 import Footer from './../Layout/Footer';
 import Header2 from './../Layout/Header2';
 
 
 const hotelContent = [
     {
-        image: require('./../../images/gallery/img7.jpg'),
+        image: require('images/gallery/img7.jpg'),
         title: 'Commodi',
         offer: '3 nights + Flight 5*Hotel',
         price: '400',
 
     },
     {
-        image: require('./../../images/gallery/img2.jpg'),
+        image: require('images/gallery/img2.jpg'),
         title: 'Natus',
         offer: '3 nights + Flight 5*Hotel',
         price: '450',
 
     },
     {
-        image: require('./../../images/gallery/img3.jpg'),
+        image: require('images/gallery/img3.jpg'),
         title: 'Dolores',
         offer: '3 nights + Flight 5*Hotel',
         price: '400',
 
     },
     {
-        image: require('./../../images/gallery/img4.jpg'),
+        image: require('images/gallery/img4.jpg'),
         title: 'Consectetur',
         offer: '3 nights + Flight 5*Hotel',
         price: '200',
 
     },
     {
-        image: require('./../../images/gallery/img5.jpg'),
+        image: require('images/gallery/img5.jpg'),
         title: 'Eiusmod',
         offer: '3 nights + Flight 5*Hotel',
         price: '100',
 
     },
     {
-        image: require('./../../images/gallery/img6.jpg'),
+        image: require('images/gallery/img6.jpg'),
         title: 'Proident',
         offer: '3 nights + Flight 5*Hotel',
         price: '300',
@@ -50,13 +51,19 @@ const hotelContent = [
     },
 ]
 
-const bg3 = require('./../../images/banner/bnr1.jpg');
+const bg3 = require('images/banner/bnr1.jpg');
+const villa = require('images/homestay/hidden-villa-2.jpg')
 
 function Hotel(props) {
     const dispatch = useDispatch();
     const [rooms, setRooms] = useState([])
     useEffect(() => {
-       
+        roomsService.getAll().then(
+            res => {
+                let rooms = res.data.slice(50, 55);
+                setRooms(rooms)
+            }
+        )
     }, [])
     // const popularHotel= rooms.slice(2,5)||[];
     return (
@@ -83,11 +90,10 @@ function Hotel(props) {
                     </div>
                     <div className="row">
                         {rooms.map((item, index) => (
-
                             <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={index}>
                                 <div className="dlab-box hotal-box" data-tilt data-tilt-max="10" data-tilt-speed="1">
                                     <div className="dlab-media dlab-img-effect dlab-img-overlay2">
-                                        <img src={require(item.image)} alt="" />
+                                        <img src={villa} alt="" />
                                         <div className="dlab-info-has p-a20 text-white no-hover">
                                             <h4 className="m-t0 m-b10">{item.name}</h4>
                                             <span>{item.offer}</span>

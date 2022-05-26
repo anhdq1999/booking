@@ -77,11 +77,11 @@ function register(user) {
 function create(user) {
     return dispatch => {
         dispatch(request(user));
-        userService.register(user)
+        userService.create(user)
             .then(
                 res => {
                     if (res.success) {
-                        dispatch(success());
+                        dispatch(success(res.data));
                         dispatch(alertActions.success('Create user successful'));
                     } else {
                         dispatch(failure(res.message));
@@ -96,9 +96,9 @@ function create(user) {
             );
     };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+    function request(user) { return { type: userConstants.CREATE_REQUEST, user } }
+    function success(user) { return { type: userConstants.CREATE_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.CREATE_FAILURE, error } }
 }
 function update(user, data) {
     return dispatch => {
