@@ -7,9 +7,9 @@ class OrderController {
   create(req, res, next) {
     const { orderDetails } = req.body;
     // res.json(orderDetails);
-    orderDetails.forEach(async (ordersDetails) => {
+    orderDetails.forEach((ordersDetails) => {
       const newOrderDetails = new OrderDetail(ordersDetails);
-      await newOrderDetails.save();
+      newOrderDetails.save();
     });
     res.json("success");
     // const orderRequest = req.body;
