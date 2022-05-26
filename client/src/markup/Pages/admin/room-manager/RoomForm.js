@@ -1,7 +1,9 @@
-import { roomActions } from 'actions/room.actions';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Col, Form, Input, Label, Row } from 'reactstrap';
+
+import { Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import { roomsService } from 'services';
+import React, { useEffect, useState } from 'react'
+
+
 
 // type FormValues = {
 //     nameRoom: String;

@@ -26,7 +26,7 @@ class AuthenticationController {
                     if (isCreated) {
                         res.status(200).json({
                             success: true,
-                            message: 'User created successfully',
+                            message: 'Register user successfully',
                             data: {
                                 username: newUser.username,
                             },

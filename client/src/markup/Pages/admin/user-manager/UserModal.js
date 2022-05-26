@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userActions } from 'actions';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import * as yup from 'yup';
@@ -35,6 +35,9 @@ const schema = yup.object().shape({
     address: yup
         .string()
         .required("Address is required"),
+    roles:yup
+        .string()
+        .required("Roles is required")
 })
 export default function UserModal(props) {
     const initialFormState = {
@@ -46,7 +49,7 @@ export default function UserModal(props) {
         sex: '',
         address: '',
         roles: '',
-    };
+    };    
     const user = props.user;
     const alert = useSelector(state => state.alert)
     const newUser = useSelector(state => state.userReducer.editUser)
@@ -64,7 +67,6 @@ export default function UserModal(props) {
         resolver: yupResolver(schema),
 
     })
-    console.log(user);
     if (user) {
         if (newUser) {
             setUserValue(newUser)
@@ -92,14 +94,14 @@ export default function UserModal(props) {
         setValue("roles", data.roles)
     }
     function handleAdd(data) {
-        dispatch(userActions.register(data))
+        dispatch(userActions.create(data))
     }
     function handleEdit(data) {
         dispatch(userActions.update(user, data))
     }
 
     const onSubmit = data => {
-        if (user.fullname) {
+        if (user) {
             handleEdit(data)
         }
         else handleAdd(data)
@@ -148,7 +150,9 @@ export default function UserModal(props) {
                                     type="date"
                                     {...register("dateOfBirth")}
                                 />
-
+                                {errors?.dateOfBirth &&
+                                    <div className="alert-warning text-center">{errors.dateOfBirth?.message}</div>
+                                }
                             </Col>
                         </Row>
                         <Row>
@@ -164,7 +168,9 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("username")}
                                 />
-
+{errors?.username &&
+                                    <div className="alert-warning text-center">{errors.username?.message}</div>
+                                }
                             </Col>
                             <Col md={6}>
 
@@ -178,7 +184,9 @@ export default function UserModal(props) {
                                     type="email"
                                     {...register("email")}
                                 />
-
+{errors?.email &&
+                                    <div className="alert-warning text-center">{errors.email?.message}</div>
+                                }
                             </Col>
                         </Row>
 
@@ -195,7 +203,9 @@ export default function UserModal(props) {
                                     type="password"
                                     {...register("password")}
                                 />
-
+{errors?.password &&
+                                    <div className="alert-warning text-center">{errors.password?.message}</div>
+                                }
                             </Col>
                             <Col md={6}>
 
@@ -209,7 +219,9 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("phoneNumber")}
                                 />
-
+{errors?.phoneNumber &&
+                                    <div className="alert-warning text-center">{errors.phoneNumber?.message}</div>
+                                }
                             </Col>
                         </Row>
                         <Row>
@@ -225,7 +237,9 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("address")}
                                 />
-
+{errors?.address &&
+                                    <div className="alert-warning text-center">{errors.address?.message}</div>
+                                }
                             </Col>
                             <Col md={6}>
 
@@ -244,15 +258,17 @@ export default function UserModal(props) {
                                     <option name="sex" value='nam'>Nam</option>
                                     <option name="sex" value='Nữ'>Nữ</option>
                                 </select>
-
+                                {errors?.sex &&
+                                    <div className="alert-warning text-center">{errors.sex?.message}</div>
+                                }
 
                             </Col>
                         </Row>
                         <Row>
                             <Col md={6}>
 
-                                <Label for="sex">
-                                    Sex
+                                <Label for="roles">
+                                    Roles
                                 </Label>
                                 <select
                                     className="form-control"
@@ -268,7 +284,9 @@ export default function UserModal(props) {
                                     <option name="roles" value='admin'>Admin</option>
 
                                 </select>
-
+                                {errors?.roles &&
+                                    <div className="alert-warning text-center">{errors.roles?.message}</div>
+                                }
 
                             </Col>
                         </Row>
