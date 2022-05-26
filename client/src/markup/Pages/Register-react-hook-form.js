@@ -45,7 +45,8 @@ function Register(props) {
         formState: { errors }
     } = useForm({
         resolver: yupResolver(schema),
-        mode: 'onBlur'
+        mode: 'onBlur',
+        reValidateMode:'onChange'
     }); 
     const onSubmit = data => {
         dispatch(userActions.register(data))

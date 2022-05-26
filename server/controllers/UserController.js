@@ -1,4 +1,5 @@
 const User = require('../models/Users');
+const bcrypt = require('bcrypt');
 class UserController {
     //[GET] /users/:username
     show(req, res, next) {
@@ -16,23 +17,46 @@ class UserController {
     //[POST] /users/create
     create(req, res, next) {
         const formData = req.body;
-        const user = new User(formData);
-        user.save()
-            .then((user) =>
-                res.status(200).json({
-                    action: 'add user',
-                    status: 'success',
-                    data: [user],
-                }),
-            )
-            .catch((err) =>
-                res.status(400).json({
-                    action: 'add user',
-                    status: 'fail',
-                    messsage: { err },
-                }),
-            );
-    }
+        User.findOne({ username: req.body.username })
+        .then((user) => {
+            if (user)
+                res.status(409).json({
+                    success: false,
+                    message: 'User is existed',
+                });
+            else {
+                const hash_password = bcrypt.hashSync(
+                    req.body.password,
+                    10,
+                );
+                req.body.hash_password = hash_password;
+                const newUser = new User(formData);
+                console.log(newUser);
+                const isCreated = newUser.save().then( u =>{return u});
+                console.log(isCreated);
+                if (isCreated) {
+                    res.status(200).json({
+                        success: true,
+                        message: 'User created successfully',
+                        data:newUser,
+                    });
+                } else {
+                    res.status(400).json({
+                        success: false,
+                        message:
+                            'Something is wrong when create a user, please try again',
+                    });
+                }
+            }
+        })
+        .catch((next) => {
+            console.log(next);
+            res.status(500).json({
+                success: false,
+                message: 'Internal server error',
+            });
+        });
+}
     //[PUT] /users/:id
     update(req, res, next) {
         User.findOneAndUpdate({ _id: req.params.id }, req.body,{new:true})

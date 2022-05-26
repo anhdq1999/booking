@@ -73,11 +73,21 @@ function Garbage(props) {
       dispatch(alertActions.error("Chưa chọn user để restore"))
     }
   }
+  const handleDeleteMany = () => {
+    if (selectedUsers.length > 0) {
+      selectedUsers.forEach((value) => {
+        handleDelete(value)
+      })
+    } else {
+      dispatch(alertActions.error("Chưa chọn user để xóa"))
+    }
+  }
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/users-manager">Quay lại</Link>
       <div className="text-right mb-5">
         <Button onClick={() => handleRestoreMany()}>Restore</Button>
+        <Button onClick={() => handleDeleteMany()}>Delete</Button>
       </div>
       {alert.message &&
         <div className={`alert ${alert.type}`}>{alert.message}</div>

@@ -1,4 +1,5 @@
 const Room = require('../models/Rooms');
+const User = require('../models/Users');
 
 class RoomController {
     //[GET] /:id
@@ -111,13 +112,13 @@ class RoomController {
     //[PUT] /users/restore/:id
     restore(req, res, next) {
         Room.restore({ _id: req.params.id })
-        .then(() =>
-            res.status(200).json({
-                action: 'restore room',
-                success: true,
-                message: 'Restore room successful ',
-            }),
-        );
+            .then(() =>
+                res.status(200).json({
+                    action: 'restore room',
+                    success: true,
+                    message: 'Restore room successful ',
+                }),
+            );
     }
     //[DELETE] /rooms/remove/:id
     completeDelete(req, res, next) {
