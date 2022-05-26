@@ -1,5 +1,7 @@
 const config = require('../config/auth.config');
 const jwt = require('jsonwebtoken');
+const User = require('../models/Users');
+
 generateToken = (user) => {
     // Định nghĩa những thông tin của user mà bạn muốn lưu vào token ở đây
     const userData = {
@@ -16,6 +18,7 @@ generateToken = (user) => {
 
 verifyToken = (req, res, next) => {
     let token = req.headers['x-access-token'];
+    
     if (!token) {
         return res.status(403).send({
             message: 'No token provided!',
@@ -27,12 +30,55 @@ verifyToken = (req, res, next) => {
                 message: 'Unauthorized!',
             });
         }
-        req.userId = decoded.id;
+        req.userId = decoded.data._id;
         next();
     });
 };
+isAdmin = (req, res, next) => {
+    User.findById({ _id: req.userId }).then(user => {
+        if (user.roles === 'admin') {
+            next();
+            return;
+        } else {
+            res.status(403).send({
+                message: "Require Admin Role!"
+            });
+            return;
+        }
+    });
+};
+isUserRole = (req, res, next) => {
+    User.findById({ _id: req.userId }).then(user => {
+        if (user.roles === 'user') {
+            next();
+            return;
+        } else {
+            res.status(403).send({
+                message: "Require User Role!"
+            });
+            return;
+        }
+    });
+};
+isHost = (req, res, next) => {
+    User.findById({ _id: req.userId }).then(user => {
+        if (user.roles === 'host') {
+            next();
+            return;
+        } else {
+            res.status(403).send({
+                message: "Require Host Role!"
+            });
+            return;
+        }
+    });
+};
+
 const authJwt = {
     generateToken,
     verifyToken,
+    isAdmin,
+    isUserRole,
+    isHost
 };
 module.exports = authJwt;

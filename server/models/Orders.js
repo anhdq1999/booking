@@ -21,7 +21,9 @@ const orderSchema = new Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users"
-    }
+    },
+    customerName: { type: String, required: true },
+    customerPhone: { type: String, required: true }
   },
   {
     timestamps: true

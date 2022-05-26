@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import {SRLWrapper} from 'simple-react-lightbox';

@@ -1,9 +1,9 @@
-import { userActions } from 'actions';
-import React from 'react'
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
+import { userActions } from "actions";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -35,19 +35,21 @@ const schema = yup.object().shape({
     address: yup
         .string()
         .required("Address is required"),
-
 })
 function Register(props) {
-
+    const dispatch = useDispatch();
+    const alert = useSelector(state => state.alert)
     const {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onBlur'
+    }); 
     const onSubmit = data => {
-        props.register(data)
+        dispatch(userActions.register(data))
     };
-    const { alert } = props
     return (
         <div className="section-full content-inner-2 shop-account bg-white">
             <div className="container">
@@ -62,7 +64,7 @@ function Register(props) {
                             <div className="tab-content">
                                 <form onSubmit={handleSubmit(onSubmit)} className="tab-pane active">
                                     <h4 className="font-weight-700 text-center">PERSONAL INFORMATION</h4>
-                                    <p className="font-weight-600 text-center">If you have an account with us, login  
+                                    <p className="font-weight-600 text-center">If you have an account with us, login
                                         <Link to={'/login'} className="site-button-link ml-2"> HERE</Link>
                                         .</p>
                                     {alert.message &&
@@ -75,7 +77,7 @@ function Register(props) {
                                                 <input
                                                     className="form-control"
                                                     placeholder="Full Name"
-                                                    {...register("fullname", { required: true })}
+                                                    {...register("fullname")}
                                                     type="text" />
                                                 {errors?.fullname &&
                                                     <div className="alert-warning text-center">{errors.fullname?.message}</div>
@@ -88,7 +90,7 @@ function Register(props) {
                                                     name="email"
                                                     className="form-control"
                                                     placeholder="Your Email Id"
-                                                    {...register("email", { required: true })}
+                                                    {...register("email")}
                                                     type="email" />
                                                 {errors?.email &&
                                                     <div className="alert-warning text-center">{errors.email?.message}</div>
@@ -101,7 +103,7 @@ function Register(props) {
                                                     name="username"
                                                     className="form-control"
                                                     placeholder="Username"
-                                                    {...register("username", { required: true })}
+                                                    {...register("username")}
                                                     type="text" />
                                                 {errors?.username &&
                                                     <div className="alert-warning text-center">{errors.username?.message}</div>
@@ -198,15 +200,4 @@ function Register(props) {
     )
 }
 
-
-
-function mapState(state) {
-    const { alert } = state;
-    return { alert };
-}
-const actionCreators = {
-    register: userActions.register,
-
-};
-const connectedLoginPage = connect(mapState, actionCreators)(Register);
-export { connectedLoginPage as Register }
+export default Register ;

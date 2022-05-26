@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import GoogleMaps from "simple-react-google-maps"
 import Header2 from './../Layout/Header2';

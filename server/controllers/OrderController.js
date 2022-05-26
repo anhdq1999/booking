@@ -82,6 +82,29 @@ class OrderController {
       });
   }
 
+  // POST /
+  create(req, res, next) {
+    const oder = req.body;
+    const newOrder = new Order(roomRequest);
+    newOrder
+      .save()
+      .then(() => {
+        res.status(200).json({
+          action: "create room",
+          success: true,
+          message: "create room successfully",
+          data: newOrder
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
+          action: "create room",
+          success: false,
+          message: `Internal Server Error : ${error}`,
+          data: null
+        });
+      });
+  }
 
   // PUT /:id
   update(req, res, next) {
@@ -130,5 +153,6 @@ class OrderController {
 
 
 }
+
 
 module.exports = new OrderController();
