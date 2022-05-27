@@ -5,11 +5,10 @@ class RoomController {
     //[GET] /:id
     show(req, res, next) {
         const id = req.params.id;
-        console.log(id);
         Room.findById({ _id: id })
             .then((room) =>
                 res.status(200).json({
-                    action: 'find room by id',
+                    action: 'find order by id',
                     success: true,
                     message: 'find successfully',
                     data: room,
@@ -17,7 +16,7 @@ class RoomController {
             )
             .catch((error) => {
                 res.status(500).json({
-                    action: 'find room by id',
+                    action: 'find order by id',
                     success: false,
                     message: `Internal Server Error : ${error}`,
                     data: null,

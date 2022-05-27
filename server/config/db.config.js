@@ -10,7 +10,7 @@ function connect() {
     mongoose
         .connect(urlDatabase)
         .then((res) => {
-            console.log('Connect to mongo sucessfully');
+            console.log('Connect to mongo successfully');
         })
         .catch((err) => {
             console.log(err);

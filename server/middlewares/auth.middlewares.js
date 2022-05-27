@@ -27,7 +27,7 @@ verifyToken = (req, res, next) => {
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
-                message: 'Unauthorized!',
+                message: 'UnAuthorized!',
             });
         }
         req.userId = decoded.data._id;
@@ -35,7 +35,9 @@ verifyToken = (req, res, next) => {
     });
 };
 isAdmin = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User
+      .findById({ _id: req.userId })
+      .then(user => {
         if (user.roles === 'admin') {
             next();
             return;
@@ -48,7 +50,9 @@ isAdmin = (req, res, next) => {
     });
 };
 isUserRole = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User
+      .findById({ _id: req.userId })
+      .then(user => {
         if (user.roles === 'user') {
             next();
             return;
@@ -61,7 +65,9 @@ isUserRole = (req, res, next) => {
     });
 };
 isHost = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User
+      .findById({ _id: req.userId })
+      .then(user => {
         if (user.roles === 'host') {
             next();
             return;

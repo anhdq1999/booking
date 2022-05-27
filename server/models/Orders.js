@@ -5,22 +5,83 @@ const mongooseDelete = require("mongoose-delete");
 
 const orderSchema = new Schema(
   {
-    orderDetails: [{
-      type: mongoose.Schema.Type.ObjectId,
-      ref: "orderDetail"
-    }],
-    paymentMethod: { type: String, required: true },
-    paymentResult: {
-      id: String,
-      status: String,
-      update_time: String,
-      email_address: String
+    orderDetails: [
+      {
+        room: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "rooms",
+          require: true
+        },
+        dates:
+          {
+            checkInDate: {
+              type: Date,
+              required: true
+            },
+            checkOutDate: {
+              type: Date,
+              required: true
+            }
+          },
+        adults: {
+          type: Number,
+          required: true,
+          default: 1
+        },
+        child: {
+          type: Number,
+          required: true,
+          default: 0
+        },
+        infants: {
+          type: Number,
+          required: true,
+          default: 0
+        },
+        price: {
+          type: Number,
+          required: true },
+        notes: { type: String }
+      }
+    ],
+    paymentMethod: {
+      type: String,
+      required: true },
+    // paymentResult: {
+    //   id: String,
+    //   status: String,
+    //   update_time: String,
+    //   email_address: String
+    // },
+    paidAt: { type: Date },
+    refundAt: { type: Date },
+    status: {
+      type: String,
+      require: true,
+      enum: ["UNPAID", "PAID", "CANCEL"],
+      default: "UNPAID"
     },
-    taxPrice: { type: Number, required: true },
-    totalPrice: { type: Number, required: true },
+
+    taxPrice: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    totalPrice: {
+      type: Number,
+      required: true
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users"
+    },
+    customerName: {
+      type: String,
+      required: true
+    },
+    customerPhone: {
+      type: String,
+      required: true
     }
   },
   {

@@ -5,28 +5,36 @@ const mongooseDelete = require("mongoose-delete");
 const orderDetailSchema = new Schema({
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
-  rooms: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "rooms",
-      require: true,
-
-    }
-  ],
+  room: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "rooms",
+    require: true
+  },
   dates:
     {
-      checkInDate: { type: Date, required: true },
-      checkOutDate: { type: Date, required: true }
+      checkInDate: {
+        type: Date,
+        required: true,
+        default: Date.now()
+      },
+      checkOutDate: {
+        type: Date,
+        required: true
+      }
     },
-  roles: {
+  status: {
     type: String,
     require: true,
-    enum: ["paid", "delivered", "confirming"],
+    enum: ["PAID", "DELIVERED", "CONFIRMING", "CANCEL"],
     default: "user"
   },
   paidAt: { type: Date },
   deliveredAt: { type: Date },
-  itemPrice: { type: Number, required: true }
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "orders",
+    require: true
+  }
 });
 orderDetailSchema.plugin(mongooseDelete, {
   deleteAt: true,

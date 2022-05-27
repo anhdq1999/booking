@@ -80,7 +80,7 @@ class UserController {
             .then(() =>
                 res.status(200).json({
                     success: true,
-                    message: 'Delete user succesful',
+                    message: 'Delete user successfully',
                 }),
             )
             .catch(next);
