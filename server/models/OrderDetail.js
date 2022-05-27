@@ -11,30 +11,30 @@ const orderDetailSchema = new Schema({
     require: true
   },
   dates:
-  {
-    checkInDate: {
-      type: Date,
-      required: true,
-      default: Date.now()
+    {
+      checkInDate: {
+        type: Date,
+        required: true,
+        default: Date.now()
+      },
+      checkOutDate: {
+        type: Date,
+        required: true
+      }
     },
-    checkOutDate: {
-      type: Date,
-      required: true
-    }
-  },
   status: {
     type: String,
     require: true,
-    enum: ["PAID", "DELIVERED", "CONFIRMING"],
+    enum: ["PAID", "DELIVERED", "CONFIRMING", "CANCEL"],
     default: "user"
   },
   paidAt: { type: Date },
   deliveredAt: { type: Date },
-
-  // order: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "Orders"
-  // }
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "orders",
+    require: true
+  }
 });
 orderDetailSchema.plugin(mongooseDelete, {
   deleteAt: true,

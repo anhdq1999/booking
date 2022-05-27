@@ -143,7 +143,8 @@ function getAll() {
         dispatch(request());
         userService.getAll()
             .then(
-                users => {
+                res => {
+                  const users=res.data;
                     if (users.length > 0) {
                         dispatch(success(users))
                     } else {
