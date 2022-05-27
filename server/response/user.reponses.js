@@ -19,7 +19,6 @@ const GETALL = {
 
 }
 const CREATE = {
-   
     SUCCESS: (data) => {
         return {
             action: constants.user.CREATE_CONSTANTS,
