@@ -7,6 +7,7 @@ export const userService = {
     getAll,
     getById,
     getAllDeleted,
+    create,
     update,
     deleteUser,
     removeUser,
@@ -25,7 +26,7 @@ function logout() {
 }
 
 function getAll() {
-    const url = "/users/store";
+    const url = "/users";
     return axiosClient.get(url);
 }
 
@@ -43,6 +44,10 @@ function register(user) {
     return axiosClient.post(url, user)
 }
 
+function create(user) {
+    const url = "/users";
+    return axiosClient.post(url, user)
+}
 function update(user, newUser) {
     const url = `/users/${user._id}`;
     return axiosClient.put(url, newUser);
