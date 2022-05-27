@@ -6,6 +6,7 @@ export const roomsService = {
     getById,
     getAllDeleted,
     update,
+    create,
     deleteRoom,
     removeRoom,
     restoreRoom
@@ -28,7 +29,10 @@ function getAllDeleted() {
     return axiosClient.get(url);
 }
     
-
+function create(room){
+    const url=`/rooms`;
+    return axiosClient.post(url,room)
+}
 function update(room) {
     const url = `/rooms/${room._id}`;
     return axiosClient.put(url);

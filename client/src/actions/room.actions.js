@@ -5,6 +5,8 @@ import { alertActions } from './index';
 export const roomActions = {
     getAll,
     getAllDeleted,
+    create,
+    update,
     delete: _delete
 };
 function getAllDeleted() {
@@ -65,4 +67,48 @@ function _delete(id) {
     function request(id) { return { type: roomConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: roomConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: roomConstants.DELETE_FAILURE, id, error } }
+}
+function create(room) {
+    return dispatch => {
+        dispatch(request(room));
+        roomsService.create(room)
+            .then(
+                res => {
+                    if (res.success) {
+                        dispatch(success(res.data));
+                        dispatch(alertActions.success('Create room successful'));
+                    } else {
+                        dispatch(failure(res.message));
+                        dispatch(alertActions.error(res.message))
+                    }
+                })
+            .catch(
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error.message));
+                }
+            );
+    };
+    function request(room) { return { type: roomConstants.CREATE_REQUEST, room } }
+    function success(room) { return { type: roomConstants.CREATE_SUCCESS, room } }
+    function failure(error) { return { type: roomConstants.CREATE_FAILURE, error } }
+}
+function update(room, data) {
+    return dispatch => {
+        dispatch(request(room))
+        roomsService.update(room, data)
+            .then(res => {
+                if (res.success) {
+                    dispatch(success(res.data))
+                    console.log(res.data);
+                    dispatch(alertActions.success(res.message))
+                }
+            }).catch(error => {
+                dispatch(failure(error));
+                dispatch(alertActions.error(error.message));
+            })
+    }
+    function request(room) { return { type: roomConstants.UPDATE_REQUEST, room } }
+    function success(room) { return { type: roomConstants.UPDATE_SUCCESS, room } }
+    function failure(error) { return { type: roomConstants.UPDATE_FAILURE, error } }
 }

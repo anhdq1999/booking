@@ -19,8 +19,7 @@ import {useDispatch } from 'react-redux';
 import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
 import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
-import {RoomsManager} from 'markup/Pages/admin/room-manager/RoomsManager';
-import {RoomForm} from 'markup/Pages/admin/room-manager/RoomForm';
+import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
 
 import Homepage2 from 'markup/Pages/Homepage2';
 import About from 'markup/Pages/About';
@@ -88,7 +87,6 @@ function App() {
             <Route path='/listing' exact component={ListingDetails} />
             <Route path= '/admin/rooms-manager' exact component={RoomsManager}/>
             <Route path= '/admin/rooms-manager/garbage' exact component={GarbageRoom} />
-            <Route path= '/admin/room-manager/RoomForm' exact component={RoomForm}/>
             </Switch>
           </div>
       </Router>
