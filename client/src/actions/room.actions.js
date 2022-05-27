@@ -5,6 +5,8 @@ import { alertActions } from './index';
 export const roomActions = {
     getAll,
     getAllDeleted,
+    restore,
+    remove,
     create,
     update,
     delete: _delete
@@ -15,7 +17,7 @@ function getAllDeleted() {
         roomsService.getAllDeleted()
             .then(
                 rooms => {
-                    if (rooms.length>0) {
+                    if (rooms.length > 0) {
                         dispatch(success(rooms))
                     } else {
                         dispatch(failure())
@@ -33,9 +35,10 @@ function getAll() {
         dispatch(request());
         roomsService.getAll()
             .then(
-                room => {
-                    if (room.length>0) {
-                        dispatch(success(room))
+                res => {
+                    const rooms = res.data
+                    if (rooms.length > 0) {
+                        dispatch(success(rooms))
                     } else {
                         dispatch(failure())
                     }
@@ -44,7 +47,7 @@ function getAll() {
     };
 
     function request() { return { type: roomConstants.GETALL_REQUEST } }
-    function success(room) { return { type: roomConstants.GETALL_SUCCESS, room } }
+    function success(rooms) { return { type: roomConstants.GETALL_SUCCESS, rooms } }
     function failure(error) { return { type: roomConstants.GETALL_FAILURE, error } }
 }
 
@@ -52,16 +55,19 @@ function getAll() {
 function _delete(id) {
     return dispatch => {
         dispatch(request(id));
-        roomsService.deleteUser(id)
+        roomsService.deleteRoom(id)
             .then(
                 res => {
-                    dispatch(success(id));
-                    alertActions.success(res.message)
-                },
-                error => {
-                    dispatch(failure(id, error));
-                }
-            );
+                    if (res.success) {
+                        dispatch(success(id));
+                        dispatch(alertActions.success(res.message))
+                    }else{
+                        dispatch(failure(res.message));
+                    }
+                } 
+            ).catch(error=>{
+                dispatch(failure(error));
+            });
     };
 
     function request(id) { return { type: roomConstants.DELETE_REQUEST, id } }
@@ -111,4 +117,42 @@ function update(room, data) {
     function request(room) { return { type: roomConstants.UPDATE_REQUEST, room } }
     function success(room) { return { type: roomConstants.UPDATE_SUCCESS, room } }
     function failure(error) { return { type: roomConstants.UPDATE_FAILURE, error } }
+}
+function remove(id) {
+    return dispatch => {
+        roomsService.removeRoom(id)
+            .then(
+                res => {
+                    if (res.success) {
+                        dispatch(success(id));
+                        dispatch(alertActions.success(res.message))
+                    }
+                }
+            )
+            .catch(error => {
+                dispatch(alertActions.error(error.message));
+            })
+
+    };
+
+    function success(id) { return { type: roomConstants.REMOVE_SUCCESS, id } }
+}
+function restore(id) {
+    return dispatch => {
+        roomsService.restoreRoom(id)
+            .then(
+                res => {
+                    if (res.success) {
+                        dispatch(success(id));
+                        dispatch(alertActions.success(res.message))
+                    }
+                }
+            )
+            .catch(error => {
+                dispatch(alertActions.error(error.message));
+            })
+
+    };
+
+    function success(id) { return { type: roomConstants.RESTORE_SUCCESS, id } }
 }

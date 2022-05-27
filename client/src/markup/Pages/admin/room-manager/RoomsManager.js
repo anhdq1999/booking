@@ -9,7 +9,7 @@ import RoomModal from './RoomModal';
 function RoomsManager(props) {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const [editableRoom, setEditableRoom] = useState([]);
-  const [isOpenModal, setIsOpenModal] = useState([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAddModal,  setIsAddModal] = useState([]);
   const alert = useSelector(state => state.alert);
   const rooms = useSelector(state => state.roomReducer.items)
@@ -46,8 +46,6 @@ function RoomsManager(props) {
 
   ]
   useEffect(() => {
-    console.log(dispatch(roomActions.getAll())
-    )
     dispatch(roomActions.getAll())
   }, [dispatch])
 
