@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react'
 import { roomActions } from 'actions';
 import { connect } from 'react-redux';
 
-
-
 // type FormValues = {
 //     nameRoom: String;
 //     hostRoom: String;
