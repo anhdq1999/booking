@@ -1,5 +1,6 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
+const Responses = require('../response');
 class UserController {
     //[GET] /users/:username
     show(req, res, next) {
@@ -11,7 +12,10 @@ class UserController {
     //[GET] /users/store
     index(req, res, next) {
         User.find({})
-            .then((users) => res.json(users))
+            .then((users) => 
+            {
+                res.status(200).json(Responses.User.GETALL.SUCCESS(users))
+            })
             .catch(next);
     }
     //[POST] /users/create
