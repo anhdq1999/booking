@@ -89,34 +89,37 @@ class OrderController {
   }
 
   update(req, res, next) {
-    // const _id = req.params.id;
-    //
-    // const orderRequest = req.body;
-    // let listOrderDetails;
-    // let isFindOrderDetails = false;
-    // Order
-    //   .findById({ _id })
-    //   .then((order) => {
-    //     listOrderDetails = order;
-    //     res.status(200)
-    //       .json({
-    //         action: "find order by id",
-    //         success: true,
-    //         message: `find order by id successfully`,
-    //         data: order
-    //       });
-    //   })
-    //   .catch(error => {
-    //     res.status(500)
-    //       .json({
-    //         action: "find order by id",
-    //         success: false,
-    //         message: `Internal Server Error : ${error}`,
-    //         data: null
-    //       });
-    //   });
-    //
-    // console.log({ listOrderDetails, isFindOrderDetails });
+    const _id = req.params.id;
+    const orderRequest = req.body;
+    let listOrderDetails;
+    let isFindOrderDetails = false;
+    Order
+      .findById({ _id })
+      .then((order) => {
+        listOrderDetails = order;
+        console.log(order);
+        res.status(200)
+          .json({
+            action: "find order by id",
+            success: true,
+            message: `find order by id successfully`,
+            data: order
+          });
+      })
+      .then(() => {
+          console.log({ listOrderDetails, isFindOrderDetails });
+        }
+      )
+      .catch(error => {
+        res.status(500)
+          .json({
+            action: "find order by id",
+            success: false,
+            message: `Internal Server Error : ${error}`,
+            data: null
+          });
+      });
+
 
   }
 
