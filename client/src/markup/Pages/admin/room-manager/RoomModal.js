@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from 'react';
+import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { roomActions } from 'actions';
 import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Input } from 'reactstrap';
@@ -28,11 +28,11 @@ const schema = yup.object().shape({
     ward: yup
         .string().required("Ward is required"),
     district: yup
-        .string().required("district is required"),
+        .string().required("District is required"),
     street: yup
-        .string().required("street is required"),
+        .string().required("Street is required"),
 })
-export default function RoomModal(props){
+export default function RoomModal(props) {
     const initialFormState = {
         nameroom: ' ',
         hostroom: ' ',
@@ -95,6 +95,29 @@ export default function RoomModal(props){
             handleEdit(data)
         } else handleAdd(data)
     }
+
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const handleImageChange = (e) => {
+      if (e.target.files) {
+        const filesArray = Array.from(e.target.files).map((file) =>
+          URL.createObjectURL(file)
+        );
+  
+  
+        setSelectedFiles((pImages) => pImages.concat(filesArray));
+        Array.from(e.target.files).map(
+          (file) => URL.revokeObjectURL(file)
+        );
+      }
+    };
+  
+    const renderPhotos = (source) => {
+      console.log("source: ", source);
+      return source.map((photo) => {
+        return <img src={photo} alt="" key={photo} />;
+      });
+    };
     return (
         <div>
             <Modal
@@ -103,7 +126,7 @@ export default function RoomModal(props){
                 toggle={() => toggle()}
             >
                 <ModalHeader>
-                    Modal title
+                    Form
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -111,25 +134,28 @@ export default function RoomModal(props){
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
                         <Row>
-                            <Col>
+                            <Col md={6}>
                                 <Label for="name"> Name Room:</Label>
                                 <Input type="text" id='name' {...register("name")}></Input>
                                 {errors?.nameroom &&
                                     <div className="alert-warning text-center">{errors.nameroom?.message}</div>
                                 }
                                 <Label > Category: </Label>
-                                <Input type="text" id='category'{...register("category")}></Input>
-                                {errors?.category &&
-                                    <div className="alert-warning text-center">{errors.category?.message}</div>
-                                }
+                                <Input bsSize="sm" className="mb-3" type="select" {...register("category")}>
+                                    <option name="category" value=''>...Chọn</option>
+                                    <option name="category" value='Vietnam'>Homestay</option>
+                                    <option name="category" value='America'>Restaurant - Room</option>
+                                    {errors?.category &&
+                                        <div className="alert-warning text-center">{errors.category?.message}</div>
+                                    }
+                                </Input>
                                 <Label > Short Description:</Label>
                                 <Input type="textarea" id='shortdescription' {...register("shortdescription")}></Input>
                                 {errors?.sdescription &&
                                     <div className="alert-warning text-center">{errors.sdescription?.message}</div>
                                 }
                             </Col>
-                            <Col>
-
+                            <Col md={6}>
                                 <Label > Host Room: </Label>
                                 <Input type="text" id='host-name' {...register("hostname")}></Input>
                                 {errors?.hostroom &&
@@ -149,7 +175,7 @@ export default function RoomModal(props){
                         </Row>
                         <Row  >
                             <Col>
-                                <Label name = "country"> Country:
+                                <Label name="country"> Country:
                                     <Input bsSize="sm" className="mb-3" type="select" {...register("country")}>
                                         <option name="country" value=''>...Chọn</option>
                                         <option name="country" value='Vietnam'>Viet Nam</option>
@@ -181,7 +207,7 @@ export default function RoomModal(props){
                                         <option name="ward" value='2'>2</option>
                                         {errors?.ward &&
                                             <div className="alert-warning text-center">{errors.ward?.message}</div>
-                                        }       
+                                        }
                                     </Input>
                                 </Label>
                             </Col>
@@ -198,7 +224,7 @@ export default function RoomModal(props){
                                 </Label>
                             </Col>
                             <Col>
-                                <Label for='street' name ="street">Street:
+                                <Label for='street' name="street">Street:
                                     <Input bsSize="sm" className="mb-3" type="select" {...register("street")}>
                                         <option name="street" value=''>...Chọn</option>
                                         <option name="street" value='Nguyen Van Linh'>Nguyen Van Linh</option>
@@ -210,6 +236,16 @@ export default function RoomModal(props){
                                 </Label>
                             </Col>
                         </Row>
+                        <Row className="ml-3">
+                            <input type="file" id="file" multiple onChange={handleImageChange} />
+                            <Label htmlFor="file" className="label">
+                                <i className="material-icons"></i>
+                            </Label>
+                            <div className="result-image">
+                            <Col md={2}>{renderPhotos(selectedFiles)}</Col>
+                            </div>
+
+                        </Row>
                         <Row className="mt-3">
                             <Col md={6}>
                                 <Button
@@ -217,7 +253,6 @@ export default function RoomModal(props){
                                     type="submit"
                                 >
                                     {room ? 'Edit Room' : 'Add new room'}
-
                                 </Button>
                             </Col>
 
@@ -228,8 +263,6 @@ export default function RoomModal(props){
                                         type='button'
                                         onClick={() => reset()}>Reset</Button>
                                 </Col>
-
-
                             }
                         </Row>
                     </form>

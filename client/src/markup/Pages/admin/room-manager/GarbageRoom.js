@@ -1,38 +1,30 @@
-import { roomActions } from 'actions';
+import { alertActions, roomActions } from 'actions';
 import React, { useMemo, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import DataTable from 'react-data-table-component';
 import { Button } from 'reactstrap';
-import { roomsService } from 'services';
+import { useDispatch, useSelector } from 'react-redux';
 import './styles.css'
+
 
 
 function GarbageRooom(props) {
   const noDataComponentContent = 'Thùng rác rỗng';
-  const [pending, setPending] = useState(true);
-  const [rooms, setRooms] = useState([]);
+  const alert = useSelector(state => state.alert)
+  const rooms = useSelector(state => state.roomReducer.items)
+  const pending = useSelector(state => state.roomReducer.loading)
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
-    roomsService.getAllDeleted()
-      .then(rooms => {
-        setRooms(rooms)
-        setPending(false)
-      });
-  }, []);
+    dispatch(roomActions.getAllDeleted())
+  }, [dispatch]);
 
   function handleDelete(room) {
-    roomsService.removeRoom(room._id)
-      .then(res => {
-        if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== room._id))
-      })
+    dispatch(roomActions.remove(room._id))
   }
   function handleRestore(room) {
-    const id = room._id;
-    roomsService.restoreRoom(id)
-      .then(res => {
-        if (res.success) setRooms(rooms => rooms.filter(rooms => rooms._id !== id))
-      })
+    dispatch(roomActions.restore(room._id))
   }
 
   const columns = useMemo(
@@ -69,20 +61,34 @@ function GarbageRooom(props) {
     setSelectedRooms(selectedRows)
   };
   const handleRestoreMany = () => {
-    if (selectedRooms.length>0) {
+    if (selectedRooms.length > 0) {
       selectedRooms.forEach((value) => {
         handleRestore(value)
       })
-    }else{
-      alert('Chưa chọn room cần hồi phục')
+    } else {
+      dispatch(alertActions.error('Chưa chọn room cần hồi phục'))
     }
   }
+  const handleDeleteMany = () => {
+    if (selectedRooms.length > 0) {
+      selectedRooms.forEach((value) => {
+        handleDelete(value)
+      })
+    } else {
+      dispatch(alertActions.error("Chưa chọn room để xóa"))
+    }
+  }
+
   return (
     <div className="mt-5 mx-5">
       <Link to="/admin/rooms-manager">Quay lại</Link>
       <div className="text-right mb-5">
         <Button onClick={() => handleRestoreMany()}>Restore</Button>
+        <Button onClick={() => handleDeleteMany()}>Delete</Button>
       </div>
+      {alert.message &&
+        <div className={`alert ${alert.type}`}>{alert.message}</div>
+      }
       <DataTable
         title='Room Garbage'
         columns={columns}
