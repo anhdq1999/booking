@@ -1,6 +1,6 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
-const Responses = require('../response');
+const RES = require('../response');
 class UserController {
     //[GET] /users/:username
     show(req, res, next) {
@@ -13,8 +13,10 @@ class UserController {
     index(req, res, next) {
         User.find({})
             .then((users) => 
-            {
-                res.status(200).json(Responses.User.GETALL.SUCCESS(users))
+            {   
+                res.status(200).json(
+                    RES.USER.GETALL.SUCCESS(users)
+                )
             })
             .catch(next);
     }
@@ -24,10 +26,7 @@ class UserController {
         User.findOne({ username: req.body.username })
         .then((user) => {
             if (user)
-                res.status(409).json({
-                    success: false,
-                    message: 'User is existed',
-                });
+                res.status(409).json(RES.USER.CREATE.FAILURE());
             else {
                 const hash_password = bcrypt.hashSync(
                     req.body.password,

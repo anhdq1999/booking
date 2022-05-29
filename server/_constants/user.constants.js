@@ -42,6 +42,13 @@ const userConstants = {
             success: 'restore user successfully',
             failure: 'restore user failed'
         }
+    },
+    GET_BY_ID:{
+        action:  'RESTORE_USER' ,
+        message: {
+            success: 'restore user successfully',
+            failure: 'restore user failed'
+        }
     }
 }
 module.exports = userConstants
