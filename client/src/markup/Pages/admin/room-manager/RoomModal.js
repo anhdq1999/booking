@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { roomActions } from 'actions';
 import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Input } from 'reactstrap';
@@ -99,24 +99,24 @@ export default function RoomModal(props) {
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleImageChange = (e) => {
-      if (e.target.files) {
-        const filesArray = Array.from(e.target.files).map((file) =>
-          URL.createObjectURL(file)
-        );
-  
-  
-        setSelectedFiles((pImages) => pImages.concat(filesArray));
-        Array.from(e.target.files).map(
-          (file) => URL.revokeObjectURL(file)
-        );
-      }
+        if (e.target.files) {
+            const filesArray = Array.from(e.target.files).map((file) =>
+                URL.createObjectURL(file)
+            );
+
+
+            setSelectedFiles((pImages) => pImages.concat(filesArray));
+            Array.from(e.target.files).map(
+                (file) => URL.revokeObjectURL(file)
+            );
+        }
     };
-  
+
     const renderPhotos = (source) => {
-      console.log("source: ", source);
-      return source.map((photo) => {
-        return <img src={photo} alt="" key={photo} />;
-      });
+        console.log("source: ", source);
+        return source.map((photo) => {
+            return <img src={photo} alt="" key={photo} />;
+        });
     };
     return (
         <div>
@@ -223,14 +223,14 @@ export default function RoomModal(props) {
                                     </Input>
                                 </Label>
                             </Col>
-                            <Col>
-                                <Label for='street' name="street">Street:
-                                    <Input bsSize="sm" className="mb-3" type="select" {...register("street")}>
-                                        <option name="street" value=''>...Chọn</option>
-                                        <option name="street" value='Nguyen Van Linh'>Nguyen Van Linh</option>
-                                        <option name="street" value='Nguyen Thi Thap'>Nguyen Thi Thap</option>
-                                        {errors?.street &&
-                                            <div className="alert-warning text-center">{errors.street?.message}</div>
+
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                <Label for='address' name="address">Address:
+                                    <Input name="address" type="text" {...register("address")}>
+                                        {errors?.address &&
+                                            <div className="alert-warning text-center">{errors.address?.message}</div>
                                         }
                                     </Input>
                                 </Label>
@@ -242,7 +242,7 @@ export default function RoomModal(props) {
                                 <i className="material-icons"></i>
                             </Label>
                             <div className="result-image">
-                            <Col md={2}>{renderPhotos(selectedFiles)}</Col>
+                                <Col md={2}>{renderPhotos(selectedFiles)}</Col>
                             </div>
 
                         </Row>

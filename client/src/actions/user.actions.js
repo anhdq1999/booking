@@ -3,6 +3,14 @@ import { userService } from 'services';
 import { alertActions } from './index';
 import { history } from 'helpers';
 
+// data respone api 
+/* {
+    action:"",
+    success:boolean,
+    message:""
+    data:[] || {}
+}
+*/
 export const userActions = {
     login,
     logout,
@@ -143,8 +151,9 @@ function getAll() {
         dispatch(request());
         userService.getAll()
             .then(
-                users => {
-                    if (users.length > 0) {
+                res => {
+                    const users=res.data;
+                    if (res.success) {
                         dispatch(success(users))
                     } else {
                         dispatch(failure())
