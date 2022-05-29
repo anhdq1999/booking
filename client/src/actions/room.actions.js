@@ -31,9 +31,10 @@ function getAll() {
         dispatch(request());
         roomsService.getAll()
             .then(
-                room => {
-                    if (room.length>0) {
-                        dispatch(success(room))
+                res => {
+                    const rooms=res.data
+                    if (rooms.length>0) {
+                        dispatch(success(rooms))
                     } else {
                         dispatch(failure())
                     }
@@ -42,7 +43,7 @@ function getAll() {
     };
 
     function request() { return { type: roomConstants.GETALL_REQUEST } }
-    function success(room) { return { type: roomConstants.GETALL_SUCCESS, room } }
+    function success(rooms) { return { type: roomConstants.GETALL_SUCCESS, rooms } }
     function failure(error) { return { type: roomConstants.GETALL_FAILURE, error } }
 }
 

@@ -14,7 +14,7 @@ import Register from './markup/Pages/Register-react-hook-form';
 import Register2 from './markup/Pages/Register2';
 import ForgotPass from './markup/Pages/ForgotPass';
 import { history } from 'helpers';
-import { alertActions } from 'actions';
+import { alertActions, roomActions } from 'actions';
 import {useDispatch } from 'react-redux';
 import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
@@ -47,6 +47,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(roomActions.getAll())
     history.listen((location, action) => {
       // clear alert on location change
       dispatch(alertActions.clear());
