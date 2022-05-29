@@ -11,5 +11,6 @@ const userConstants = {
     UPDATE_CONSTANTS: 'UPDATE_USER',
     DELETE_CONSTANTS: 'DELETE_USER',
     REMOVE_CONSTANTS: 'REMOVE_USER',
+    RESTORE_CONSTANTS: 'RESTORE_USER',
 }
 module.exports = userConstants

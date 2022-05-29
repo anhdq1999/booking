@@ -5,14 +5,14 @@ const GETALL = {
     SUCCESS: (data) => {
         return {
             action:constants.user.GETALL_CONSTANTS.action,
-            message: 'Get all user successfully',
+            message: constants.user.GETALL_CONSTANTS.message.success,
             data: data
         }
     },
     FAILURE: () => {
         return {
             action:constants.user.GETALL_CONSTANTS.action,
-            message: 'Get all user failure',
+            message: constants.user.GETALL_CONSTANTS.message.failure,
             data: null
         }
     }
