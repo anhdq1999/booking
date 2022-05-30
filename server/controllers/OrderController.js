@@ -50,32 +50,18 @@ class OrderController {
   }
 
   create(req, res, next) {
-    const { orderDetails } = req.body;
-    let isSuccessSave = false;
-    orderDetails.forEach((order) => {
-      const newOrderDetail = new OrderDetail(order);
-      newOrderDetail.save();
-      isSuccessSave = true;
-    });
-    const order = req.body;
-    const newOrder = new Order(order);
-    newOrder.save()
-      .then((order) => {
-        if (isSuccessSave) {
-          res.status(200).json({
-            action: "create order",
-            success: true,
-            message: "create order successfully",
-            data: order
-          });
-        } else {
-          res.status(500).json({
-            action: "create order",
-            success: false,
-            message: "create OrderDetail error",
-            data: order
-          });
-        }
+
+    const orderRequest = req.body;
+    const newOrder = new Order(orderRequest);
+    newOrder
+      .save({ new: true })
+      .then(order => {
+        res.status(200).json({
+          action: "create order",
+          success: true,
+          message: "create order successfully",
+          data: order
+        });
       })
       .catch(error => {
         res.status(500).json({
@@ -89,35 +75,26 @@ class OrderController {
   }
 
   update(req, res, next) {
-    // const _id = req.params.id;
-    //
-    // const orderRequest = req.body;
-    // let listOrderDetails;
-    // let isFindOrderDetails = false;
-    // Order
-    //   .findById({ _id })
-    //   .then((order) => {
-    //     listOrderDetails = order;
-    //     res.status(200)
-    //       .json({
-    //         action: "find order by id",
-    //         success: true,
-    //         message: `find order by id successfully`,
-    //         data: order
-    //       });
-    //   })
-    //   .catch(error => {
-    //     res.status(500)
-    //       .json({
-    //         action: "find order by id",
-    //         success: false,
-    //         message: `Internal Server Error : ${error}`,
-    //         data: null
-    //       });
-    //   });
-    //
-    // console.log({ listOrderDetails, isFindOrderDetails });
-
+    const _id = req.params.id;
+    const orderRequest = req.body;
+    Order
+      .findOneAndUpdate({ _id }, orderRequest, { new: true })
+      .then(order => {
+        res.status(200).json({
+          action: "create order",
+          success: true,
+          message: "create order successfully",
+          data: order
+        });
+      })
+      .catch(error => {
+        res.status(500).json({
+          action: "create order",
+          success: false,
+          message: `create order error : ${error}`,
+          data: null
+        });
+      });
   }
 
   garbage(req, res, next) {

@@ -11,7 +11,6 @@ export function userReducer(state = initialState, action) {
    
       return {
         loading: true
-
       };
     case userConstants.GETALL_SUCCESS:
       return {

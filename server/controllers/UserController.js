@@ -1,5 +1,6 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
+const RES = require('../response');
 class UserController {
     //[GET] /users/:username
     show(req, res, next) {
@@ -14,11 +15,7 @@ class UserController {
             .then((users) => 
             {   
                 res.status(200).json(
-                   {
-                       action:"get _all_user",
-                       success:true,
-                       data:users
-                   }
+                    RES.USER.GETALL.SUCCESS(users)
                 )
             })
             .catch(next);
