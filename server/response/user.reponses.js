@@ -24,37 +24,22 @@ const CREATE = {
    
     SUCCESS: (data) => {
         return {
-<<<<<<< HEAD
-            action: constants.user.CREATE_CONSTANTS,
-            message: 'Create user successfully',
-=======
             success:true,
             action: constants.user.CREATE_CONSTANTS.action,
             message: constants.user.CREATE_CONSTANTS.message.success,
->>>>>>> 056ba7dcd68ecc59d10eb193defd991d86ca001d
             data: data
         }
     },
     FAILURE: () => {
         return {
-<<<<<<< HEAD
-            action: constants.user.CREATE_CONSTANTS,
-            message: 'Create user failure',
-=======
             success:false,
             action: constants.user.CREATE_CONSTANTS.action,
             message: constants.user.CREATE_CONSTANTS.message.failure,
->>>>>>> 056ba7dcd68ecc59d10eb193defd991d86ca001d
             data: null
         }
     }
 
 }
-<<<<<<< HEAD
-const UserReponse = {
-    GETALL,
-    CREATE
-=======
 const UPDATE = {
     SUCCESS:(data) =>{
         return{
@@ -142,6 +127,5 @@ const UserReponse = {
     DELETE,
     REMOVE,
     RESTORE
->>>>>>> 056ba7dcd68ecc59d10eb193defd991d86ca001d
 }
 module.exports = UserReponse
