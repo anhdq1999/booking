@@ -11,7 +11,16 @@ class UserController {
     //[GET] /users/store
     index(req, res, next) {
         User.find({})
-            .then((users) => res.json(users))
+            .then((users) => 
+            {   
+                res.status(200).json(
+                   {
+                       action:"get _all_user",
+                       success:true,
+                       data:users
+                   }
+                )
+            })
             .catch(next);
     }
     //[POST] /users/create
@@ -20,10 +29,7 @@ class UserController {
         User.findOne({ username: req.body.username })
         .then((user) => {
             if (user)
-                res.status(409).json({
-                    success: false,
-                    message: 'User is existed',
-                });
+                res.status(409).json(RES.USER.CREATE.FAILURE());
             else {
                 const hash_password = bcrypt.hashSync(
                     req.body.password,
@@ -35,11 +41,7 @@ class UserController {
                 const isCreated = newUser.save().then( u =>{return u});
                 console.log(isCreated);
                 if (isCreated) {
-                    res.status(200).json({
-                        success: true,
-                        message: 'User created successfully',
-                        data:newUser,
-                    });
+                    res.status(200).json(RES.USER.CREATE.SUCCESS(newUser));
                 } else {
                     res.status(400).json({
                         success: false,

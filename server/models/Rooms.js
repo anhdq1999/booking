@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
 const slug = require('mongoose-slug-generator');
+const slug_update = require('mongoose-slug-updater');
 
-mongoose.plugin(slug);
 
 const reviewSchema = new Schema(
   {
@@ -25,29 +25,31 @@ const addressDetails = new Schema({
   googleAddress: { type: String, require: true }
 });
 const Room = new Schema(
-    {
-        slug: { type: String, slug: 'name' },
-        name: { type: String, require: true },
-        host: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-        category: { type: String, require: true },
-        shortDescription: { type: String, require: true },
-        description: { type: String, require: true },
-        image: { type: String, require: true },
-        images: [String],
-        price: { type: Number, require: true },
-        rating: { type: Number, require: true },
-        numReviews: { type: Number, require: true },
-        reviews: [reviewSchema],
-        address: addressDetails,
-        status: { type: Boolean, require: true },
-    },
-    {
-        timestamps: true,
-    },
+  {
+    name: { type: String, require: true },
+    slug: { type: String, slug: "name",unique: true ,slugOn: { findOneAndUpdate: true }},
+    host: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    category: { type: String, require: true },
+    shortDescription: { type: String, require: true },
+    description: { type: String, require: true },
+    image: { type: String, require: true },
+    images: [String],
+    price: { type: Number, require: true },
+    rating: { type: Number, require: true },
+    numReviews: { type: Number, require: true },
+    reviews: [reviewSchema],
+    address: addressDetails,
+    status: { type: Boolean, require: true },
+  },
+  {
+    timestamps: true,
+  },
 );
-
+mongoose.plugin(slug);
+mongoose.plugin(slug_update);
 Room.plugin(mongooseDelete, {
-    deleteAt: true,
-    overrideMethods: true,
+  deleteAt: true,
+  overrideMethods: true,
 });
+Room.plugin(slug_update);
 module.exports = mongoose.model('Room', Room);

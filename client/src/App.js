@@ -1,4 +1,4 @@
-import React, {  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './css/plugins.css';
 import './css/style.css';
 import './css/templete.css';
@@ -15,8 +15,8 @@ import Register2 from './markup/Pages/Register2';
 import ForgotPass from './markup/Pages/ForgotPass';
 import { history } from 'helpers';
 import { alertActions } from 'actions';
-import {useDispatch } from 'react-redux';
-import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
+import { useDispatch } from 'react-redux';
+import UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
 import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
 import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
@@ -39,6 +39,7 @@ import PortfolioGrid2 from 'markup/Pages/PortfolioGrid2';
 import Contacts from 'markup/Pages/Contacts';
 import ListingDetails from 'markup/Pages/ListingDetails';
 import Popupss from 'markup/Pages/Tab';
+import Update from 'markup/Pages/admin/room-manager/Update';
 
 
 function App() {
@@ -85,10 +86,12 @@ function App() {
             <Route path='/contact' exact component={Contacts} />
             <Route path='/popup' exact component={Popupss} />
             <Route path='/listing' exact component={ListingDetails} />
-            <Route path= '/admin/rooms-manager' exact component={RoomsManager}/>
-            <Route path= '/admin/rooms-manager/garbage' exact component={GarbageRoom} />
-            </Switch>
-          </div>
+            <Route path='/admin/rooms-manager' exact component={RoomsManager} />
+            <Route path='/admin/rooms-manager/garbage' exact component={GarbageRoom} />
+            <Route path='/admin/rooms-manager/update' exact component={Update} />
+
+          </Switch>
+        </div>
       </Router>
     </div>
   )

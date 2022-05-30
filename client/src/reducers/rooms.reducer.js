@@ -9,6 +9,7 @@ export function roomReducer(state = initialState, action) {
     let items = state.items
     switch (action.type) {
         case roomConstants.GETALL_REQUEST:
+            
             return {
                 loading: true
             };

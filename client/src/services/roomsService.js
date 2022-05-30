@@ -33,9 +33,9 @@ function create(room){
     const url=`/rooms`;
     return axiosClient.post(url,room)
 }
-function update(room) {
-    const url = `/rooms/${room._id}`;
-    return axiosClient.put(url);
+function update(id,newRoom) {
+    const url = `/rooms/${id}`;
+    return axiosClient.put(url,newRoom);
 }
 function deleteRoom(id){
     const url =`rooms/${id}`;

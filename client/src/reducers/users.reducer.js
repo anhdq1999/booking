@@ -8,6 +8,7 @@ export function userReducer(state = initialState, action) {
   let items = state.items
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
+   
       return {
         loading: true
 

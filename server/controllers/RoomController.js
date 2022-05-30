@@ -1,3 +1,4 @@
+const slugGenerator = require('mongoose-slug-generator/lib/slug-generator');
 const Room = require('../models/Rooms');
 const User = require('../models/Users');
 
@@ -50,9 +51,9 @@ class RoomController {
 
     // PUT /:id
     update(req, res, next) {
-        const roomRequestId = req.params.id;
+        const _id = req.params.id;
         const roomRequest = req.body;
-        Room.findByIdAndUpdate(roomRequestId, roomRequest)
+        Room.findOneAndUpdate({_id}, roomRequest,{new:true},)
             .then((room) => {
                 res.status(200).json({
                     action: 'update room',
