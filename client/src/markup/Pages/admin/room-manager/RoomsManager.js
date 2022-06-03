@@ -95,12 +95,4 @@ function RoomsManager(props) {
   )
 }
 
-function mapState(state) {
-
-}
-const actionCreators = {
-  getAll: roomActions.getAll,
-  delete: roomActions.delete
-}
-const connectedRoomsManagerPage = connect(mapState, actionCreators)(RoomsManager)
-export { connectedRoomsManagerPage as RoomsManager }
+export default RoomsManager

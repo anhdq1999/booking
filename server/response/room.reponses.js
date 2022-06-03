@@ -1,8 +1,6 @@
 const constants = require("../_constants")
 
-const GETALL = {
-   
-    
+const GETALL = {  
     SUCCESS: (data) => {
         return {
             success:true,
@@ -19,7 +17,42 @@ const GETALL = {
             data: null
         }
     }
-
+}
+const GETALL_DELETED = {  
+    SUCCESS: (data) => {
+        return {
+            success:true,
+            action:constants.room.GETALL_DELETED_CONSTANTS.action,
+            message: constants.room.GETALL_DELETED_CONSTANTS.message.success,
+            data: data
+        }
+    },
+    FAILURE: () => {
+        return {
+            success:false,
+            action:constants.room.GETALL_DELETED_CONSTANTS.action,
+            message: constants.room.GETALL_DELETED_CONSTANTS.message.failure,
+            data: null
+        }
+    }
+}
+const GETONEBYID = {  
+    SUCCESS: (data) => {
+        return {
+            success:true,
+            action:constants.room.GETONE_CONSTANTS.action,
+            message: constants.room.GETONE_CONSTANTS.message.success,
+            data: data
+        }
+    },
+    FAILURE: () => {
+        return {
+            success:false,
+            action:constants.room.GETONE_CONSTANTS.action,
+            message: constants.room.GETONE_CONSTANTS.message.failure,
+            data: null
+        }
+    }
 }
 const CREATE = {
    
@@ -124,6 +157,8 @@ const RESTORE = {
 
 const RoomReponse = {
     GETALL,
+    GETALL_DELETED,
+    GETONEBYID,
     CREATE,
     UPDATE,
     DELETE,

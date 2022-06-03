@@ -7,11 +7,20 @@ const userConstants = {
             failure:'Get all user failure'
         }
     },
+    GETALL_DELETED_CONSTANTS:
+    {
+        action: 'GET_ALL_DELETED_USER',
+        message:{
+            success:'Get all deleted user  successfully',
+            failure:'Get all deleted user failure'
+        }
+    },
     CREATE_CONSTANTS:{
         action:  'CREATE_USER',
         message: {
             success: 'create user successfully',
-            failure: 'create user failed'
+            failure: 'create user failed',
+            failure_exist:'User is existed'
         }
     },
     UPDATE_CONSTANTS: {

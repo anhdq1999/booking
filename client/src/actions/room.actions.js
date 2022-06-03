@@ -12,11 +12,13 @@ function getAllDeleted() {
         dispatch(request());
         roomsService.getAllDeleted()
             .then(
-                rooms => {
-                    if (rooms.length>0) {
-                        dispatch(success(rooms))
+                res => {
+                    if (res.success) {
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
-                        dispatch(failure())
+                        dispatch(failure());
+                        dispatch(alertActions.error(res.message))
                     }
                 }
             ).catch(error => dispatch(failure(error)));
@@ -32,11 +34,12 @@ function getAll() {
         roomsService.getAll()
             .then(
                 res => {
-                    const rooms=res.data
-                    if (rooms.length>0) {
-                        dispatch(success(rooms))
+                    if (res.success) {
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
                         dispatch(failure())
+                        dispatch(alertActions.error(res.message))
                     }
                 }
             ).catch(error => dispatch(failure(error)));
@@ -54,13 +57,15 @@ function _delete(id) {
         roomsService.deleteUser(id)
             .then(
                 res => {
-                    dispatch(success(id));
-                    alertActions.success(res.message)
-                },
-                error => {
-                    dispatch(failure(id, error));
+                    if (res.success) {
+                        dispatch(success(id));
+                        dispatch(alertActions.success(res.message))
+                    }else{
+                        dispatch(failure(id));
+                        dispatch(alertActions.error(res.message))
+                    }
                 }
-            );
+            ).catch(error => dispatch(failure(error)));
     };
 
     function request(id) { return { type: roomConstants.DELETE_REQUEST, id } }

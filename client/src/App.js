@@ -18,8 +18,8 @@ import { alertActions, roomActions } from 'actions';
 import {useDispatch } from 'react-redux';
 import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
-import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
-import {RoomsManager} from 'markup/Pages/admin/room-manager/RoomsManager';
+import GarbageRoom  from 'markup/Pages/admin/room-manager/GarbageRoom';
+import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
 import {RoomForm} from 'markup/Pages/admin/room-manager/RoomForm';
 
 import Homepage2 from 'markup/Pages/Homepage2';
@@ -47,7 +47,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(roomActions.getAll())
     history.listen((location, action) => {
       // clear alert on location change
       dispatch(alertActions.clear());

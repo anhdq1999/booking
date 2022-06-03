@@ -1,4 +1,6 @@
 import { alertActions, userActions } from 'actions';
+import Header from 'markup/Layout/Header';
+import Header2 from 'markup/Layout/Header2';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux';
@@ -90,6 +92,7 @@ function UsersManager(props) {
   }
   return (
     <div>
+      <Header />
       <div className="mt-5 mx-5">
         <Link to='/admin/users-manager/garbage'>Thùng rác của tôi</Link>
         <div className="text-right mb-5">

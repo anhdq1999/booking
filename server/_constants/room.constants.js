@@ -7,6 +7,21 @@ const roomConstants = {
             failure:'Get all room failure'
         }
     },
+    GETALL_DELETED_CONSTANTS:
+    {
+        action: 'GET_ALL_DELETED_ROOM',
+        message:{
+            success:'Get all deleted room successfully',
+            failure:'Get all deleted room failure'
+        }
+    },
+    GETONE_CONSTANTS: {
+        action: 'Get one by id',
+        message:{
+            success:'Get one room successfully',
+            failure:'Get one room failure'
+        }
+    },
     CREATE_CONSTANTS: 
     {
         action: 'CREATE_ROOM',
