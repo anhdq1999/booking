@@ -10,7 +10,6 @@ export function userReducer(state = initialState, action) {
     case userConstants.GETALL_REQUEST:
       return {
         loading: true
-
       };
     case userConstants.GETALL_SUCCESS:
       return {

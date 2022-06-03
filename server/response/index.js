@@ -1,4 +1,4 @@
-const User = require('./user.reponses');
+const USER = require('./user.reponses');
 module.exports = {
-    User
+    USER
 };
