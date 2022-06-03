@@ -1,6 +1,7 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
-const Responses = require('../response');
+const RES = require('../response');
+const { user } = require("../_constants");
 class UserController {
     //[GET] /users/:username
     show(req, res, next) {
@@ -14,7 +15,7 @@ class UserController {
         User.find({})
             .then((users) => 
             {
-                res.status(200).json(Responses.User.GETALL.SUCCESS(users))
+                res.status(200).json(RES.User.GETALL.SUCCESS(users))
             })
             .catch(next);
     }
@@ -24,10 +25,7 @@ class UserController {
         User.findOne({ username: req.body.username })
         .then((user) => {
             if (user)
-                res.status(409).json({
-                    success: false,
-                    message: 'User is existed',
-                });
+                res.status(409).json(RES.User.CREATE.FAILURE);
             else {
                 const hash_password = bcrypt.hashSync(
                     req.body.password,
@@ -39,11 +37,7 @@ class UserController {
                 const isCreated = newUser.save().then( u =>{return u});
                 console.log(isCreated);
                 if (isCreated) {
-                    res.status(200).json({
-                        success: true,
-                        message: 'User created successfully',
-                        data:newUser,
-                    });
+                    res.status(200).json(RES.User.CREATE.SUCCESS(newUser));
                 } else {
                     res.status(400).json({
                         success: false,
@@ -65,12 +59,7 @@ class UserController {
     update(req, res, next) {
         User.findOneAndUpdate({ _id: req.params.id }, req.body,{new:true})
             .then((user) =>
-                res.status(200).json({
-                    action: 'update user',
-                    success: true,
-                    message: 'update thanh cong',
-                    data: user
-                })
+                res.status(200).json(RES.User.UPDATE.SUCCESS(user))
             )
             .catch(next);
     }
@@ -78,10 +67,7 @@ class UserController {
     delete(req, res, next) {
         User.delete({ _id: req.params.id })
             .then(() =>
-                res.status(200).json({
-                    success: true,
-                    message: 'Delete user successfully',
-                }),
+                res.status(200).json(RES.User.DELETE.SUCCESS()),
             )
             .catch(next);
     }
@@ -91,25 +77,17 @@ class UserController {
             .then((users) => res.json(users))
             .catch(next);
     }
-    //[PUT] /users/restore/:id
+    //[POST] /users/restore/:id
     restore(req, res, next) {
         User.restore({ _id: req.params.id }).then(() =>
-            res.status(200).json({
-                action: 'restore user',
-                success: true,
-                message: 'Restore user successful ',
-            }),
+            res.status(200).json(RES.User.RESTORE.SUCCESS(User)),
         );
     }
     //[DELETE] /users/remove/:id
     completeDelete(req, res, next) {
         User.remove({ _id: req.params.id })
             .then(() =>
-                res.status(200).json({
-                    action: 'remove user',
-                    success: true,
-                    message: 'Remove user successful ',
-                }),
+                res.status(200).json(RES.User.REMOVE.SUCCESS()),
             )
             .catch(next);
     }

@@ -116,6 +116,25 @@ const RESTORE = {
     }
 
 }
+const GETBYID = {
+    SUCCESS:(data) =>{
+        return{
+            success:true,
+            action:constants.user.GETBYID_CONSTANTS.action,
+            message: constants.user.GETBYID_CONSTANTS.message.success,
+            data: data
+        }
+    },
+    FAILURE:() =>{
+        return{
+            success:false,
+            action:constants.user.GETALL_CONSTANTS.action,
+            message: constants.user.GETBYID_CONSTANTS.message.failure,
+            data: null
+        }
+    }
+
+}
 
 
 
@@ -126,6 +145,8 @@ const UserReponse = {
     UPDATE,
     DELETE,
     REMOVE,
-    RESTORE
+    RESTORE,
+    GETBYID
+
 }
 module.exports = UserReponse
