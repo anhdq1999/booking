@@ -1,4 +1,5 @@
 import { roomConstants } from "_constants/room.constants";
+<<<<<<< HEAD
 const initialState = {
     items: [],
     newRoom: {},
@@ -7,6 +8,16 @@ const initialState = {
 
 export function roomReducer(state = initialState, action) {
     let items = state.items
+=======
+const initialState={
+    items:[],
+    newRoom:{}, 
+    editRoom:{}
+}
+
+export function roomReducer(state = initialState, action) {
+    let items= state.items
+>>>>>>> Doan
     switch (action.type) {
         case roomConstants.GETALL_REQUEST:
             
@@ -14,14 +25,22 @@ export function roomReducer(state = initialState, action) {
                 loading: true
             };
         case roomConstants.GETALL_SUCCESS:
+            items =action.rooms;
+            items.forEach(room=> room.image =room.image.replace("images/",""))
+            console.log(items);
             return {
+<<<<<<< HEAD
                 items: action.rooms,
                 loading: false
+=======
+                items: items
+>>>>>>> Doan
             };
         case roomConstants.GETALL_FAILURE:
             return {
                 error: action.error
             };
+<<<<<<< HEAD
         case roomConstants.GETALL_DELETED_REQUEST:
             return {
                 loading: true
@@ -42,6 +61,20 @@ export function roomReducer(state = initialState, action) {
             };
         case roomConstants.CREATE_REQUEST:
             state.createRoom = action.room
+=======
+
+        case roomConstants.DELETE_REQUEST:
+            // add 'deleting:true' property to user being deleted
+            return {
+                ...state
+            };
+        case roomConstants.DELETE_SUCCESS:
+            // remove deleted user from state
+            items = items.filter(room => room._id !== action.id)
+            return { ...state,items };
+        case roomConstants.DELETE_FAILURE:
+            // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
+>>>>>>> Doan
             return {
                 ...state
             };

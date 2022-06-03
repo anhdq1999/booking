@@ -14,12 +14,13 @@ import Register from './markup/Pages/Register-react-hook-form';
 import Register2 from './markup/Pages/Register2';
 import ForgotPass from './markup/Pages/ForgotPass';
 import { history } from 'helpers';
-import { alertActions } from 'actions';
-import { useDispatch } from 'react-redux';
-import UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
+import { alertActions, roomActions } from 'actions';
+import {useDispatch } from 'react-redux';
+import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
-import { GarbageRoom } from 'markup/Pages/admin/room-manager/GarbageRoom';
+import GarbageRoom  from 'markup/Pages/admin/room-manager/GarbageRoom';
 import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
+import {RoomForm} from 'markup/Pages/admin/room-manager/RoomForm';
 
 import Homepage2 from 'markup/Pages/Homepage2';
 import About from 'markup/Pages/About';

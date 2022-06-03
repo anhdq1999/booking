@@ -34,7 +34,7 @@ class Markup extends Component {
                         <Route path='/forgot' exact component={ForgotPass} />
                     </Switch>
                 </div>
-                /
+                
             </Router>
 
         )

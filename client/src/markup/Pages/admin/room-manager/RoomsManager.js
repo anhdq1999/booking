@@ -136,4 +136,4 @@ function RoomsManager(props) {
   )
 }
 
-export default RoomsManager 
+export default RoomsManager

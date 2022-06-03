@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './styles.css'
 
 
-
-function GarbageRooom(props) {
+function GarbageRoom(props) {
   const noDataComponentContent = 'Thùng rác rỗng';
   const alert = useSelector(state => state.alert)
   const rooms = useSelector(state => state.roomReducer.items)
@@ -102,10 +101,5 @@ function GarbageRooom(props) {
     </div>
   )
 }
-function mapState(state) {
-}
-const actionCreators = {
-  getAllDeleted: roomActions.getAllDeleted,
-}
-const connectedGarbagePage = connect(mapState, actionCreators)(GarbageRooom)
-export { connectedGarbagePage as GarbageRoom }
+
+export default GarbageRoom 

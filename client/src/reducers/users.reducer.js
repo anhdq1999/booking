@@ -34,11 +34,7 @@ export function userReducer(state = initialState, action) {
       return {
         error: action.error
       };
-    case userConstants.GETALL_REQUEST:
-      return {
-        loading: true
 
-      };
     case userConstants.CREATE_REQUEST:
       state.createUser = action.user
       return {

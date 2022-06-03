@@ -90,7 +90,7 @@ function create(user) {
                 res => {
                     if (res.success) {
                         dispatch(success(res.data));
-                        dispatch(alertActions.success('Create user successful'));
+                        dispatch(alertActions.success(res.message));
                     } else {
                         dispatch(failure(res.message));
                         dispatch(alertActions.error(res.message))
@@ -115,7 +115,6 @@ function update(user, data) {
             .then(res => {
                 if (res.success) {
                     dispatch(success(res.data))
-                    console.log(res.data);
                     dispatch(alertActions.success(res.message))
                 }
             }).catch(error => {
@@ -132,11 +131,15 @@ function getAllDeleted() {
         dispatch(request());
         userService.getAllDeleted()
             .then(
-                users => {
-                    if (users.length > 0) {
-                        dispatch(success(users))
+                res => {
+                    console.log(res);
+                    if (res.success) {
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
                         dispatch(failure())
+                        dispatch(alertActions.failure(res.message))
+
                     }
                 }
             ).catch(error => dispatch(failure(error)));
@@ -152,9 +155,9 @@ function getAll() {
         userService.getAll()
             .then(
                 res => {
-                    const users=res.data;
                     if (res.success) {
-                        dispatch(success(users))
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
                         dispatch(failure())
                     }

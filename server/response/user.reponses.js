@@ -20,8 +20,27 @@ const GETALL = {
     }
 
 }
-const CREATE = {
+const GETALL_DELETED = {
    
+    SUCCESS: (data) => {
+        return {
+            success:true,
+            action:constants.user.GETALL_DELETED_CONSTANTS.action,
+            message:constants.user.GETALL_DELETED_CONSTANTS.message.success,
+            data: data
+        }
+    },
+    FAILURE: () => {
+        return {
+            success:false,
+            action:constants.user.GETALL_DELETED_CONSTANTS.action,
+            message: constants.user.GETALL_DELETED_CONSTANTS.message.failure,
+            data: null
+        }
+    }
+
+}
+const CREATE = {
     SUCCESS: (data) => {
         return {
             success:true,
@@ -35,6 +54,14 @@ const CREATE = {
             success:false,
             action: constants.user.CREATE_CONSTANTS.action,
             message: constants.user.CREATE_CONSTANTS.message.failure,
+            data: null
+        }
+    },
+    FAILURE_EXIST: () => {
+        return {
+            success:false,
+            action: constants.user.CREATE_CONSTANTS.action,
+            message: constants.user.CREATE_CONSTANTS.message.failure_exist,
             data: null
         }
     }
@@ -122,6 +149,7 @@ const RESTORE = {
 
 const UserReponse = {
     GETALL,
+    GETALL_DELETED,
     CREATE,
     UPDATE,
     DELETE,
