@@ -1,6 +1,7 @@
 import { userConstants } from '_constants';
 const initialState = {
   items: [],
+  item:{},
   editUser: {},
   createUser: {}
 }
@@ -8,7 +9,6 @@ export function userReducer(state = initialState, action) {
   let items = state.items
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
-   
       return {
         loading: true
       };
@@ -16,6 +16,14 @@ export function userReducer(state = initialState, action) {
       return {
         items: action.users,
         loading: false
+      };
+    case userConstants.GETBYID_FAILURE:
+      return {
+        error: action.error
+      };
+    case userConstants.GETBYID_SUCCESS:
+      return {
+        items: action.user,
       };
     case userConstants.GETALL_FAILURE:
       return {
@@ -42,7 +50,7 @@ export function userReducer(state = initialState, action) {
       };
     case userConstants.CREATE_SUCCESS:
       items.push(action.user);
-      items=items.filter(user => user._id !=='')
+      items = items.filter(user => user._id !== '')
       return {
         ...state,
         items,

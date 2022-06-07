@@ -1,3 +1,4 @@
+import { roomActions } from 'actions';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -24,10 +25,9 @@ function Hotel(props) {
     const rooms = useSelector(state => state.roomReducer.items)
 
     useEffect(() => {
-        //  villa = require(rooms[0].image)
-
+       dispatch(roomActions.getAll())
     }, [dispatch])
-    // const popularHotel= rooms.slice(2,5)||[];
+
     return (
         <div>
             <Header2 />
@@ -60,7 +60,7 @@ function Hotel(props) {
                                             <h4 className="m-t0 m-b10">{item.name}</h4>
                                             <span>{item.offer}</span>
                                             <h2 className="m-t10 m-b20">$ {item.price}</h2>
-                                            <Link to={'./hotelbooking'} className="site-button outline outline-2 radius-xl">Book Now</Link>
+                                            <Link to={`./hotelbooking/${item._id}`} className="site-button outline outline-2 radius-xl">Book Now</Link>
                                         </div>
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@ import { userConstants } from '_constants';
 import { userService } from 'services';
 import { alertActions } from './index';
 import { history } from 'helpers';
+import { isFulfilled } from '@reduxjs/toolkit';
 
 // data respone api 
 /* {
@@ -16,6 +17,7 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getById,
     create,
     update,
     getAllDeleted,
@@ -23,7 +25,18 @@ export const userActions = {
     restore,
     remove
 };
-
+function getById(id) {
+    return dispatch => {
+        userService.getById(id).then(res => {
+            if (res.success) dispatch(success(res.data))
+            else dispatch(failure(res.message))
+        }
+        )
+    }
+    function request(id) { return { type: userConstants.GETBYID_REQUEST, id } }
+    function success(user) { return { type: userConstants.GETBYID_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.GETBYID_FAILURE, error } }
+}
 function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));

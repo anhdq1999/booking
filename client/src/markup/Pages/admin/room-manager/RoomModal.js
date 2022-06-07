@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { roomActions } from 'actions';
+import { roomActions, userActions } from 'actions';
 import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, input } from 'reactstrap';
 import * as yup from 'yup';
 const schema = yup.object().shape({
@@ -61,9 +61,9 @@ export default function RoomModal(props) {
         mode: 'onBlur',
         resolver: yupResolver(schema),
     })
-    console.log(room);
+
+  
     if (room) {
-        console.log(newRoom);
         if (newRoom) {
             setRoom(newRoom)
         } else {

@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';
 import Footer from './../Layout/Footer';
 import BookNowModal from './book-now-modal/BookNowModal';
+import { roomActions } from 'actions';
+import { useDispatch, useSelector } from 'react-redux';
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+}
 
+const images = importAll(require.context('images', true, /\.(png|jpe?g|svg)$/));
 const hotelSlider = [
     {
         image: require('./../../images/hotel/pic1.jpg'),
@@ -39,7 +47,13 @@ const hotelSlider = [
 ]
 const bg3 = require('./../../images/banner/bnr1.jpg');
 function HotelBooking(props) {
-
+    const id =props.match.params.id;
+    const room = useSelector(state => state.roomReducer.item)
+    console.log(room);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(roomActions.getById(id))
+    },[dispatch])
     const [isOpenModal,setIsOpenModal]=useState(false);
 
     const handleOpenModal=()=>{
@@ -60,7 +74,7 @@ function HotelBooking(props) {
                         <h1 className="text-white">Hotal Booking</h1>
                         <div className="breadcrumb-row">
                             <ul className="list-inline">
-                                <li><Link>Home</Link></li>
+                                <li><Link to={'/'}>Home</Link></li>
                                 <li>Hotal Booking</li>
                             </ul>
                         </div>
@@ -74,23 +88,23 @@ function HotelBooking(props) {
                             <div className="col-lg-8">
                                 <div className="d-flex info-bx m-b30">
                                     <div className="tour-title">
-                                        <h2>FabHotel RMS Comforts</h2>
+                                        <h2>{room.name}</h2>
                                         <p><i className="fa fa-map-marker m-r5"></i>Yeshwanthpur, Bangalore <Link className="text-primary">View on Map</Link></p>
                                         <p><span className="site-button button-sm button-gray">Hotel</span> <span className="site-button button-sm">Bar</span> Tour</p>
                                     </div>
                                     <div className="tour-price ml-auto">
                                         <span>Per Room Per Night</span>
-                                        <h2 className="price">Rs.1,07,990</h2>
+                                        <h2 className="price">{room.price}</h2>
                                         <h4 className="actual-price">Rs.1,23,990</h4>
                                     </div>
                                 </div>
                                 <div className="product-gallery on-show-slider">
                                     <Slider {...settings}>
-                                        {hotelSlider.map((item, index) => (
+                                        {room.images && room.images.map((item, index) => (
                                             <div className="item" key={index}>
                                                 <div className="dlab-box">
                                                     <div className="dlab-thum-bx">
-                                                        <img src={item.image} alt="" />
+                                                        <img src={images[item]} alt="" />
                                                     </div>
                                                 </div>
                                             </div>

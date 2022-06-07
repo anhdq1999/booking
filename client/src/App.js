@@ -20,7 +20,6 @@ import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
 import GarbageRoom  from 'markup/Pages/admin/room-manager/GarbageRoom';
 import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
-import {RoomForm} from 'markup/Pages/admin/room-manager/RoomForm';
 
 import Homepage2 from 'markup/Pages/Homepage2';
 import About from 'markup/Pages/About';
@@ -76,7 +75,7 @@ function App() {
             <Route path='/packages' exact component={Packages} />
             <Route path='/error' exact component={Error404} />
             <Route path='/forgot' exact component={ForgotPass} />
-            <Route path='/hotelbooking' exact component={HotelBooking} />
+            <Route path='/hotelbooking/:id' exact component={HotelBooking} />
             <Route path='/blogclassic' exact component={BlogClassic} />
             <Route path='/blogclassicsidebar' exact component={BlogClassicSidebar} />
             <Route path='/bloggrid' exact component={BlogGrid} />

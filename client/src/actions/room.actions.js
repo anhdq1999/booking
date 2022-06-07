@@ -5,12 +5,27 @@ import { alertActions } from './index';
 export const roomActions = {
     getAll,
     getAllDeleted,
+    getById,
     restore,
     remove,
     create,
     update,
     delete: _delete
 };
+function getById(id) {
+    return dispatch => {
+        roomsService.getById(id).then(res=>{
+            if(res.success){
+                dispatch(success(res.data))
+            }else{
+                dispatch(failure(res.message))
+            }
+
+        })
+    }
+    function success(room) { return { type: roomConstants.GETBYID_SUCCESS, room } }
+    function failure(error) { return { type: roomConstants.GETBYID_FAILURE, error } }
+}
 function getAllDeleted() {
     return dispatch => {
         dispatch(request());
