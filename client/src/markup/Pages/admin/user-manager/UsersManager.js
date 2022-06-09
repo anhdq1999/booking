@@ -1,11 +1,10 @@
 import { alertActions, userActions } from 'actions';
 import Header from 'markup/Layout/Header';
-import Header2 from 'markup/Layout/Header2';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button } from 'reactstrap';
+import { Button, Label } from 'reactstrap';
 import UserModal from './UserModal';
 
 
@@ -14,8 +13,11 @@ function UsersManager(props) {
   const [editableUser, setEditableUser] = useState({})
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isAddModal, setIsAddModal] = useState(false)
+  const [isSearch, setIsSearch] = useState(false)
+  const [searchBy, setSearchBy] = useState("email");
   const alert = useSelector(state => state.alert)
   const users = useSelector(state => state.userReducer.items)
+  const usersSearch = useSelector(state => state.userReducer.itemsSearch)
   const pending = useSelector(state => state.userReducer.loading)
   const dispatch = useDispatch();
   const columns = [
@@ -69,6 +71,11 @@ function UsersManager(props) {
     handleOpenModal()
     setEditableUser(user)
   }
+  const handleAdd = () => {
+    setIsAddModal(true)
+    handleOpenModal()
+    setEditableUser(null);
+  }
   const handleChange = ({ selectedRows }) => {
     setSelectedUsers(selectedRows);
   };
@@ -85,11 +92,20 @@ function UsersManager(props) {
   const handleOpenModal = () => {
     setIsOpenModal(!isOpenModal)
   }
-  const handleAdd= ()=>{ 
-    setIsAddModal(true)
-    setEditableUser();
-    handleOpenModal()
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    dispatch(userActions.searchByEmail(searchBy, value));
   }
+  const handleSearchBy = (e) => {
+    const { value } = e.target;
+    setSearchBy(value)
+
+    // dispatch(userActions.searchByEmail(value));
+  }
+  const handleFocus = () => {
+    setIsSearch(true);
+  }
+
   return (
     <div>
       <Header />
@@ -102,11 +118,22 @@ function UsersManager(props) {
         {alert.message &&
           <div className={`alert ${alert.type}`}>{alert.message}</div>
         }
+        <Label className="mr-5">Search:</Label>
+        <input
+          onChange={(e) => handleSearch(e)}
+          onFocus={(e) => handleFocus(e)}
+          name="keySearch"
+          placeholder={'Search by ' + searchBy}
+          type="text" />
+        <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
+          <option value="username">Username</option>
+          <option value="email" selected>Email</option>
+          <option value="fullname">Full Name</option>
+        </select>
         <DataTable
-
           title='User Store'
           columns={columns}
-          data={users}
+          data={isSearch ? usersSearch : users}
           theme="dark"
           selectableRows
           onSelectedRowsChange={handleChange}
@@ -114,21 +141,21 @@ function UsersManager(props) {
           progressPending={pending} />
       </div>
       {isAddModal &&
-         <UserModal
-         isAdd={isAddModal}
-         isOpen={isOpenModal}
-         toggle={handleOpenModal}
-       ></UserModal>
+        <UserModal
+          isAdd={isAddModal}
+          isOpen={isOpenModal}
+          toggle={handleOpenModal}
+        ></UserModal>
       }
       {!isAddModal &&
-         <UserModal
-         isAdd={isAddModal}
-         user={editableUser}
-         isOpen={isOpenModal}
-         toggle={handleOpenModal}
-       ></UserModal>
+        <UserModal
+          isAdd={isAddModal}
+          user={editableUser}
+          isOpen={isOpenModal}
+          toggle={handleOpenModal}
+        ></UserModal>
       }
-     
+
     </div>
   )
 }

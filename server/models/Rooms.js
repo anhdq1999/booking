@@ -1,19 +1,18 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
 const slug = require('mongoose-slug-generator');
 const slug_update = require('mongoose-slug-updater');
 
-
 const reviewSchema = new Schema(
   {
     name: { type: String, require: true },
     comment: { type: String, require: true },
-    rating: { type: Number, require: true }
+    rating: { type: Number, require: true },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 const addressDetails = new Schema({
@@ -22,12 +21,15 @@ const addressDetails = new Schema({
   district: { type: String, require: true },
   ward: { type: String, require: true },
   street: { type: String, require: true },
-  googleAddress: { type: String, require: true }
+  googleAddress: { type: String, require: true },
 });
 const Room = new Schema(
   {
     name: { type: String, require: true },
-    slug: { type: String, slug: "name",unique: true ,slugOn: { findOneAndUpdate: true }},
+    slug: {
+      type: String,
+      slug: 'name',
+    },
     host: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     category: { type: String, require: true },
     shortDescription: { type: String, require: true },
@@ -51,5 +53,5 @@ Room.plugin(mongooseDelete, {
   deleteAt: true,
   overrideMethods: true,
 });
-Room.plugin(slug_update);
+// Room.plugin(slug_update);
 module.exports = mongoose.model('Room', Room);

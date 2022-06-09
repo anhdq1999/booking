@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 import { Link } from 'react-router-dom';
-import Slick from './Slick';
 import TopPlaces from './../Element/TopPlaces';
-import Header from './../Layout/Header';
 import Footer from './../Layout/Footer';
+import Header from './../Layout/Header';
+import Slick from './Slick';
 
 
 
@@ -29,7 +29,7 @@ const content = [
 ];
 
 const bg1 = require('images/background/bg1.jpg');
-const bg3 = require('images/background/bg3.jpg');
+// const bg3 = require('images/background/bg3.jpg');
 
 function Homepage(props) {
 
@@ -122,8 +122,9 @@ function Homepage(props) {
 
 
                 <TopPlaces />
+                <Slick />
 
-                <div className="section-full bg-white content-inner-2 bgeffect overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
+                {/* <div className="section-full bg-white content-inner-2 bgeffect overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6 col-md-12">
@@ -137,11 +138,10 @@ function Homepage(props) {
                             <div className="col-lg-6 col-md-6"></div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                <Slick />
 
-                <div className="section-full bg-white content-inner dlab-about-1 promotions">
+                {/* <div className="section-full bg-white content-inner dlab-about-1 promotions">
                     <div className="container">
                         <div className="section-head text-black text-center">
                             <h2 className="text-uppercase m-b0">PACKAGES</h2>
@@ -234,7 +234,7 @@ function Homepage(props) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             <Footer />
         </div>

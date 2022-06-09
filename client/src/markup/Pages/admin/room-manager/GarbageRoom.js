@@ -1,23 +1,22 @@
 import { alertActions, roomActions } from 'actions';
-import React, { useMemo, useEffect, useState } from 'react'
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { Button } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './styles.css'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Button } from 'reactstrap';
+import './styles.css';
 
 
 function GarbageRoom(props) {
   const noDataComponentContent = 'Thùng rác rỗng';
   const alert = useSelector(state => state.alert)
-  const rooms = useSelector(state => state.roomReducer.items)
+  const rooms = useSelector(state => state.roomReducer.itemsDeleted)
   const pending = useSelector(state => state.roomReducer.loading)
   const [selectedRooms, setSelectedRooms] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(roomActions.getAllDeleted())
-  }, [dispatch]);
+  },[dispatch]);
 
   function handleDelete(room) {
     dispatch(roomActions.remove(room._id))
@@ -26,8 +25,7 @@ function GarbageRoom(props) {
     dispatch(roomActions.restore(room._id))
   }
 
-  const columns = useMemo(
-    () => [
+const columns = [
       {
         name: 'Room Name',
         selector: row => row.name
@@ -55,7 +53,7 @@ function GarbageRoom(props) {
         buttons: true,
         allowOverflow: true,
       }
-    ], [])
+    ]
   const handleChange = ({ selectedRows }) => {
     setSelectedRooms(selectedRows)
   };

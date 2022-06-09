@@ -67,3 +67,4 @@ function restoreUser(id) {
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;
 }
+

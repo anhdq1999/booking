@@ -38,7 +38,7 @@ const placeList = [
 
 const bg3 = require('./../../images/banner/bnr1.jpg');
 function Place(props) {
-
+  
     return (
         <div>
             <Header2 />

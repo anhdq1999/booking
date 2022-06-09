@@ -9,7 +9,9 @@ export const roomsService = {
     create,
     deleteRoom,
     removeRoom,
-    restoreRoom
+    restoreRoom,
+    groupByProvince,
+    getByProvince,
 };
 
 
@@ -50,4 +52,11 @@ function restoreRoom(id){
     const url =`rooms/restore/${id}`;
     return axiosClient.post(url);
 }
-
+function groupByProvince(){
+    const url =`rooms/groupByProvince/`;
+    return axiosClient.get(url);
+}
+function getByProvince(province){ 
+    const url =`rooms/${province}`;
+    return axiosClient.get(url);
+}

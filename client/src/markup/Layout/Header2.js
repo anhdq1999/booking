@@ -62,7 +62,9 @@ function Header2(props) {
                             }
                             {loggedIn &&
                                 <ul>
-                                    
+                                    {user.role==='admin' &&
+                                     <li><Link to={'/admin/rooms-manager'} className="site-button-link">Admin Room</Link></li>
+                                    }
                                     <li><Link to={'/profile'} className="site-button-link">{user.fullname}</Link></li>
                                     <li><Link to={'/'} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
                                 </ul>
@@ -77,7 +79,7 @@ function Header2(props) {
                 <div className="main-bar clearfix onepage">
                     <div className="container-fluid clearfix">
                         <div className="logo-header mostion">
-                            <Link to={'./index-2'} ><img src={require('./../../images/logo-2.png')} alt="" /></Link>
+                            <Link to={'/index-2'} ><img src={require('./../../images/logo-2.png')} alt="" /></Link>
                         </div>
 
                         <button className="navbar-toggler collapsed navicon justify-content-end" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,49 +106,48 @@ function Header2(props) {
                             <ul className="nav navbar-nav">
                                 <li><Link to={''}>Home <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
-                                        <li><Link to={'./'} className="dez-page">Home 1</Link></li>
-                                        <li><Link to={'index-2'} className="dez-page">Home 2 <span className="new-page menu-new">New</span></Link></li>
+                                        <li><Link to={'/'} className="dez-page">Home 1</Link></li>
+                                        <li><Link to={'/index-2'} className="dez-page">Home 2 <span className="new-page menu-new">New</span></Link></li>
                                     </ul>
                                 </li>
                                 <li className="active"></li>
                                 <li><Link to={''}> Pages <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
-                                        <li><Link to={'./about'} className="dez-page">About Us</Link></li>
-                                        <li><Link to={'./listing'} className="dez-page">Listing <span className="new-page menu-new">New</span></Link></li>
-                                        <li><Link to={'./hotel'}>Hotels</Link></li>
-                                        <li><Link to={'./booking'}>Booking Details</Link></li>
-                                        <li><Link to={'./place'}>Places</Link></li>
-                                        <li><Link to={'./packages'}>Packages</Link></li>
-                                        <li><Link to={'./error'} className="dez-page">Error 404</Link></li>
-                                        <li><Link to={'./login'} className="dez-page">Login</Link></li>
-                                        <li><Link to={'./register'} className="dez-page">Register</Link></li>
-                                        <li><Link to={'./register2'} className="dez-page">Register <span className="new-page menu-new">New</span></Link></li>
+                                        <li><Link to='/about' className="dez-page">About Us</Link></li>
+                                        <li><Link to={'/listing'} className="dez-page">Listing <span className="new-page menu-new">New</span></Link></li>
+                                        <li><Link to={'/hotel'}>Hotels</Link></li>
+                                        <li><Link to={'/booking'}>Booking Details</Link></li>
+                                        <li><Link to={'/place'}>Places</Link></li>
+                                        <li><Link to={'/packages'}>Packages</Link></li>
+                                        <li><Link to={'/error'} className="dez-page">Error 404</Link></li>
+                                        <li><Link to={'/login'} className="dez-page">Login</Link></li>
+                                        <li><Link to={'/register'} className="dez-page">Register</Link></li>
+                                        <li><Link to={'/register2'} className="dez-page">Register <span className="new-page menu-new">New</span></Link></li>
                                     </ul>
                                 </li>
                                 <li><Link to={''}>Hotels <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
-                                        <li><Link to={'hotel'} className="dez-page">Hotel</Link></li>
-                                        <li><Link to={'hotelbooking'} className="dez-page">Hotel Booking</Link></li>
+                                        <li><Link to={'/hotel'} className="dez-page">Hotel</Link></li>
                                     </ul>
                                 </li>
                                 <li><Link to={''}>Blog <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
-                                        <li><Link to={'blogclassic'} className="dez-page">Classic</Link></li>
-                                        <li><Link to={'blogclassicsidebar'} className="dez-page">Classic Sidebar</Link></li>
-                                        <li><Link to={'bloggrid'} className="dez-page">Detailed Grid</Link></li>
-                                        <li><Link to={'bloggridsidebar'} className="dez-page">Detailed Grid Sidebar</Link></li>
-                                        <li><Link to={'blogleftsidebar'} className="dez-page">Left Image Sidebar</Link></li>
-                                        <li><Link to={'blogdetails'} className="dez-page">Blog Details</Link></li>
+                                        <li><Link to={'/blogclassic'} className="dez-page">Classic</Link></li>
+                                        <li><Link to={'/blogclassicsidebar'} className="dez-page">Classic Sidebar</Link></li>
+                                        <li><Link to={'/bloggrid'} className="dez-page">Detailed Grid</Link></li>
+                                        <li><Link to={'/bloggridsidebar'} className="dez-page">Detailed Grid Sidebar</Link></li>
+                                        <li><Link to={'/blogleftsidebar'} className="dez-page">Left Image Sidebar</Link></li>
+                                        <li><Link to={'/blogdetails'} className="dez-page">Blog Details</Link></li>
                                     </ul>
                                 </li>
                                 <li><Link to={''}>Our Portfolio <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
-                                        <li><Link to={'portfolio2'} className="dez-page">Portfolio Grid 2 </Link></li>
+                                        <li><Link to={'/portfolio2'} className="dez-page">Portfolio Grid 2 </Link></li>
                                         {/*<li><Link to={'portfolio2'} className="dez-page">Portfolio Grid 3 </Link></li>
 												<li><Link to={'portfolio2'} className="dez-page">Portfolio Grid 4 </Link></li>*/}
                                     </ul>
                                 </li>
-                                <li><Link to={'contact'} className="dez-page">Contact Us</Link></li>
+                                <li><Link to={'/contact'} className="dez-page">Contact Us</Link></li>
                             </ul>
                         </div>
                     </div>

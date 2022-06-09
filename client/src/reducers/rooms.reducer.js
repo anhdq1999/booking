@@ -3,19 +3,19 @@ const initialState={
     items:[],
     item:{},
     newRoom:{}, 
-    editRoom:{}
+    editRoom:{},
+    itemsDeleted:[],
 }
 
 export function roomReducer(state = initialState, action) {
-    let items= state.items
-    
     switch (action.type) {
         case roomConstants.GETALL_REQUEST:
             return {
-                loading: true
+                loading: true,
+                ...state,
             };
         case roomConstants.GETBYID_SUCCESS:
-            let item =action.room
+           let item =action.room
             item.image =item.image.replace("images/","")
             item.images=item.images.map(image => image.replace("images/",""))
             state.item=item
@@ -24,26 +24,29 @@ export function roomReducer(state = initialState, action) {
             };
         case roomConstants.GETBYID_FAILURE:
             return {
-                error: action.error
+                error: action.error,
+                ...state
             };
     
         case roomConstants.GETALL_SUCCESS:
-            items =action.rooms;
-            items.forEach(room=> room.image =room.image.replace("images/",""))
+            state.items =action.rooms;
+            state.items.forEach(room=> room.image =room.image.replace("images/",""))
+            state.loading=false
             return {
-                items: action.rooms,
-                loading: false
+              ...state
             };
-        case roomConstants.GETALL_DELETED_REQUEST:
+        case roomConstants.GETALLDELETED_REQUEST:
+            state.loading=true;
             return {
-                loading: true
+               ...state
             };
-        case roomConstants.GETALL_DELETED_SUCCESS:
+        case roomConstants.GETALLDELETED_SUCCESS:
+            state.loading=false;
+            state.itemsDeleted=action.rooms;
             return {
-                loading: false,
-                items: action.rooms
+                ...state,
             };
-        case roomConstants.GETALL_DELETED_FAILURE:
+        case roomConstants.GETALLDELETED_FAILURE:
             return {
                 error: action.error
             };
@@ -53,35 +56,45 @@ export function roomReducer(state = initialState, action) {
                 ...state
             };
         case roomConstants.CREATE_SUCCESS:
-            items.push(action.room);
-            items = items.filter(room => room._id !== '')
+            state.items.push(action.room);
+            state.items = state.items.filter(room => room._id !== '')
+            state.createRoom={};
             return {
                 ...state,
-                items,
-                createRoom: {}
             };
-
+            case roomConstants.GROUP_BY_PROVINCE_SUCCESS:
+                let itemsGroupByProvine=action.rooms
+                itemsGroupByProvine.forEach(room=> room.image =room.image.replace("images/",""))
+                return {
+                    itemsGroupByProvine:itemsGroupByProvine,
+                    ...state,
+                };
+                case roomConstants.GET_BY_PROVINCE_SUCCESS:
+                let itemsByProvince=action.rooms
+                itemsByProvince.forEach(room=> room.image =room.image.replace(["images/"],""))
+                return {
+                    itemsByProvince:itemsByProvince,
+                    ...state,
+                };
         case roomConstants.UPDATE_REQUEST:
             return {
                 ...state,
-                editRoom: action.room,
+            editRoom: action.room,
             };
         case roomConstants.UPDATE_SUCCESS:
-            const editRoomIndex = items.findIndex(room => room._id === action.room._id)
-            items[editRoomIndex] = action.room
-            items = items.filter(room => room._id !== "")
+            const editRoomIndex = state.items.findIndex(room => room._id === action.room._id)
+            state.items[editRoomIndex] = action.room
+            state.items = state.items.filter(room => room._id !== "")
+            state.editRoom=action.room
             return {
                 ...state,
-                items,
-                editroom: action.room,
             };
         case roomConstants.RESTORE_SUCCESS:
-            items = items.filter(room => room._id !== action.id)
-            return { ...state, items };
+            state.itemsDeleted = state.itemsDeleted.filter(room => room._id !== action.id)
+            return { ...state };
         case roomConstants.REMOVE_SUCCESS:
-
-            items = items.filter(room => room._id !== action.id)
-            return { ...state, items };
+            state.itemsDeleted = state.itemsDeleted.filter(room => room._id !== action.id)
+            return { ...state };
         case roomConstants.DELETE_REQUEST:
             // add 'deleting:true' property to room being deleted
             return {
@@ -89,19 +102,12 @@ export function roomReducer(state = initialState, action) {
             };
         case roomConstants.DELETE_SUCCESS:
             // remove deleted room from state
-            items = items.filter(room => room._id !== action.id)
-            return { ...state, items };
+            state.items = state.items.filter(room => room._id !== action.id)
+            return { ...state };
         case roomConstants.DELETE_FAILURE:
             // remove 'deleting:true' property and add 'deleteError:[error]' property to room 
             return {
                 ...state,
-        items: state.items.map(room => {
-          if (room.id === action.id) {
-            const { deleting, ...roomCopy } = room;
-            return { ...roomCopy, deleteError: action.error };
-          }
-          return room;
-        })
             };
         default:
             return state

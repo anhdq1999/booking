@@ -1,8 +1,7 @@
-import { userConstants } from '_constants';
-import { userService } from 'services';
-import { alertActions } from './index';
 import { history } from 'helpers';
-import { isFulfilled } from '@reduxjs/toolkit';
+import { userService } from 'services';
+import { userConstants } from '_constants';
+import { alertActions } from './index';
 
 // data respone api 
 /* {
@@ -23,10 +22,35 @@ export const userActions = {
     getAllDeleted,
     delete: _delete,
     restore,
+    searchByEmail,
     remove
 };
+function searchByEmail(type, key) {
+    return dispatch => {
+        switch (type) {
+            case "email":
+                dispatch(searchByEmail(key));
+                return;
+            case "username":
+                dispatch(searchByUsername(key));
+                return;
+            case "fullname":
+                dispatch(searchByFullname(key));
+                return;
+            default:
+                dispatch(searchByEmail(key));
+        }
+
+
+    }
+    function searchByEmail(key) { return { type: userConstants.SEARCH_BY_EMAIL, key } }
+    function searchByUsername(key) { return { type: userConstants.SEARCH_BY_USERNAME, key } }
+    function searchByFullname(key) { return { type: userConstants.SEARCH_BY_FULLNAME, key } }
+
+}
 function getById(id) {
     return dispatch => {
+        dispatch(request(id))
         userService.getById(id).then(res => {
             if (res.success) dispatch(success(res.data))
             else dispatch(failure(res.message))

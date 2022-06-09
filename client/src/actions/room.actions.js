@@ -10,7 +10,9 @@ export const roomActions = {
     remove,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    groupByProvince,
+    getByProvince
 };
 function getById(id) {
     return dispatch => {
@@ -43,9 +45,9 @@ function getAllDeleted() {
             ).catch(error => dispatch(failure(error)));
     };
 
-    function request() { return { type: roomConstants.GETALL_REQUEST } }
-    function success(rooms) { return { type: roomConstants.GETALL_SUCCESS, rooms } }
-    function failure(error) { return { type: roomConstants.GETALL_FAILURE, error } }
+    function request() { return { type: roomConstants.GETALLDELETED_REQUEST } }
+    function success(rooms) { return { type: roomConstants.GETALLDELETED_SUCCESS, rooms } }
+    function failure(error) { return { type: roomConstants.GETALLDELETED_FAILURE, error } }
 }
 function getAll() {
     return dispatch => {
@@ -119,7 +121,7 @@ function create(room) {
 function update(room, data) {
     return dispatch => {
         dispatch(request(room))
-        roomsService.update(room, data)
+        roomsService.update(room._id, data)
             .then(res => {
                 if (res.success) {
                     dispatch(success(res.data))
@@ -172,4 +174,22 @@ function restore(id) {
     };
 
     function success(id) { return { type: roomConstants.RESTORE_SUCCESS, id } }
+}
+function groupByProvince(){ 
+    return dispatch => {
+        roomsService.groupByProvince()
+            .then(rooms =>{
+                dispatch(success(rooms))
+            })
+    }
+    function success(rooms) { return { type: roomConstants.GROUP_BY_PROVINCE_SUCCESS, rooms } }
+}
+function getByProvince(province){ 
+    return dispatch => {
+        roomsService.getByProvince(province)
+            .then(rooms =>{
+                dispatch(success(rooms))
+            })
+    }
+    function success(rooms) { return { type: roomConstants.GET_BY_PROVINCE_SUCCESS, rooms } }
 }

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
 const bcrypt = require('bcrypt');
-
 const User = new Schema(
     {
         username: {

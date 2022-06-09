@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userActions } from 'actions';
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import * as yup from 'yup';
@@ -35,7 +35,7 @@ const schema = yup.object().shape({
     address: yup
         .string()
         .required("Address is required"),
-    roles:yup
+    roles: yup
         .string()
         .required("Roles is required")
 })
@@ -49,10 +49,10 @@ export default function UserModal(props) {
         sex: '',
         address: '',
         roles: '',
-    };    
+    };
     const user = props.user;
     const alert = useSelector(state => state.alert)
-    const newUser = useSelector(state => state.userReducer.editUser)
+    const updateUser = useSelector(state => state.userReducer.editUser)
     const dispatch = useDispatch();
 
 
@@ -68,15 +68,15 @@ export default function UserModal(props) {
 
     })
     if (user) {
-        if (newUser) {
-            setUserValue(newUser)
+        if (updateUser) {
+            setUserValue(updateUser)
         } else {
             setUserValue(user)
         }
     }
 
-    function toggle() {
 
+    function toggle() {
         return props.toggle()
     }
     function setUserValue(data) {
@@ -103,6 +103,7 @@ export default function UserModal(props) {
     const onSubmit = data => {
         if (user) {
             handleEdit(data)
+
         }
         else handleAdd(data)
     }
@@ -118,6 +119,7 @@ export default function UserModal(props) {
                     Modal title
                 </ModalHeader>
                 <ModalBody>
+
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
@@ -168,7 +170,7 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("username")}
                                 />
-{errors?.username &&
+                                {errors?.username &&
                                     <div className="alert-warning text-center">{errors.username?.message}</div>
                                 }
                             </Col>
@@ -184,7 +186,7 @@ export default function UserModal(props) {
                                     type="email"
                                     {...register("email")}
                                 />
-{errors?.email &&
+                                {errors?.email &&
                                     <div className="alert-warning text-center">{errors.email?.message}</div>
                                 }
                             </Col>
@@ -203,7 +205,7 @@ export default function UserModal(props) {
                                     type="password"
                                     {...register("password")}
                                 />
-{errors?.password &&
+                                {errors?.password &&
                                     <div className="alert-warning text-center">{errors.password?.message}</div>
                                 }
                             </Col>
@@ -219,7 +221,7 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("phoneNumber")}
                                 />
-{errors?.phoneNumber &&
+                                {errors?.phoneNumber &&
                                     <div className="alert-warning text-center">{errors.phoneNumber?.message}</div>
                                 }
                             </Col>
@@ -237,7 +239,7 @@ export default function UserModal(props) {
                                     type="text"
                                     {...register("address")}
                                 />
-{errors?.address &&
+                                {errors?.address &&
                                     <div className="alert-warning text-center">{errors.address?.message}</div>
                                 }
                             </Col>
@@ -314,6 +316,7 @@ export default function UserModal(props) {
                         </Row>
 
                     </form>
+
                 </ModalBody>
                 <ModalFooter>
                     <Button

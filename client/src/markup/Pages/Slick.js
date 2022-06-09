@@ -1,41 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { roomActions } from 'actions';
 
-
-const destination = [
-    {
-        image: require('./../../images/gallery/destinations/pic1.jpg'),
-        title: 'Eiffel Tower'
-    },
-    {
-        image: require('./../../images/gallery/destinations/pic2.jpg'),
-        title: 'South America'
-    },
-    {
-        image: require('./../../images/gallery/destinations/pic3.jpg'),
-        title: 'Australia '
-    },
-    {
-        image: require('./../../images/gallery/destinations/pic4.jpg'),
-        title: 'India'
-    },
-    {
-        image: require('./../../images/gallery/destinations/pic5.jpg'),
-        title: 'Philippines '
-    },
-    {
-        image: require('./../../images/gallery/destinations/pic3.jpg'),
-        title: 'Australia'
-    },
-]
-
-
+const img =  require('./../../images/our-work/pic2.jpg')
 function Slick(props) {
-
+    const rooms = useSelector(state => state.roomReducer.itemsGroupByProvine)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(roomActions.groupByProvince())
+    },[dispatch])
     const settings = {
         dots: false,
-        slidesToShow: 5,
+        slidesToShow: 4,
         infinite: true,
         autoplay: false,
         speed: 2000,
@@ -76,21 +54,24 @@ function Slick(props) {
                 </div>
                 <div className="section-content">
                     <Slider className="destination" {...settings}>
-                        {destination.map((item, index) => (
-                            <div className="item" key={index}>
-                                <div className="dlab-box">
-                                    <div className="dlab-media dlab-img-effect zoom-slow dlab-img-overlay2">
-                                        <img src={item.image} alt="" />
-                                        <div className="dlab-info-has p-a20 no-hover ">
-                                            <div className="dlab-info-has-text">
-                                                <h3 className="text-white">{item.title} <span className="text-primary pull-right">4 tours</span></h3>
-                                                <Link to={'/packages'} className="site-button-link">View All Tours</Link>
+                        {rooms &&
+                            rooms.map((item, index) => (
+                                <div className="item" key={index}>
+                                    <div className="dlab-box">
+                                        <div className="dlab-media dlab-img-effect zoom-slow dlab-img-overlay2">
+                                            <img src={img} alt="" />
+                                            <div className="dlab-info-has p-a20 no-hover ">
+                                                <div className="dlab-info-has-text">
+                                                    <h3 className="text-white">{item._id} <span className="text-primary pull-right">{item.total} places</span></h3>
+                                                    <Link to={`/packages?province=${item._id}`} className="site-button-link">View All Tours</Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+
+                        }
                     </Slider>
                 </div>
             </div>

@@ -1,45 +1,45 @@
+import { alertActions } from 'actions';
+import { history } from 'helpers';
+import About from 'markup/Pages/About';
+import GarbageRoom from 'markup/Pages/admin/room-manager/GarbageRoom';
+import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
+import Update from 'markup/Pages/admin/room-manager/Update';
+import Garbage from 'markup/Pages/admin/user-manager/Garbage';
+import UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
+import BlogClassic from 'markup/Pages/BlogClassic';
+import BlogClassicSidebar from 'markup/Pages/BlogClassicSidebar';
+import BlogDetails from 'markup/Pages/BlogDetails';
+import BlogGrid from 'markup/Pages/BlogGrid';
+import BlogGridSidebar from 'markup/Pages/BlogGridSidebar';
+import BlogLeftSidebar from 'markup/Pages/BlogLeftSidebar';
+import BookingDetails from 'markup/Pages/BookingDetails';
+import Contacts from 'markup/Pages/Contacts';
+import Error404 from 'markup/Pages/Error';
+import Homepage2 from 'markup/Pages/Homepage2';
+import Hotel from 'markup/Pages/Hotel';
+import HotelBooking from 'markup/Pages/HotelBooking';
+import ListingDetails from 'markup/Pages/ListingDetails';
+import Packages from 'markup/Pages/Packages';
+import Place from 'markup/Pages/Place';
+import PortfolioGrid2 from 'markup/Pages/PortfolioGrid2';
+import Popupss from 'markup/Pages/Tab';
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Router, Switch } from 'react-router-dom';
 import './css/plugins.css';
+import './css/skin/skin-1.css';
 import './css/style.css';
 import './css/templete.css';
-import './css/skin/skin-1.css';
-import './plugins/fontawesome/css/font-awesome.min.css'
-import './plugins/slick/slick.min.css';
-import './plugins/slick/slick-theme.min.css';
-import { Router, Route, Switch } from 'react-router-dom';
-
+import ForgotPass from './markup/Pages/ForgotPass';
 import Homepage from './markup/Pages/Homepage';
 import Login2 from './markup/Pages/Login2';
 import Register from './markup/Pages/Register-react-hook-form';
 import Register2 from './markup/Pages/Register2';
-import ForgotPass from './markup/Pages/ForgotPass';
-import { history } from 'helpers';
-import { alertActions, roomActions } from 'actions';
-import {useDispatch } from 'react-redux';
-import  UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
-import Garbage from 'markup/Pages/admin/user-manager/Garbage';
-import GarbageRoom  from 'markup/Pages/admin/room-manager/GarbageRoom';
-import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
+import './plugins/fontawesome/css/font-awesome.min.css';
+import './plugins/slick/slick-theme.min.css';
+import './plugins/slick/slick.min.css';
 
-import Homepage2 from 'markup/Pages/Homepage2';
-import About from 'markup/Pages/About';
-import Hotel from 'markup/Pages/Hotel';
-import BookingDetails from 'markup/Pages/BookingDetails';
-import Place from 'markup/Pages/Place';
-import Packages from 'markup/Pages/Packages';
-import Error404 from 'markup/Pages/Error';
-import HotelBooking from 'markup/Pages/HotelBooking';
-import BlogClassic from 'markup/Pages/BlogClassic';
-import BlogClassicSidebar from 'markup/Pages/BlogClassicSidebar';
-import BlogGrid from 'markup/Pages/BlogGrid';
-import BlogGridSidebar from 'markup/Pages/BlogGridSidebar';
-import BlogLeftSidebar from 'markup/Pages/BlogLeftSidebar';
-import BlogDetails from 'markup/Pages/BlogDetails';
-import PortfolioGrid2 from 'markup/Pages/PortfolioGrid2';
-import Contacts from 'markup/Pages/Contacts';
-import ListingDetails from 'markup/Pages/ListingDetails';
-import Popupss from 'markup/Pages/Tab';
-import Update from 'markup/Pages/admin/room-manager/Update';
+
 
 
 function App() {

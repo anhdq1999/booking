@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { roomActions } from 'actions';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { roomActions, userActions } from 'actions';
-import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, input } from 'reactstrap';
+import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import * as yup from 'yup';
 const schema = yup.object().shape({
-    nameroom: yup
+    name: yup
         .string().required("Name room is required"),
-    hostroom: yup
+    host: yup
         .string().required("Host room is required"),
     category: yup
         .string().required("Type room is required"),
@@ -18,9 +18,9 @@ const schema = yup.object().shape({
         .string().required("Short Description is required")
         .min(50, "At least 50 characters"),
     price: yup
-        .number().required("Price is required")
-        .min(6, " At least 100.000 VNĐ")
-        .max(9, "Price room is so expensive"),
+        .string()
+        .matches(/(?=.*?[0-9])/, "Phone Number must be number")
+        .required("Price is required"),
     country: yup
         .string().required("Country is required"),
     province: yup
@@ -34,16 +34,16 @@ const schema = yup.object().shape({
 })
 export default function RoomModal(props) {
     const initialFormState = {
-        nameroom: ' ',
-        hostroom: ' ',
-        category: ' ',
-        description: ' ',
-        sdescription: ' ',
-        price: ' ',
-        province: ' ',
-        ward: ' ',
-        district: ' ',
-        street: ' ',
+        nameroom: '',
+        hostroom: '',
+        category: '',
+        description: '',
+        sdescription: '',
+        price: '',
+        province: '',
+        ward: '',
+        district: '',
+        street: '',
 
     };
     const room = props.room;
@@ -62,7 +62,7 @@ export default function RoomModal(props) {
         resolver: yupResolver(schema),
     })
 
-  
+
     if (room) {
         if (newRoom) {
             setRoom(newRoom)
@@ -139,12 +139,12 @@ export default function RoomModal(props) {
                         <Row>
                             <Col md={6}>
                                 <Label for="name"> Name Room:</Label>
-                                <input className="form-control" type="text"  id='name' {...register("name")}></input>
+                                <input className="form-control" type="text" id='name' {...register("name")}></input>
                                 {errors?.nameroom &&
                                     <div className="alert-warning text-center">{errors.nameroom?.message}</div>
                                 }
                                 <Label > Category: </Label>
-                                <select className="form-control"  name="category"  {...register("category")}>
+                                <select className="form-control" name="category"  {...register("category")}>
                                     <option name="category" value=''>...Chọn</option>
                                     <option name="category" value='homestay'>Homestay</option>
                                     <option name="category" value='America'>Restaurant - Room</option>
@@ -153,7 +153,7 @@ export default function RoomModal(props) {
                                     }
                                 </select>
                                 <Label > Short Description:</Label>
-                                <textarea className="form-control"  rows="7" name="shortDescription" id='shortDescription' {...register("shortDescription")}></textarea>
+                                <textarea className="form-control" rows="7" name="shortDescription" id='shortDescription' {...register("shortDescription")}></textarea>
                                 {errors?.shortDescription &&
                                     <div className="alert-warning text-center">{errors.shortDescription?.message}</div>
                                 }
@@ -161,15 +161,15 @@ export default function RoomModal(props) {
                             <Col md={6}>
                                 <Label > Host Room: </Label>
                                 <select className="form-control" id='host' {...register("host")}>
-                                   {users && users.map((item, index) =>(
-                                       <option value={item._id}>{item.fullname}</option>
-                                   ))}
+                                    {users && users.map((item, index) => (
+                                        <option value={item._id}>{item.fullname}</option>
+                                    ))}
                                 </select>
                                 {errors?.hostroom &&
                                     <div className="alert-warning text-center">{errors.hostroom?.message}</div>
                                 }
                                 <Label for='price'> Price: </Label>
-                                <input className="form-control" type="double" id='price' {...register("price")}></input>
+                                <input className="form-control" type="text" id='price' {...register("price")}></input>
                                 {errors?.price &&
                                     <div className="alert-warning text-center">{errors.price?.message}</div>
                                 }
@@ -183,51 +183,71 @@ export default function RoomModal(props) {
                         <Row  >
                             <Col>
                                 <Label name="country"> Country:
-                                    <select className="form-control mb-3"    {...register("country")}>
+                                    {/* <select className="form-control mb-3"    {...register("country")}>
                                         <option name="country" value=''>...Chọn</option>
                                         <option name="country" value='Vietnam'>Viet Nam</option>
                                         <option name="country" value='America'>America</option>
-                                        {errors?.country &&
-                                            <div className="alert-warning text-center">{errors.country?.message}</div>
-                                        }
-                                    </select>
+                                        </select> */}
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        {...register("country")}
+                                    ></input>
+                                    {errors?.country &&
+                                        <div className="alert-warning text-center">{errors.country?.message}</div>
+                                    }
                                 </Label>
 
                             </Col>
                             <Col>
                                 <Label for='province' name="province"> Province:
-                                    <select className="form-control mb-3"   {...register("province")}>
+                                    {/* <select className="form-control mb-3"   {...register("province")}>
                                         <option name="province" value=''>...Chọn</option>
                                         <option name="province" value='HoChiMinhCity'>Ho Chi Minh City</option>
                                         <option name="province" value='HaNoi'>Ha Noi</option>
-                                        {errors?.province &&
-                                            <div className="alert-warning text-center">{errors.province?.message}</div>
-                                        }
-                                    </select>
+                                        </select> */}
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        {...register("province")}
+                                    ></input>
+                                    {errors?.province &&
+                                        <div className="alert-warning text-center">{errors.province?.message}</div>
+                                    }
                                 </Label>
                             </Col>
                             <Col>
                                 <Label for='ward' name="ward">Ward:
-                                    <select className="form-control mb-3"    {...register("ward")}>
+                                    {/* <select className="form-control mb-3"    {...register("ward")}>
                                         <option name="ward" value=''>...Chọn</option>
                                         <option name="ward" value='1'>1</option>
                                         <option name="ward" value='2'>2</option>
-                                        {errors?.ward &&
-                                            <div className="alert-warning text-center">{errors.ward?.message}</div>
-                                        }
-                                    </select>
+                                        </select> */}
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        {...register("ward")}
+                                    ></input>
+                                    {errors?.ward &&
+                                        <div className="alert-warning text-center">{errors.ward?.message}</div>
+                                    }
                                 </Label>
                             </Col>
                             <Col>
                                 <Label for='district' name="district"> District:
-                                    <select className="form-control mb-3"   {...register("district")}>
+                                    {/* <select className="form-control mb-3"   {...register("district")}>
                                         <option name="district" value=''>...Chọn</option>
                                         <option name="district" value='Tan Binh'>Tan Binh</option>
                                         <option name="district" value='1'>1</option>
-                                        {errors?.district &&
-                                            <div className="alert-warning text-center">{errors.district?.message}</div>
-                                        }
-                                    </select>
+                                        </select> */}
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        {...register("district")}
+                                    ></input>
+                                    {errors?.district &&
+                                        <div className="alert-warning text-center">{errors.district?.message}</div>
+                                    }
                                 </Label>
                             </Col>
 
@@ -235,24 +255,28 @@ export default function RoomModal(props) {
                         <Row>
                             <Col md={12}>
                                 <Label for='street' name="street">Street:
-                                    <input className="form-control" name="address" type="text" {...register("street")}>
-                                        {errors?.address &&
-                                            <div className="alert-warning text-center">{errors.address?.message}</div>
-                                        }
-                                    </input>
                                 </Label>
+                                <input className="form-control" name="address" type="text" {...register("street")}>
+                                    {errors?.address &&
+                                        <div className="alert-warning text-center">{errors.address?.message}</div>
+                                    }
+                                </input>
                             </Col>
                         </Row>
-                        <Row className="ml-3">
-                            <input className="form-control" type="file" id="file" multiple onChange={handleImageChange} />
+                        <Row className=" mt-3">
+                            <Col md={12}>
                             <Label htmlFor="file" className="label">
-                                <i className="material-icons"></i>
+                                Images
                             </Label>
-                            <div className="result-image">
+                            <input className="form-control" type="file" id="file" multiple onChange={handleImageChange} />
+                            </Col>
+                        </Row>
+                        <Row>
+                        <div className="result-image">
                                 <Col md={2}>{renderPhotos(selectedFiles)}</Col>
                             </div>
-
                         </Row>
+                            
                         <Row className="mt-3">
                             <Col md={6}>
                                 <Button

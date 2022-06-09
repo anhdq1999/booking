@@ -1,6 +1,8 @@
 const slugGenerator = require('mongoose-slug-generator/lib/slug-generator');
+const { $where } = require('../models/Rooms');
 const Room = require('../models/Rooms');
-const RESPONSE = require('../response')
+const RESPONSE = require('../response');
+const { room } = require('../_constants');
 class RoomController {
     //[GET] /:id
     show(req, res, next) {
@@ -42,7 +44,7 @@ class RoomController {
     update(req, res, next) {
         const _id = req.params.id;
         const roomRequest = req.body;
-        Room.findOneAndUpdate({_id}, roomRequest,{new:true},)
+        Room.findOneAndUpdate({ _id }, roomRequest, { new: true })
             .then((room) => {
                 res.status(200).json(RESPONSE.ROOM.UPDATE.SUCCESS(room));
             })
@@ -58,16 +60,18 @@ class RoomController {
     //[GET] /rooms/garbage
     garbage(req, res, next) {
         Room.findDeleted({})
-            .then((rooms) => res.status(200).json(RESPONSE.ROOM.GETALL_DELETED.SUCCESS(rooms)))
+            .then((rooms) =>
+                res
+                    .status(200)
+                    .json(RESPONSE.ROOM.GETALL_DELETED.SUCCESS(rooms)),
+            )
             .catch(next);
     }
     // DELETE /:id
     delete(req, res, next) {
         // console.log(req.params.);
         Room.delete({ _id: req.params.id })
-            .then(() =>
-                res.status(200).json(RESPONSE.ROOM.DELETE.SUCCESS()),
-            )
+            .then(() => res.status(200).json(RESPONSE.ROOM.DELETE.SUCCESS()))
             .catch(next);
     }
     // [GET] /rooms/store
@@ -87,17 +91,38 @@ class RoomController {
     }
     //[PUT] /users/restore/:id
     restore(req, res, next) {
-        Room.restore({ _id: req.params.id })
-            .then(() =>
-                res.status(200).json(RESPONSE.ROOM.RESTORE.SUCCESS()),
-            );
+        Room.restore({ _id: req.params.id }).then(() =>
+            res.status(200).json(RESPONSE.ROOM.RESTORE.SUCCESS()),
+        );
     }
     //[DELETE] /rooms/remove/:id
     completeDelete(req, res, next) {
         Room.deleteOne({ _id: req.params.id })
-            .then(() =>
-                res.status(200).json(RESPONSE.ROOM.REMOVE.SUCCESS())
-            )
+            .then(() => res.status(200).json(RESPONSE.ROOM.REMOVE.SUCCESS()))
+            .catch(next);
+    }
+    //[GET] /rooms/findByProvince
+    groupByProvince(req, res, next) {
+        Room.aggregate([
+            {
+                $group: {
+                    _id: '$address.province',
+                    image: { $first: '$image' },
+                    total: {
+                        $sum: 1,
+                    },
+                },
+            },
+        ])
+            .then((rooms) => res.status(200).json(rooms))
+            .catch(next);
+    }
+    //[GET] getByProvince /rooms/:province
+    getByProvince(req, res, next) {
+        const province = req.params.province;
+        console.log(province);
+        Room.find({ 'address.province': province })
+            .then((rooms) => res.status(200).json(rooms))
             .catch(next);
     }
 }
