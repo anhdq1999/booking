@@ -8,12 +8,10 @@ import Header from './../Layout/Header';
 import Slick from './Slick';
 
 
-
-
 const content = [
     {
-        title: 'Vulputate Mollis Ultricies Fermentum Parturient',
-        button: 'Read More',
+        title: 'Đặt Homstay không khó nhờ có booking ',
+        button: 'Đặt ngay',
         image: require('images/main-slider/slide1.jpg'),
     },
     {
@@ -25,6 +23,11 @@ const content = [
         title: 'Tortor Dapibus Commodo Aenean Quam',
         button: 'Discover',
         image: require('images/main-slider/slide3.jpg'),
+    },
+    {
+        title: '',
+        button: 'Discover',
+        image: require('images/main-slider/slide4.jpg'),
     }
 ];
 
@@ -32,7 +35,6 @@ const bg1 = require('images/background/bg1.jpg');
 // const bg3 = require('images/background/bg3.jpg');
 
 function Homepage(props) {
-
 
     return (
         <div>
