@@ -1,6 +1,8 @@
-import React from 'react';
+import { addressActions } from 'actions';
+import React, { useEffect } from 'react';
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TopPlaces from './../Element/TopPlaces';
 import Footer from './../Layout/Footer';
@@ -35,7 +37,21 @@ const bg1 = require('images/background/bg1.jpg');
 // const bg3 = require('images/background/bg3.jpg');
 
 function Homepage(props) {
-
+    const provinces = useSelector(state => state.addressReducer.provinces)
+    const districts = useSelector(state => state.addressReducer.districts)
+    const wards = useSelector(state => state.addressReducer.wards)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(addressActions.getAllProvince())
+    }, [dispatch])
+    const handleProvinceChange = (e) => {
+        const { value } = e.target;
+        dispatch(addressActions.getAllDistrict(value))
+    }
+    const handleDistrictChange = (e) => {
+        const { value } = e.target;
+        dispatch(addressActions.getAllWard(value))
+    }
     return (
         <div>
             <Header />
@@ -64,49 +80,50 @@ function Homepage(props) {
                     <div className="container">
                         <form className="row">
                             <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
-                                <label>Keywords</label>
-                                <input className="form-control" placeholder="Enter Zip Code" type="text" />
-                            </div>
-                            <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
-                                <label>Activity</label>
-                                <select className="form-control">
-                                    <option>Any</option>
-                                    <option>City Tours</option>
-                                    <option>Cultural &amp; Thematic Tours</option>
-                                    <option>Family Friendly Tours</option>
-                                    <option>Holiday &amp; Seasonal Tours</option>
-                                    <option>Indulgence &amp; Luxury Tours</option>
-                                    <option>Outdoor Activites</option>
-                                    <option>Relaxation Tours</option>
-                                    <option>Wild &amp; Adventure Tours</option>
+                                <label>Country</label>
+                                <select className="form-control" readonly>
+                                    <option>Việt Nam</option>
                                 </select>
                             </div>
                             <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
-                                <label>Destination</label>
-                                <select className="form-control">
-                                    <option>Any</option>
-                                    <option>City Tours</option>
-                                    <option>Cultural &amp; Thematic Tours</option>
-                                    <option>Family Friendly Tours</option>
-                                    <option>Holiday &amp; Seasonal Tours</option>
-                                    <option>Indulgence &amp; Luxury Tours</option>
-                                    <option>Outdoor Activites</option>
-                                    <option>Relaxation Tours</option>
-                                    <option>Wild &amp; Adventure Tours</option>
+                                <label>Province</label>
+                                <select className="form-control" onChange={handleProvinceChange}>
+                                    {provinces.length > 0 &&
+                                        <option checked>Chọn tỉnh</option>
+                                    }
+                                    {(provinces.length > 0 &&
+                                        provinces.map((item, index) => (
+                                            <option key={item._id} value={item.code}>{item.name_with_type}</option>
+                                        ))) ||
+                                        <option >Đang load dữ liệu</option>
+                                    }
                                 </select>
                             </div>
                             <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
-                                <label>Duration</label>
+                                <label>District</label>
+                                <select className="form-control" onChange={handleDistrictChange}>
+                                    {districts.length > 0 &&
+                                        <option checked> Chọn Quận/huyện</option>
+                                    }
+                                    {(districts.length > 0 &&
+                                        districts.map((item, index) => (
+                                            <option key={item._id} value={item.code}>{item.name_with_type}</option>
+                                        ))) ||
+                                        <option>Vui lòng chọn tỉnh</option>}
+                                </select>
+                            </div>
+                            <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
+                                <label>Ward</label>
                                 <select className="form-control">
-                                    <option>Any</option>
-                                    <option>City Tours</option>
-                                    <option>Cultural &amp; Thematic Tours</option>
-                                    <option>Family Friendly Tours</option>
-                                    <option>Holiday &amp; Seasonal Tours</option>
-                                    <option>Indulgence &amp; Luxury Tours</option>
-                                    <option>Outdoor Activites</option>
-                                    <option>Relaxation Tours</option>
-                                    <option>Wild &amp; Adventure Tours</option>
+                                    {wards.length > 0 &&
+                                        <option checked> Chọn Phường/Xã</option>
+                                    }
+                                    {(wards.length > 0 &&
+                                        wards.map((item, index) => (
+                                            <option value={item.code}>{item.name_with_type}</option>
+                                        ))) ||
+                                        <option>Vui lòng chọn huyện</option>
+                                    }
                                 </select>
                             </div>
                             <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">

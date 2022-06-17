@@ -66,6 +66,9 @@ function Header(props) {
                             }
                             {loggedIn &&
                                 <ul>
+                                    {user.role==='admin' &&
+                                     <li><Link to={'/admin/rooms-manager'} className="site-button-link">Admin Room</Link></li>
+                                    }
                                     <li><Link to={'/profile'} className="site-button-link">{user.fullname}</Link></li>
                                     <li><Link to={'/'} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
                                 </ul>
@@ -109,13 +112,13 @@ function Header(props) {
                                         <li><Link to={'/register2'} className="dez-page">Register <span className="new-page menu-new">New</span></Link></li>
                                     </ul>
                                 </li>
-                                <li><Link>Hotels <i className="fa fa-chevron-down"></i></Link>
+                                <li><Link to='/'>Hotels <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
                                         <li><Link to={'/hotel'} className="dez-page">Hotel</Link></li>
                                         <li><Link to={'/hotelbooking'} className="dez-page">Hotel Booking</Link></li>
                                     </ul>
                                 </li>
-                                <li><Link>Blog <i className="fa fa-chevron-down"></i></Link>
+                                <li><Link to='/'>Blog <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
                                         <li><Link to={'/blogclassic'} className="dez-page">Classic</Link></li>
                                         <li><Link to={'/blogclassicsidebar'} className="dez-page">Classic Sidebar</Link></li>
@@ -125,7 +128,7 @@ function Header(props) {
                                         <li><Link to={'/blogdetails'} className="dez-page">Blog Details</Link></li>
                                     </ul>
                                 </li>
-                                <li><Link>Our Portfolio <i className="fa fa-chevron-down"></i></Link>
+                                <li><Link to='/'>Our Portfolio <i className="fa fa-chevron-down"></i></Link>
                                     <ul className="sub-menu">
                                         <li><Link to={'/portfolio2'} className="dez-page">Portfolio Grid 2 </Link></li>
                                         {/*<li><Link to={'portfolio2'} className="dez-page">Portfolio Grid 3 </Link></li>

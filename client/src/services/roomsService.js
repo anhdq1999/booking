@@ -12,6 +12,7 @@ export const roomsService = {
     restoreRoom,
     groupByProvince,
     getByProvince,
+    formatPrice,
 };
 
 
@@ -19,7 +20,7 @@ export const roomsService = {
 function getAll() {
     const url = `/rooms`;
     return axiosClient.get(url);
-    
+
 }
 
 function getById(id) {
@@ -30,33 +31,39 @@ function getAllDeleted() {
     const url = `/rooms/garbage`;
     return axiosClient.get(url);
 }
-    
-function create(room){
-    const url=`/rooms`;
-    return axiosClient.post(url,room)
+
+function create(room) {
+    const url = `/rooms`;
+    return axiosClient.post(url, room)
 }
-function update(id,newRoom) {
+function update(id, newRoom) {
     const url = `/rooms/${id}`;
-    return axiosClient.put(url,newRoom);
+    return axiosClient.put(url, newRoom);
 }
-function deleteRoom(id){
-    const url =`rooms/${id}`;
+function deleteRoom(id) {
+    const url = `rooms/${id}`;
     return axiosClient.delete(url);
 }
 
-function removeRoom(id){
-    const url =`rooms/remove/${id}`;
+function removeRoom(id) {
+    const url = `rooms/remove/${id}`;
     return axiosClient.delete(url);
 }
-function restoreRoom(id){
-    const url =`rooms/restore/${id}`;
+function restoreRoom(id) {
+    const url = `rooms/restore/${id}`;
     return axiosClient.post(url);
 }
-function groupByProvince(){
-    const url =`rooms/groupByProvince/`;
+function groupByProvince() {
+    const url = `rooms/groupByProvince/`;
     return axiosClient.get(url);
 }
-function getByProvince(province){ 
-    const url =`rooms/${province}`;
+function getByProvince(province) {
+    const url = `rooms/getByProvince/${province}`;
     return axiosClient.get(url);
+}
+function formatPrice(price) {
+    return new Intl.NumberFormat('vi-VN', {
+        style:'currency',
+        currency:'VND'
+    }).format(price)
 }

@@ -15,17 +15,41 @@ export default function BookNowModal(props) {
                 isOpen={props.isOpen}
                 toggle={() => toggle()}
             >
-
                 <ModalHeader>
                     <h5 className="modal-title" id="exampleModalLabel">Get the Best Holiday Planned by Experts!</h5>
-
                 </ModalHeader>
                 <ModalBody>
-
-
-
                     <h5 className="text-center">Enter your contact details and we will plan the best holiday suiting all your requirements.</h5>
                     <form className="row">
+                        <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <input name="dzName" required="" className="form-control" placeholder="" type="date" />
+                                </div>
+                                <span className="font-12">From</span>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <input name="dzName" required="" className="form-control" placeholder="" type="date" />
+                                </div>
+                                <span className="font-12">To</span>
+
+                            </div>
+                        </div>
+
+                        <div className="col-md-6 col-lg-6 col-xl-12 col-sm-6 col-6">
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <select className="form-control">
+                                        <option>Deluxe Twin Bed Room</option>
+                                        <option>Breakfast and Dinner</option>
+                                        <option>Deluxe Twin (Smoking)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div className="col-md-6">
                             <div className="form-group">
                                 <div className="input-group">
@@ -42,19 +66,19 @@ export default function BookNowModal(props) {
                         </div>
                         <div className="col-md-4">
                             <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" type="text" name="demo_vertical2" />
+                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
                                 <span className="font-12">Adult (12yrs +)</span>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" type="text" name="demo_vertical2" />
+                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
                                 <span className="font-12">Child (2-12yrs)</span>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" type="text" name="demo_vertical2" />
+                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
                                 <span className="font-12">Infant (0-2yrs)</span>
                             </div>
                         </div>

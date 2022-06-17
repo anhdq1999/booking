@@ -1,18 +1,11 @@
 import { roomActions } from 'actions';
+import { Image, Transformation } from 'cloudinary-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Footer from './../Layout/Footer';
 import Header2 from './../Layout/Header2';
 
-
-function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => images[item.replace('./', '')] = r(item));
-    return images;
-}
-
-const images = importAll(require.context('images', true, /\.(png|jpe?g|svg)$/));
 const bg3 = require('images/banner/bnr1.jpg');
 
 // const villa = require('images/homestay/pic15.jpg')
@@ -53,7 +46,8 @@ function Hotel(props) {
                                 <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={index}>
                                     <div className="dlab-box hotal-box" data-tilt data-tilt-max="10" data-tilt-speed="1">
                                         <div className="dlab-media dlab-img-effect dlab-img-overlay2">
-                                            {item.image && <img src={images[item.image]} alt="" />}
+                                            <Image cloudName="dmtwoqysj" publicId={item.image} >
+                                            </Image>
                                             <div className="dlab-info-has p-a20 text-white no-hover">
                                                 <h4 className="m-t0 m-b10">{item.name}</h4>
                                                 <span>{item.offer}</span>

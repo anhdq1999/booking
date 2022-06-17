@@ -1,9 +1,7 @@
 import { userActions } from 'actions';
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { userService } from 'services';
 import { FormGroup, Input, Label } from 'reactstrap';
-import { useForm } from 'react-hook-form';
 
 function Register(props) {
 
@@ -67,7 +65,7 @@ function Register(props) {
         }
         let isValidated = true;
         stateArr.forEach((value) =>{
-            if  (value.errorMessage.length > 0 || value.value.length == 0)
+            if  (value.errorMessage.length > 0 || value.value.length === 0)
             isValidated = false; return;
         })
         setIsValidationForm(isValidated)
@@ -147,7 +145,6 @@ function Register(props) {
         username,
         password,
         dateOfBirth,
-        sex,
         phoneNumber,
         address,
     } = registedUser
@@ -323,4 +320,4 @@ const actionCreators = {
 
 };
 const connectedLoginPage = connect(mapState, actionCreators)(Register);
-export { connectedLoginPage as Register }
+export { connectedLoginPage as Register };

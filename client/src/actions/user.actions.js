@@ -40,8 +40,6 @@ function searchByEmail(type, key) {
             default:
                 dispatch(searchByEmail(key));
         }
-
-
     }
     function searchByEmail(key) { return { type: userConstants.SEARCH_BY_EMAIL, key } }
     function searchByUsername(key) { return { type: userConstants.SEARCH_BY_USERNAME, key } }
@@ -199,7 +197,12 @@ function getAll() {
                         dispatch(failure())
                     }
                 }
-            ).catch(error => dispatch(failure(error)));
+            ).catch(
+                error => {
+                    dispatch(failure(error))
+                    dispatch(alertActions.error(error.message))
+                }
+            );
     }
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }

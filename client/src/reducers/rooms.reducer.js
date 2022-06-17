@@ -1,10 +1,12 @@
 import { roomConstants } from "_constants/room.constants";
-const initialState={
-    items:[],
-    item:{},
-    newRoom:{}, 
-    editRoom:{},
-    itemsDeleted:[],
+const initialState = {
+    items: [],
+    item: {},
+    newRoom: {},
+    editRoom: null,
+    itemsDeleted: [],
+    itemsSearch: [],
+    itemsByProvince:[]
 }
 
 export function roomReducer(state = initialState, action) {
@@ -15,10 +17,8 @@ export function roomReducer(state = initialState, action) {
                 ...state,
             };
         case roomConstants.GETBYID_SUCCESS:
-           let item =action.room
-            item.image =item.image.replace("images/","")
-            item.images=item.images.map(image => image.replace("images/",""))
-            state.item=item
+            let item = action.room
+            state.item = item
             return {
                 ...state
             };
@@ -27,22 +27,21 @@ export function roomReducer(state = initialState, action) {
                 error: action.error,
                 ...state
             };
-    
+
         case roomConstants.GETALL_SUCCESS:
-            state.items =action.rooms;
-            state.items.forEach(room=> room.image =room.image.replace("images/",""))
-            state.loading=false
+            state.items = action.rooms;
+            state.loading = false
             return {
-              ...state
+                ...state
             };
         case roomConstants.GETALLDELETED_REQUEST:
-            state.loading=true;
+            state.loading = true;
             return {
-               ...state
+                ...state
             };
         case roomConstants.GETALLDELETED_SUCCESS:
-            state.loading=false;
-            state.itemsDeleted=action.rooms;
+            state.loading = false;
+            state.itemsDeleted = action.rooms;
             return {
                 ...state,
             };
@@ -58,34 +57,31 @@ export function roomReducer(state = initialState, action) {
         case roomConstants.CREATE_SUCCESS:
             state.items.push(action.room);
             state.items = state.items.filter(room => room._id !== '')
-            state.createRoom={};
+            state.createRoom = {};
             return {
                 ...state,
             };
-            case roomConstants.GROUP_BY_PROVINCE_SUCCESS:
-                let itemsGroupByProvine=action.rooms
-                itemsGroupByProvine.forEach(room=> room.image =room.image.replace("images/",""))
-                return {
-                    itemsGroupByProvine:itemsGroupByProvine,
-                    ...state,
-                };
-                case roomConstants.GET_BY_PROVINCE_SUCCESS:
-                let itemsByProvince=action.rooms
-                itemsByProvince.forEach(room=> room.image =room.image.replace(["images/"],""))
-                return {
-                    itemsByProvince:itemsByProvince,
-                    ...state,
-                };
+        case roomConstants.GROUP_BY_PROVINCE_SUCCESS:
+            return {
+                ...state,
+                itemsGroupByProvine: action.rooms,
+            };
+        case roomConstants.GET_BY_PROVINCE_SUCCESS:
+            state.itemsByProvince = action.rooms
+            // itemsByProvince.forEach(room=> room.image =room.image.replace(["images/"],""))
+            return {
+                ...state,
+            };
         case roomConstants.UPDATE_REQUEST:
             return {
                 ...state,
-            editRoom: action.room,
+                editRoom: action.room,
             };
         case roomConstants.UPDATE_SUCCESS:
             const editRoomIndex = state.items.findIndex(room => room._id === action.room._id)
             state.items[editRoomIndex] = action.room
             state.items = state.items.filter(room => room._id !== "")
-            state.editRoom=action.room
+            state.editRoom = action.room
             return {
                 ...state,
             };
@@ -109,6 +105,11 @@ export function roomReducer(state = initialState, action) {
             return {
                 ...state,
             };
+        case roomConstants.SEARCH_BY_NAME:
+            state.itemsSearch = state.items.filter(u => u.name.toLowerCase().includes((action.key).toLowerCase()));
+            return {
+                ...state
+            }
         default:
             return state
     }

@@ -3,7 +3,6 @@ import { history } from 'helpers';
 import About from 'markup/Pages/About';
 import GarbageRoom from 'markup/Pages/admin/room-manager/GarbageRoom';
 import RoomsManager from 'markup/Pages/admin/room-manager/RoomsManager';
-import Update from 'markup/Pages/admin/room-manager/Update';
 import Garbage from 'markup/Pages/admin/user-manager/Garbage';
 import UsersManager from 'markup/Pages/admin/user-manager/UsersManager';
 import BlogClassic from 'markup/Pages/BlogClassic';
@@ -70,9 +69,9 @@ function App() {
             <Route path='/index-2' exact component={Homepage2} />
             <Route path='/about' exact component={About} />
             <Route path='/hotel' exact component={Hotel} />
-            <Route path='/booking' exact component={BookingDetails} />
+            <Route path='/booking/:id' exact component={BookingDetails} />
             <Route path='/place' exact component={Place} />
-            <Route path='/packages' exact component={Packages} />
+            <Route path='/packages/:province' exact component={Packages} />
             <Route path='/error' exact component={Error404} />
             <Route path='/forgot' exact component={ForgotPass} />
             <Route path='/hotelbooking/:id' exact component={HotelBooking} />
@@ -88,8 +87,6 @@ function App() {
             <Route path='/listing' exact component={ListingDetails} />
             <Route path='/admin/rooms-manager' exact component={RoomsManager} />
             <Route path='/admin/rooms-manager/garbage' exact component={GarbageRoom} />
-            <Route path='/admin/rooms-manager/update' exact component={Update} />
-
           </Switch>
         </div>
       </Router>

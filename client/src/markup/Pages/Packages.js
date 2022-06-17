@@ -1,27 +1,20 @@
 import { roomActions } from 'actions';
+import { Image, Transformation } from 'cloudinary-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { roomsService } from 'services';
 import Footer from './../Layout/Footer';
 import Header2 from './../Layout/Header2';
 
-function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => images[item.replace('./', '')] = r(item));
-    return images;
-}
-
-const images = importAll(require.context('images', true, /\.(png|jpe?g|svg)$/));
-console.log(images);
-
 const bg3 = require('./../../images/banner/bnr1.jpg');
 function Packages(props) {
-    let province = props.location.search.replace("?province=", "");
+    const province = props.match.params.province;
     const dispatch = useDispatch();
     const rooms = useSelector(state => state.roomReducer.itemsByProvince)
     useEffect(() => {
-       dispatch(roomActions.getByProvince(province))
-    },[dispatch,province])
+        dispatch(roomActions.getByProvince(province))
+    }, [dispatch, province])
     return (
         <div>
             <Header2 />
@@ -45,7 +38,11 @@ function Packages(props) {
                             <div className="col-md-6 col-xl-3  col-sm-6 m-b20" key={index}>
                                 <div className="dlab-box">
                                     <div className="dlab-media">
-                                        <Link to={'./booking'}><img src={images[item.image]} alt="" /> </Link>
+                                        <Link to={`/booking/${item._id}`}>
+                                            <Image cloudName="dmtwoqysj" publicId={item.image} >
+                                                <Transformation width="400" height="250" gravity="south" crop="fill" />
+                                            </Image>
+                                        </Link>
                                     </div>
                                     <div className="dlab-info p-a15 border-1">
                                         <h4 className="dlab-title m-t0"><a href="booking-details.html">{item.name}</a></h4>
@@ -56,7 +53,7 @@ function Packages(props) {
                                                 <li> <span className="fa fa-star"></span> Star: {item.rating} </li>
                                             </ul>
                                             <div className="clearfix">
-                                                <span className="package-price pull-left text-primary">{item.price}VND</span>
+                                                <span className="package-price pull-left text-primary">{roomsService.formatPrice(item.price)}</span>
                                                 <Link to={'/booking'} className="site-button pull-right w-100">View details</Link>
                                             </div>
                                         </div>

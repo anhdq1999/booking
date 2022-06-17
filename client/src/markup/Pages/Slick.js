@@ -3,14 +3,14 @@ import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { roomActions } from 'actions';
+import { Image, Transformation } from 'cloudinary-react';
 
-const img =  require('./../../images/our-work/pic2.jpg')
 function Slick(props) {
     const rooms = useSelector(state => state.roomReducer.itemsGroupByProvine)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(roomActions.groupByProvince())
-    },[dispatch])
+    }, [dispatch])
     const settings = {
         dots: false,
         slidesToShow: 4,
@@ -59,11 +59,13 @@ function Slick(props) {
                                 <div className="item" key={index}>
                                     <div className="dlab-box">
                                         <div className="dlab-media dlab-img-effect zoom-slow dlab-img-overlay2">
-                                            <img src={img} alt="" />
+                                            <Image cloudName="dmtwoqysj" publicId={item.image}>
+                                                <Transformation width="400" height="250" gravity="south" crop="fill" />
+                                            </Image>
                                             <div className="dlab-info-has p-a20 no-hover ">
                                                 <div className="dlab-info-has-text">
                                                     <h3 className="text-white">{item._id} <span className="text-primary pull-right">{item.total} places</span></h3>
-                                                    <Link to={`/packages?province=${item._id}`} className="site-button-link">View All Tours</Link>
+                                                    <Link to={`/packages/${item._id}`} className="site-button-link">View All Tours</Link>
                                                 </div>
                                             </div>
                                         </div>
