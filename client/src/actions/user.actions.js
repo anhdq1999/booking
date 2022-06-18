@@ -19,6 +19,7 @@ export const userActions = {
     getById,
     create,
     update,
+    updateRequest,
     getAllDeleted,
     delete: _delete,
     restore,
@@ -142,6 +143,9 @@ function create(user) {
     function request(user) { return { type: userConstants.CREATE_REQUEST, user } }
     function success(user) { return { type: userConstants.CREATE_SUCCESS, user } }
     function failure(error) { return { type: userConstants.CREATE_FAILURE, error } }
+}
+function updateRequest(user) {
+    return { type: userConstants.UPDATE_REQUEST, user }
 }
 function update(user, data) {
     return dispatch => {

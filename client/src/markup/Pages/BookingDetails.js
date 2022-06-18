@@ -6,38 +6,6 @@ import Footer from './../Layout/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { roomActions } from 'actions';
 
-const tourContent = [
-    {
-        image: require('./../../images/tour/pic1.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic2.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic3.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic4.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic5.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic6.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic7.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic8.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic9.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic10.jpg'),
-    },
-];
 
 const tourDay = [
     {

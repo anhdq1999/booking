@@ -40,21 +40,11 @@ const schema = yup.object().shape({
         .required("Roles is required")
 })
 export default function UserModal(props) {
-    const initialFormState = {
-        fullname: '',
-        username: '',
-        email: '',
-        password: '',
-        dateOfBirth: '',
-        sex: '',
-        address: '',
-        roles: '',
-    };
-    const user = props.user;
+    let user = props.user;
     const alert = useSelector(state => state.alert)
     const updateUser = useSelector(state => state.userReducer.editUser)
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
 
     const {
         register,
@@ -67,7 +57,7 @@ export default function UserModal(props) {
         resolver: yupResolver(schema),
 
     })
-    if (user) {
+    if (!props.isAdd) {
         if (updateUser) {
             setUserValue(updateUser)
         } else {
@@ -80,7 +70,6 @@ export default function UserModal(props) {
         return props.toggle()
     }
     function setUserValue(data) {
-        data = data ? data : initialFormState
         const date = new Date(data.dateOfBirth)
         const dateOfBirth = date.toLocaleDateString('en-CA') || "2000-12-16";
         setValue("fullname", data.fullname)
@@ -99,12 +88,8 @@ export default function UserModal(props) {
     function handleEdit(data) {
         dispatch(userActions.update(user, data))
     }
-
     const onSubmit = data => {
-        if (user) {
-            handleEdit(data)
-
-        }
+        if (!props.isAdd) handleEdit(data)
         else handleAdd(data)
     }
     return (

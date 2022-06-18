@@ -12,7 +12,7 @@ function UsersManager(props) {
   const [selectedUsers, setSelectedUsers] = useState([])
   const [editableUser, setEditableUser] = useState({})
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const [isAddModal, setIsAddModal] = useState(false)
+  const [isAddModal, setIsAddModal] = useState(true)
   const [isSearch, setIsSearch] = useState(false)
   const [searchBy, setSearchBy] = useState("email");
   const alert = useSelector(state => state.alert)

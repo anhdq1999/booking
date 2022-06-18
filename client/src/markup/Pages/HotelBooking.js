@@ -24,7 +24,7 @@ function HotelBooking(props) {
     const handleOpenModal = () => {
         setIsOpenModal(!isOpenModal)
     }
-
+    console.log(room);
     const settings = {
         dots: false,
         slidesToShow: 1,

@@ -1,7 +1,6 @@
-import { redRock } from "@cloudinary/url-gen/qualifiers/artisticFilter";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addressActions, roomActions } from 'actions';
+import { addressActions, alertActions, roomActions } from 'actions';
 import { Image } from "cloudinary-react";
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
@@ -42,23 +41,7 @@ const schema = yup.object().shape({
         .string("Images is required")
 })
 export default function RoomModal(props) {
-    const initialFormState = {
-        name: '',
-        host: '',
-        category: '',
-        description: '',
-        shortDescription: '',
-        image: '',
-        price: '',
-        address: {
-            country: '',
-            province: '',
-            ward: '',
-            district: '',
-            street: '',
-        }
 
-    };
     const room = props.room
     const alert = useSelector(state => state.alert)
     const users = useSelector(state => state.userReducer.items)
@@ -66,8 +49,6 @@ export default function RoomModal(props) {
     const provinces = useSelector(state => state.addressReducer.provinces)
     const districts = useSelector(state => state.addressReducer.districts)
     const wards = useSelector(state => state.addressReducer.wards)
-
-
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -79,7 +60,6 @@ export default function RoomModal(props) {
         setValue,
         handleSubmit,
         reset,
-        getValues,
         formState: { errors }
     } = useForm({
         mode: 'onBlur',
@@ -88,7 +68,7 @@ export default function RoomModal(props) {
 
     const [selectedImages, setSeletedImages] = useState([])
 
-    if (room) {
+    if (!props.isAdd) {
         if (newRoom) {
             setRoom(newRoom)
         } else {
@@ -99,7 +79,6 @@ export default function RoomModal(props) {
         return props.toggle()
     }
     function setRoom(data) {
-        data = data ? data : initialFormState
         setValue("name", data.name)
         setValue("host", data.host)
         setValue("category", data.category)
@@ -108,15 +87,28 @@ export default function RoomModal(props) {
         setValue("price", data.price)
         setValue("address.country", data.address.country)
         setValue("address.province", data.address.province)
-        setValue("address.ward", data.address.ward)
         setValue("address.district", data.address.district)
+        setValue("address.ward", data.address.ward)
         setValue("address.street", data.address.street)
 
     }
     function handleAdd(data) {
-        console.log(data);
-        data.images.forEach(item => console.log(item));
-        // dispatch(roomActions.create(data))
+        const uploadData = new FormData();
+        data.images.forEach(item => {
+            uploadData.append("file", item, item.name);
+        })
+        uploadService.uploadMultiImage(uploadData)
+            .then(
+                res => {
+                    data.images = res.data
+                    data.image = data.images[0]
+                    dispatch(roomActions.create(data))
+                }
+            ).catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                }
+            )
     }
     function handleEdit(data) {
         // data.images = selectedImages
@@ -130,17 +122,20 @@ export default function RoomModal(props) {
                     data.images = room.images.concat(res.data)
                     dispatch(roomActions.update(room, data))
                 }
+            ).catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                }
             )
     }
     const onSubmit = data => {
-        if (room) {
+        if (!props.isAdd)
             handleEdit(data)
-        } else
+        else
             handleAdd(data)
     }
 
     const handleImageChange = (e) => {
-
         if (e.target.files) {
             let images = [];
             Array.from(e.target.files).forEach(
@@ -151,13 +146,11 @@ export default function RoomModal(props) {
             setValue("images", images)
             setSeletedImages(images);
         }
-
     };
 
 
     const handleProvinceChange = (e) => {
         const { value } = e.target;
-        console.log(value);
         dispatch(addressActions.getAllDistrict(value))
     }
     const handleDistrictChange = (e) => {
@@ -190,8 +183,9 @@ export default function RoomModal(props) {
                                 <Label > Category: </Label>
                                 <select className="form-control" name="category"  {...register("category")}>
                                     <option name="category" value=''>...Chọn</option>
-                                    <option name="category" value='Homestay'>Homestay</option>
-                                    <option name="category" value='America'>Restaurant - Room</option>
+                                    <option name="category" value='homestay'>Homestay</option>
+                                    <option name="category" value='resort'>Resort</option>
+                                    <option name="category" value='villa'>Villa</option>
                                 </select>
                                 {errors?.category &&
                                     <div className="alert-warning text-center">{errors.category?.message}</div>
