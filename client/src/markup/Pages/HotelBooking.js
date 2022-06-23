@@ -86,8 +86,15 @@ function HotelBooking(props) {
                                         <p>{room.description}</p>
                                         <h2 className="m-b10">Hotel details</h2>
                                         <p>{room.shortDescription}</p>
-                                        {/* <div className="row">
-                                            <div className="col-md-12 col-lg-12 col-sm-12">
+                                        <div className="row">
+                                            <GoogleMaps
+                                                apiKey={"AIzaSyAgDuz2Nd_tVY0H-h0xUimE25_-O85-mdM"}
+                                                style={{ height: "500px", width: "100%" }}
+                                                zoom={6}
+                                                center={{ lat: 37.4224764, lng: -122.0842499 }}
+                                                markers={{ lat: 37.4224764, lng: -122.0842499 }} //optional
+                                            />
+                                            {/* <div className="col-md-12 col-lg-12 col-sm-12">
                                                 <ul className="list-hand-point primary">
                                                     <li>Closeness to ISRO (1.6 km) and BEL (2.4 km)</li>
                                                     <li>Cozy rooms with modern interiors</li>
@@ -110,34 +117,20 @@ function HotelBooking(props) {
                                                     <li>The hotel has a restaurant that treats you with a wide range of dishes across multiple cuisines</li>
                                                     <li>Sri Krishna Bhavan (53 m), Shree Sagar (63 m), Delight (72 m), Reddy Mess (140 m), Star Biryani Center (290 m) and Indira Canteen (300 m) are among many dining options around the hotel</li>
                                                 </ul>
-                                            </div>
-                                        </div> */}
+                                            </div> */}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-4">
                                     <div className="sticky-top">
-                                        <GoogleMaps
-                                            apiKey={"AIzaSyAgDuz2Nd_tVY0H-h0xUimE25_-O85-mdM"}
-                                            style={{ height: "500px", width: "100%" }}
-                                            zoom={6}
-                                            center={{ lat: 37.4224764, lng: -122.0842499 }}
-                                            markers={{ lat: 37.4224764, lng: -122.0842499 }} //optional
-                                        />
                                         <form className="hotel-booking">
                                             <div className="row">
-                                               
-                                                <div className="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12">
-                                                    <div className="booking-total">
-                                                        <h3 className="d-flex">{roomsService.formatPrice(room.price)} <span>Sub Total1 room for 1 night</span></h3>
-
-                                                    </div>
-                                                </div>
                                                 <div className="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12">
                                                     <button type="button" className="site-button btn-block" onClick={() => handleOpenModal()}>Book Now</button>
                                                 </div>
                                             </div>
                                         </form>
-                                        
+
                                         <div className="m-t30">
                                             <img src={require('./../../images/add/add-bnr.jpg')} className="d-md-none d-xl-block d-lg-block" alt="" />
                                         </div>
@@ -200,6 +193,7 @@ function HotelBooking(props) {
                                 </div>
                             </div>
                         </div>
+
                         <BookNowModal
                             isOpen={isOpenModal}
                             toggle={handleOpenModal}

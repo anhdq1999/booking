@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Slick3 from './Slick3'
+import Slick3 from './../Slick3'
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -27,7 +27,7 @@ function Login2(props) {
                         <div className="col-lg-4 p-lr0">
                             <div className="login-form">
                                 <div className="logo logo-header">
-                                    <Link to={'./'}><img src={require('./../../images/logo-2.png')} alt="" /></Link>
+                                    <Link to={'./'}><img src={require('images/logo-2.png')} alt="" /></Link>
                                 </div>
                                 <div id="login" className="tab-pane">
                                     <form onSubmit={handleSubmit(onSubmit)} className="dlab-form">

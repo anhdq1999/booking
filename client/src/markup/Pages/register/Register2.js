@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Slick3 from './../Pages/Slick3';
+import Slick3 from './../Slick3';
 
 
 
@@ -17,7 +17,7 @@ class Register2 extends Component {
                             <div class="col-lg-4 p-lr0">
                                 <div class="login-form">
                                     <div class="logo logo-header">
-                                        <Link to={'./'}><img src={require('./../../images/logo-2.png')} alt="" /></Link>
+                                        <Link to={'./'}><img src={require('images/logo-2.png')} alt="" /></Link>
                                     </div>
                                     <div id="register" class="tab-pane">
                                         <form class="dlab-form">

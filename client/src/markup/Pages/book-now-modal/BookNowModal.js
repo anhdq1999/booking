@@ -1,7 +1,16 @@
+import * as yup from 'yup';
 import React from 'react'
+import { useForm } from 'react-hook-form';
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from "reactstrap";
+import { yupResolver } from '@hookform/resolvers/yup';
 
+const schema = yup.object().shape({
+
+})
 export default function BookNowModal(props) {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    })
 
     function toggle() {
         return props.toggle()
@@ -24,7 +33,7 @@ export default function BookNowModal(props) {
                         <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input name="dzName" required="" className="form-control" placeholder="" type="date" />
+                                    <input  required="" className="form-control" placeholder="" type="date" />
                                 </div>
                                 <span className="font-12">From</span>
                             </div>
@@ -32,35 +41,23 @@ export default function BookNowModal(props) {
                         <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input name="dzName" required="" className="form-control" placeholder="" type="date" />
+                                    <input  required="" className="form-control" placeholder="" type="date" />
                                 </div>
                                 <span className="font-12">To</span>
 
                             </div>
                         </div>
-
-                        <div className="col-md-6 col-lg-6 col-xl-12 col-sm-6 col-6">
+                        <div className="col-md-6">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <select className="form-control">
-                                        <option>Deluxe Twin Bed Room</option>
-                                        <option>Breakfast and Dinner</option>
-                                        <option>Deluxe Twin (Smoking)</option>
-                                    </select>
+                                    <input required="" className="form-control" placeholder="Your Name" type="text" />
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input name="dzName" required="" className="form-control" placeholder="Your Name" type="text" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input name="dzName" required="" className="form-control" placeholder="Your Phone Number" type="text" />
+                                    <input  required="" className="form-control" placeholder="Your Phone Number" type="text" />
                                 </div>
                             </div>
                         </div>
@@ -83,11 +80,6 @@ export default function BookNowModal(props) {
                             </div>
                         </div>
                     </form>
-
-
-
-
-
                 </ModalBody>
                 <ModalFooter>
                     <button type="submit" className="site-button">Submit</button>
