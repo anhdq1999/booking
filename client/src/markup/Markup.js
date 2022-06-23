@@ -29,7 +29,7 @@ import Packages from './Pages/Packages';
 import Place from './Pages/Place';
 import PortfolioGrid2 from './Pages/PortfolioGrid2';
 import Register from './Pages/Register-react-hook-form';
-import Register2 from './Pages/Register2';
+import Register2 from './Pages/register/Register2';
 import Popupss from './Pages/Tab';
 
 
