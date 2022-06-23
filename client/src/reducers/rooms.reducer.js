@@ -6,7 +6,8 @@ const initialState = {
     editRoom: null,
     itemsDeleted: [],
     itemsSearch: [],
-    itemsByProvince:[]
+    itemsByProvince:[],
+    itemsTopPlaces:[]
 }
 
 export function roomReducer(state = initialState, action) {
