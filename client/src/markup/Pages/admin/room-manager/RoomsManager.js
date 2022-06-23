@@ -97,7 +97,7 @@ function RoomsManager(props) {
   }
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="mt-5 mx-5">
 
         <Link to='/admin/rooms-manager/garbage'>Thùng rác của tôi</Link>
@@ -116,7 +116,7 @@ function RoomsManager(props) {
           name="keySearch"
           placeholder={'Search by ' + searchBy}
           type="text" />
-          <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
+        <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
           <option value="name" defaultChecked>Name</option>
         </select>
         <DataTable
