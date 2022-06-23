@@ -7,7 +7,7 @@ class RoomController {
     //[GET] /:id
     show(req, res, next) {
         const id = req.params.id;
-        Room.findById({ _id: id })
+        Room.findOne({ _id: id })
             .then((room) =>
                 res.status(200).json(RESPONSE.ROOM.GETONEBYID.SUCCESS(room)),
             )

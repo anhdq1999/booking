@@ -1,6 +1,7 @@
 import { roomConstants } from '_constants';
 import { roomsService } from 'services/roomsService';
 import { alertActions } from './index';
+import { uploadService } from 'services/uploadService';
 
 export const roomActions = {
     getAll,
@@ -12,14 +13,30 @@ export const roomActions = {
     update,
     delete: _delete,
     groupByProvince,
-    getByProvince
+    getByProvince,
+    search,
 };
+function search(type, key) {
+    return dispatch => {
+        switch (type) {
+            case "name":
+                dispatch(searchByName(key));
+                return;
+            default:
+                dispatch(searchByName(key));
+        }
+    }
+    function searchByName(key) { return { type: roomConstants.SEARCH_BY_NAME, key } }
+
+
+}
+
 function getById(id) {
     return dispatch => {
-        roomsService.getById(id).then(res=>{
-            if(res.success){
+        roomsService.getById(id).then(res => {
+            if (res.success) {
                 dispatch(success(res.data))
-            }else{
+            } else {
                 dispatch(failure(res.message))
             }
 
@@ -81,7 +98,7 @@ function _delete(id) {
                     if (res.success) {
                         dispatch(success(id));
                         dispatch(alertActions.success(res.message))
-                    }else{
+                    } else {
                         dispatch(failure(id));
                         dispatch(alertActions.error(res.message))
                     }
@@ -175,19 +192,20 @@ function restore(id) {
 
     function success(id) { return { type: roomConstants.RESTORE_SUCCESS, id } }
 }
-function groupByProvince(){ 
+function groupByProvince() {
     return dispatch => {
         roomsService.groupByProvince()
-            .then(rooms =>{
+            .then(rooms => {
                 dispatch(success(rooms))
             })
     }
     function success(rooms) { return { type: roomConstants.GROUP_BY_PROVINCE_SUCCESS, rooms } }
 }
-function getByProvince(province){ 
+function getByProvince(province) {
     return dispatch => {
         roomsService.getByProvince(province)
-            .then(rooms =>{
+            .then(rooms => {
+                console.log(rooms);
                 dispatch(success(rooms))
             })
     }

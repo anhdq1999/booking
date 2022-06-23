@@ -1,7 +1,7 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../config/auth.config');
+// const config = require('../config/auth.config');
 const auth = require('../middlewares');
 
 class AuthenticationController {

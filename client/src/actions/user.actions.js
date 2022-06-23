@@ -19,6 +19,7 @@ export const userActions = {
     getById,
     create,
     update,
+    updateRequest,
     getAllDeleted,
     delete: _delete,
     restore,
@@ -40,8 +41,6 @@ function searchByEmail(type, key) {
             default:
                 dispatch(searchByEmail(key));
         }
-
-
     }
     function searchByEmail(key) { return { type: userConstants.SEARCH_BY_EMAIL, key } }
     function searchByUsername(key) { return { type: userConstants.SEARCH_BY_USERNAME, key } }
@@ -145,6 +144,9 @@ function create(user) {
     function success(user) { return { type: userConstants.CREATE_SUCCESS, user } }
     function failure(error) { return { type: userConstants.CREATE_FAILURE, error } }
 }
+function updateRequest(user) {
+    return { type: userConstants.UPDATE_REQUEST, user }
+}
 function update(user, data) {
     return dispatch => {
         dispatch(request(user))
@@ -199,7 +201,12 @@ function getAll() {
                         dispatch(failure())
                     }
                 }
-            ).catch(error => dispatch(failure(error)));
+            ).catch(
+                error => {
+                    dispatch(failure(error))
+                    dispatch(alertActions.error(error.message))
+                }
+            );
     }
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }

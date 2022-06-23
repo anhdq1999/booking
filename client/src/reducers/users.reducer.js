@@ -89,6 +89,11 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case userConstants.UPDATE_CANCEL:
+      state.editUser = action.user
+      return {
+        ...state,
+      };
     case userConstants.UPDATE_SUCCESS:
       state.editUser = action.user;
       const editUserIndex = state.items.findIndex(user => user._id === action.user._id)

@@ -75,7 +75,7 @@ function Tab2(props){
                                     <input type="text" className="form-control" id='datetimepicker1' placeholder="Date" />
                                 </div>
                                 <div className="form-group col-lg-2 col-md-4 col-sm-6 col-6">
-                                    <button type="button" onclick="location.href='place.html'" className="site-button btn-block">SEARCH</button>
+                                    <button type="button" onClick="location.href='place.html'" className="site-button btn-block">SEARCH</button>
                                 </div>
                             </form>
                         </TabPane>

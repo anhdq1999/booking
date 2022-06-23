@@ -1,41 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/Header2';
 import Footer from './../Layout/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { roomActions } from 'actions';
 
-const tourContent = [
-    {
-        image: require('./../../images/tour/pic1.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic2.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic3.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic4.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic5.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic6.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic7.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic8.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic9.jpg'),
-    },
-    {
-        image: require('./../../images/tour/pic10.jpg'),
-    },
-];
 
 const tourDay = [
     {
@@ -85,7 +55,12 @@ const tourDay = [
 const bg3 = require('./../../images/banner/bnr1.jpg');
 
 function BookingDetails(props) {
-
+    const id = props.match.params.id;
+    const room = useSelector(state => state.roomReducer.item)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(roomActions.getById(id))
+    }, [dispatch, id])
     const settings = {
         dots: false,
         slidesToShow: 1,
@@ -127,11 +102,11 @@ function BookingDetails(props) {
                                 </div>
                                 <div className="product-gallery on-show-slider">
                                     <Slider {...settings}>
-                                        {tourContent.map((item, index) => (
+                                        {room && room.images.map((item, index) => (
                                             <div className="item" key={index}>
                                                 <div className="dlab-box">
                                                     <div className="dlab-thum-bx">
-                                                        <img src={item.image} alt="" />
+                                                        <img src={item} alt="" />
                                                     </div>
                                                 </div>
                                             </div>

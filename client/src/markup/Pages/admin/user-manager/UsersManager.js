@@ -12,7 +12,7 @@ function UsersManager(props) {
   const [selectedUsers, setSelectedUsers] = useState([])
   const [editableUser, setEditableUser] = useState({})
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const [isAddModal, setIsAddModal] = useState(false)
+  const [isAddModal, setIsAddModal] = useState(true)
   const [isSearch, setIsSearch] = useState(false)
   const [searchBy, setSearchBy] = useState("email");
   const alert = useSelector(state => state.alert)
@@ -20,46 +20,48 @@ function UsersManager(props) {
   const usersSearch = useSelector(state => state.userReducer.itemsSearch)
   const pending = useSelector(state => state.userReducer.loading)
   const dispatch = useDispatch();
-  const columns = [
-    {
-      name: 'Username',
-      selector: row => row.username
-    },
-    {
-      name: 'Email',
-      selector: row => row.email
-    },
-    {
-      name: 'Phone Number',
-      selector: row => row.phoneNumber
-    },
-    {
-      name: 'Full Name',
-      selector: row => row.fullname
-    },
-    {
-      name: 'Address',
-      selector: row => row.address
-    },
-    {
-      name: 'Role',
-      selector: row => row.roles
-    },
-    {
-      buttons: true,
-      cell: (column) =>
-      (<>
-        <Button onClick={() => handleEdit(column)}>Edit</Button>
-        <Button onClick={() => handleDelete(column)}>Delete</Button>
+  const columns =
+    [
+      {
+        name: 'Username',
+        selector: row => row.username
+      },
+      {
+        name: 'Email',
+        selector: row => row.email
+      },
+      {
+        name: 'Phone Number',
+        selector: row => row.phoneNumber
+      },
+      {
+        name: 'Full Name',
+        selector: row => row.fullname
+      },
+      {
+        name: 'Address',
+        selector: row => row.address
+      },
+      {
+        name: 'Role',
+        selector: row => row.roles
+      },
+      {
+        buttons: true,
+        cell: (column) =>
+        (<>
+          <Button onClick={() => handleEdit(column)}>Edit</Button>
+          <Button onClick={() => handleDelete(column)}>Delete</Button>
 
-      </>
-      ),
-      ignoreRowClick: true,
-      allowOverflow: true,
-    }
+        </>
+        ),
+        ignoreRowClick: true,
+        allowOverflow: true,
+      },
   ]
   useEffect(() => {
     dispatch(userActions.getAll())
+   
   }, [dispatch])
 
   function handleDelete(user) {
@@ -99,8 +101,6 @@ function UsersManager(props) {
   const handleSearchBy = (e) => {
     const { value } = e.target;
     setSearchBy(value)
-
-    // dispatch(userActions.searchByEmail(value));
   }
   const handleFocus = () => {
     setIsSearch(true);
@@ -126,8 +126,8 @@ function UsersManager(props) {
           placeholder={'Search by ' + searchBy}
           type="text" />
         <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
+          <option value="email" defaultChecked>Email</option>
           <option value="username">Username</option>
-          <option value="email" selected>Email</option>
           <option value="fullname">Full Name</option>
         </select>
         <DataTable
@@ -148,6 +148,7 @@ function UsersManager(props) {
         ></UserModal>
       }
       {!isAddModal &&
+
         <UserModal
           isAdd={isAddModal}
           user={editableUser}
