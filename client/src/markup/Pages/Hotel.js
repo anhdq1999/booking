@@ -48,7 +48,6 @@ function Hotel(props) {
                                         <div className="dlab-media dlab-img-effect dlab-img-overlay2">
                                             <Image cloudName="dmtwoqysj" publicId={item.image} >
                                                 <Transformation width="400" height="250" gravity="south" crop="fill" />
-
                                             </Image>
                                             <div className="dlab-info-has p-a20 text-white no-hover">
                                                 <h4 className="m-t0 m-b10">{item.name}</h4>

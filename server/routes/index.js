@@ -5,6 +5,7 @@ const orderRouter = require('./orders.js');
 const uploadImgRouter = require('./upload');
 const provinceRouter =require('./province');
 const districtRouter =require('./district');
+const categoryRouter = require('./categories');
 const wardRouter =require('./ward');
 const { authJwt } = require('../middlewares');
 const { isAdmin } = require('../middlewares/auth.middlewares.js');
@@ -35,6 +36,9 @@ function route(app) {
     app.use('/districts', districtRouter);
     
     app.use('/wards', wardRouter);
+
+    app.use('/categories', categoryRouter);
+
 
     app.get('/', (req, res) => {
         res.send('hello World');
