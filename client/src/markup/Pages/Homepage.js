@@ -13,16 +13,14 @@ import Slick from './Slick';
 const content = [
     {
         title: 'Đặt Homstay không khó nhờ có booking ',
-        button: 'Đặt ngay',
-        image: require('images/main-slider/slide1.jpg'),
+        button: 'Book Now',
+        image: require('images/main-slider/slide5.jpg'),
     },
     {
-        title: 'Tortor Dapibus Commodo Aenean Quam',
-        button: 'Discover',
-        image: require('images/main-slider/slide2.jpg'),
+        image: require('images/main-slider/slide1.png'),
     },
     {
-        title: 'Tortor Dapibus Commodo Aenean Quam',
+        title: '',
         button: 'Discover',
         image: require('images/main-slider/slide3.jpg'),
     },
@@ -56,7 +54,6 @@ function Homepage(props) {
         <div>
             <Header />
             <div className="page-content">
-
                 <Slider className="slider-wrapper" infinite autoplay>
                     {content.map((item, index) => (
                         <div
@@ -64,17 +61,14 @@ function Homepage(props) {
                             className="slider-content"
                             style={{ background: `url('${item.image}') no-repeat center center` }}
                         >
-                            <div className="inner">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <button className="site-button">{item.button}</button>
-                            </div>
+                            {/*<div className="inner">*/}
+                            {/*    <h1>{item.title}</h1>*/}
+                            {/*    <p>{item.description}</p>*/}
+                            {/*    <Link to={'/place'} className="site-button">Book Now</Link>*/}
+                            {/*</div>*/}
                         </div>
                     ))}
                 </Slider>
-
-
-
 
                 <div className="section-full book-form overlay-black-dark bg-img-fix p-t30 p-b10 mid" style={{ backgroundImage: "url(" + bg1 + ")" }}>
                     <div className="container">
@@ -137,9 +131,6 @@ function Homepage(props) {
                         </form>
                     </div>
                 </div>
-
-
-
                 <TopPlaces />
                 <Slick />
 
