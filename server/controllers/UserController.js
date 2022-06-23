@@ -64,7 +64,7 @@ class UserController {
     garbage(req, res, next) {
         User.findDeleted({})
             .then((users) =>
-                res.status(200).json(RES.USER.GETALL_DELETED.SUCCESS(users)),
+                res.status(200).json(RES.USER.GETALL_DELETED.SUCCESS(users))
             )
             .catch(next);
     }
