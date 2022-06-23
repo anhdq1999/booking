@@ -52,7 +52,7 @@ function Hotel(props) {
                                             <div className="dlab-info-has p-a20 text-white no-hover">
                                                 <h4 className="m-t0 m-b10">{item.name}</h4>
                                                 <span>{item.offer}</span>
-                                                <h2 className="m-t10 m-b20">$ {item.price}</h2>
+                                                <h2 className="m-t10 m-b20">$ {(item.price)}</h2>
                                                 <Link to={`./hotelbooking/${item._id}`} className="site-button outline outline-2 radius-xl">Book Now</Link>
                                             </div>
                                         </div>
