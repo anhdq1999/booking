@@ -1,6 +1,7 @@
 const Categories = require("../models/Categories");
 
 class CategoriesController {
+  //[GET] /categories
   store(req, res, next) {
     Categories.find({})
       .then((categories) => {
@@ -21,6 +22,7 @@ class CategoriesController {
       });
   }
 
+  // POST /categories/:id
   show(req, res) {
     const _id = req.params.id;
     Categories.findById({ _id })
@@ -42,6 +44,7 @@ class CategoriesController {
       });
   }
 
+  // POST /categories
   create(req, res, next) {
     const categoriesRequest = req.body;
     const newCategories = new Categories(categoriesRequest);
@@ -65,6 +68,7 @@ class CategoriesController {
       });
   }
 
+  //[PUT] /categories/:id
   update(req, res, next) {
     const _id = req.params.id;
     const categoriesRequest = req.body;
@@ -87,6 +91,7 @@ class CategoriesController {
       });
   }
 
+  // DELETE /:id
   garbage(req, res, next) {
     Categories.findDeleted({})
       .then((categories) => {
@@ -107,6 +112,7 @@ class CategoriesController {
       });
   }
 
+  // [DELETE] /categories/:id
   delete(req, res, next) {
     const _id = req.params.id;
     Categories.delete({ _id })
@@ -128,6 +134,7 @@ class CategoriesController {
       });
   }
 
+  //[DELETE] /categories/remove/:id
   completeDelete(req, res, next) {
     const _id = req.params.id;
     Categories.remove({ _id })
@@ -149,6 +156,7 @@ class CategoriesController {
       });
   }
 
+  //[DELETE] /rooms/remove/:id
   restore(req, res, next) {
     const _id = req.params.id;
     Categories.restore({ _id })
