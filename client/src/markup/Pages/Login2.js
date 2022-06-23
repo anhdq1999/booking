@@ -79,7 +79,7 @@ function Login2(props) {
                                         <div className="form-group">
                                             <button
                                                 className="site-button black m-r10"
-                                                type="submit"  >login</button>
+                                                type="submit"  >Login</button>
                                             <Link to={'./register'} className="site-button outline">Sign Up</Link>
                                         </div>
                                     </form>
