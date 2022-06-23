@@ -17,8 +17,14 @@ export const roomsService = {
 
 
 
-function getAll() {
-    const url = `/rooms`;
+// function getAll() {
+//     const url = `/rooms`;
+//     return axiosClient.get(url);
+//
+// }
+function getAll(limit) {
+    let url =`/rooms`
+    if(limit) url = `/rooms?limit=${limit}`;
     return axiosClient.get(url);
 
 }
