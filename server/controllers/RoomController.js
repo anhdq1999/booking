@@ -76,7 +76,9 @@ class RoomController {
     }
     // [GET] /rooms/store
     store(req, res, next) {
-        Room.find({})
+        let limit =req.query.limit
+        console.log(limit);
+        Room.find({}).limit(limit)
             .then((rooms) => {
                 res.status(200).json(RESPONSE.ROOM.GETALL.SUCCESS(rooms));
             })
