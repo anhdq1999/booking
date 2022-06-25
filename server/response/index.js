@@ -6,8 +6,6 @@ const CATEGORY = require('./category.reponses');
 module.exports = {
     USER,
     ROOM,
-    BLOG
-
-
+    BLOG,
     CATEGORY
 };
