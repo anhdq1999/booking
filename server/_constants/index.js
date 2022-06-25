@@ -7,7 +7,7 @@ const categories = require("./category.constants");
 module.exports = {
     user,
     room,
-    blog
+    blog,
   categories
 
 };

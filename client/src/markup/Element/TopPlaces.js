@@ -1,63 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { roomActions } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Transformation } from "cloudinary-react";
 import { roomsService } from "../../services";
 
 
-const places = [
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic1.jpg"),
-    title: "Japan Tokyo",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  },
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic2.jpg"),
-    title: "Spain Madrid",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  },
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic3.jpg"),
-    title: "Italy",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  },
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic4.jpg"),
-    title: "UK city",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  },
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic5.jpg"),
-    title: "Europe City",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  },
-  {
-    price: 1200,
-    image: require("./../../images/our-work/pic6.jpg"),
-    title: "Hong Kong City",
-    description:
-      "We invite you to experience here with your family, definitely you are filled with lasting memories and feel awesome.",
-    link: "booking"
-  }
-
-];
 
 function TopPlaces(props) {
   const rooms = useSelector(state => state.roomReducer.items);
