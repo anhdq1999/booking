@@ -1,7 +1,6 @@
 import { roomConstants } from "_constants";
 import { roomsService } from "services/roomsService";
 import { alertActions } from "./index";
-import { uploadService } from "services/uploadService";
 
 export const roomActions = {
   getAll,

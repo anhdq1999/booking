@@ -44,11 +44,9 @@ function Login2(props) {
                                                 <label>Email Address</label>
                                                 <input
                                                     {...register("username")}
-
                                                     className="form-control"
                                                     placeholder="Type email"
                                                     type="text"
-
                                                 />
 
                                             </div>

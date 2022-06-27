@@ -9,6 +9,7 @@ import { Button, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } f
 import { uploadService } from "services/uploadService";
 import * as yup from 'yup';
 
+
 const schema = yup.object().shape({
     name: yup
         .string().required("Name room is required"),
@@ -44,16 +45,27 @@ export default function RoomModal(props) {
 
     const room = props.room
     const alert = useSelector(state => state.alert)
+
     const users = useSelector(state => state.userReducer.items)
+
     const newRoom = useSelector(state => state.roomReducer.editRoom)
+
+
     const provinces = useSelector(state => state.addressReducer.provinces)
     const districts = useSelector(state => state.addressReducer.districts)
     const wards = useSelector(state => state.addressReducer.wards)
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(addressActions.getAllProvince())
-    }, [dispatch])
+        if (props.isAdd) {
+            dispatch(addressActions.getAllProvince())
+        } else {
+            dispatch(addressActions.getProvince(room.address.province))
+            dispatch(addressActions.getDistrict(room.address.district))
+            dispatch(addressActions.getWard(room.address.ward))
+        }
+
+    }, [dispatch, props.isAdd, room])
 
     const {
         register,
@@ -76,6 +88,7 @@ export default function RoomModal(props) {
         }
     }
     function toggle() {
+        setSeletedImages([])
         return props.toggle()
     }
     function setRoom(data) {
@@ -113,20 +126,24 @@ export default function RoomModal(props) {
     function handleEdit(data) {
         // data.images = selectedImages
         const uploadData = new FormData();
-        data.images.forEach(item => {
-            uploadData.append("file", item, item.name);
-        })
-        uploadService.uploadMultiImage(uploadData)
-            .then(
-                res => {
-                    data.images = room.images.concat(res.data)
-                    dispatch(roomActions.update(room, data))
-                }
-            ).catch(
-                err => {
-                    dispatch(alertActions.error(err.message))
-                }
-            )
+        if (data.image) {
+            data.images.forEach(item => {
+                uploadData.append("file", item, item.name);
+            })
+            uploadService.uploadMultiImage(uploadData)
+                .then(
+                    res => {
+                        data.images = room.images.concat(res.data)
+                        dispatch(roomActions.update(room, data))
+                    }
+                ).catch(
+                    err => {
+                        dispatch(alertActions.error(err.message))
+                    }
+                )
+        }else{
+            dispatch(roomActions.update(room, data))
+        }
     }
     const onSubmit = data => {
         if (!props.isAdd)
@@ -138,13 +155,17 @@ export default function RoomModal(props) {
     const handleImageChange = (e) => {
         if (e.target.files) {
             let images = [];
+            let imagesPreview = []
             Array.from(e.target.files).forEach(
                 item => {
                     images.push(item)
+                    imagesPreview.push(URL.createObjectURL(item))
                 }
             )
             setValue("images", images)
-            setSeletedImages(images);
+            setSeletedImages(imagesPreview);
+        } else {
+            setSeletedImages([]);
         }
     };
 
@@ -245,6 +266,7 @@ export default function RoomModal(props) {
                                     <select className="form-control mb-3"
                                         {...register("address.province")}
                                         onChange={handleProvinceChange}
+                                        disabled={districts.length===1?true:false}
                                     >
                                         {provinces.length > 0 &&
                                             <option checked>Chọn tỉnh</option>
@@ -267,6 +289,7 @@ export default function RoomModal(props) {
                                     <select className="form-control mb-3"
                                         {...register("address.district")}
                                         onChange={handleDistrictChange}
+                                        disabled={districts.length===1?true:false}
                                     >
                                         {districts.length > 0 &&
                                             <option checked> Chọn Quận/huyện</option>
@@ -284,7 +307,10 @@ export default function RoomModal(props) {
                             </Col>
                             <Col>
                                 <Label for='ward' name="ward">Ward:
-                                    <select className="form-control mb-3"  {...register("address.ward")}>
+                                    <select className="form-control mb-3"  
+                                    {...register("address.ward")}
+                                      disabled={districts.length===1?true:false}
+                                      >
                                         {wards.length > 0 &&
                                             <option checked> Chọn phường/xã</option>
                                         }
@@ -326,11 +352,11 @@ export default function RoomModal(props) {
                                     <Image cloudName="dmtwoqysj" publicId={item} />
                                 </Col>
                             ))}
-                            {/* {selectedImages.map((item, index) => (
+                            {selectedImages.map((item, index) => (
                                 <Col className="mb-3" key={index} md={2}>
-                                    <Image cloudName="dmtwoqysj" publicId={item} />
+                                    <img src={item} alt={item.filename} />
                                 </Col>
-                            ))} */}
+                            ))}
                         </Row>
 
                         <Row className="mt-3">

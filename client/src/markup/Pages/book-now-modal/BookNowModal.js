@@ -1,16 +1,13 @@
-import * as yup from 'yup';
 import React from 'react'
-import { useForm } from 'react-hook-form';
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from "reactstrap";
-import { yupResolver } from '@hookform/resolvers/yup';
 
-const schema = yup.object().shape({
+// const schema = yup.object().shape({
 
-})
+// })
 export default function BookNowModal(props) {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
-    })
+    // const { register, handleSubmit, formState: { errors } } = useForm({
+    //     resolver: yupResolver(schema)
+    // })
 
     function toggle() {
         return props.toggle()
