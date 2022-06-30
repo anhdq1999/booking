@@ -1,7 +1,6 @@
 import { roomConstants } from "_constants";
 import { roomsService } from "services/roomsService";
 import { alertActions } from "./index";
-import { uploadService } from "services/uploadService";
 
 export const roomActions = {
   getAll,
@@ -14,7 +13,9 @@ export const roomActions = {
   delete: _delete,
   groupByProvince,
   getByProvince,
-  search
+  search,
+  getByHostId
+
 };
 
 
@@ -44,7 +45,6 @@ function getById(id) {
       } else {
         dispatch(failure(res.message));
       }
-
     });
   };
 
@@ -54,6 +54,20 @@ function getById(id) {
 
   function failure(error) {
     return { type: roomConstants.GETBYID_FAILURE, error };
+  }
+}
+
+function getByHostId(id) {
+  return dispatch => {
+    roomsService.getByHostId(id).then(res => {
+      if (res.success) {
+        dispatch(success(res.data));
+      }
+    });
+  };
+
+  function success(rooms) {
+    return { type: roomConstants.GETBYHOSTID_SUCCESS, rooms };
   }
 }
 
