@@ -13,7 +13,6 @@ class AuthenticationController {
     if (user) {
       res.status(501).json(response.auth.REGISTER.FAILURE("User is exited"));
     } else {
-
       const OTP = crypto.randomBytes(4).toString("hex");
       req.body.hash_password = bcrypt.hashSync(req.body.password, 10);
       const newUser = new User({ ...req.body, OTP });
