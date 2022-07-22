@@ -1,14 +1,9 @@
-const nodeMailer = require("nodemailer");
+const {transporter} = require('../config/sendmail.config')
+const crypto = require("crypto");
 
 class SendMailController {
+
   send = async (emailTo, subject, text) => {
-    const transporter = nodeMailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD
-      }
-    });
     const mailOption = {
       from: "18130006@st.hcmuaf.edu.vn",
       to: emailTo,
@@ -25,6 +20,40 @@ class SendMailController {
       }
     });
   };
+
+  sendMailTobeHost(req, res, next) {
+
+    const OTP = crypto.randomBytes(4).toString("hex");
+
+    const mailOption = {
+      from: "18130006@st.hcmuaf.edu.vn",
+      to:req.body.to,
+      subject:"OTP to be host",
+      html:"Here is your OTP " +
+        "</br>" +
+        OTP
+    };
+
+    transporter.sendMail(mailOption)
+      .then(
+        rs =>{
+        res.status(200).json(
+          {
+            message:"OTP was sent to your email: "+ req.body.to
+          }
+        )
+      }).catch(
+        err => {
+        res.status(500).json(
+          {
+            message:err.message
+          }
+        )
+      }
+    )
+
+
+  }
 }
 
 module.exports = new SendMailController();

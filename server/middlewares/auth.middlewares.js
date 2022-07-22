@@ -38,12 +38,12 @@ isAdmin = (req, res, next) => {
     User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'admin') {
             next();
-            return;
+
         } else {
             res.status(403).send({
                 message: 'Require Admin Role!',
             });
-            return;
+
         }
     });
 };
@@ -51,12 +51,12 @@ isUserRole = (req, res, next) => {
     User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'user') {
             next();
-            return;
+
         } else {
             res.status(403).send({
                 message: 'Require User Role!',
             });
-            return;
+
         }
     });
 };
@@ -64,12 +64,12 @@ isHost = (req, res, next) => {
     User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'host') {
             next();
-            return;
+
         } else {
             res.status(403).send({
                 message: 'Require Host Role!',
             });
-            return;
+
         }
     });
 };
