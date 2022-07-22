@@ -1,116 +1,116 @@
-import { alertActions, userActions } from 'actions';
-import Header from 'markup/Layout/Header';
-import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button, Label } from 'reactstrap';
-import UserModal from './UserModal';
+import { alertActions, userActions } from "actions";
+import Header from "markup/Layout/Header";
+import React, { useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Button, Label } from "reactstrap";
+import UserModal from "./UserModal";
 
 
 function UsersManager(props) {
-  const [selectedUsers, setSelectedUsers] = useState([])
-  const [editableUser, setEditableUser] = useState({})
-  const [isOpenModal, setIsOpenModal] = useState(false)
-  const [isAddModal, setIsAddModal] = useState(true)
-  const [isSearch, setIsSearch] = useState(false)
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [editableUser, setEditableUser] = useState({});
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isAddModal, setIsAddModal] = useState(true);
+  const [isSearch, setIsSearch] = useState(false);
   const [searchBy, setSearchBy] = useState("email");
-  const alert = useSelector(state => state.alert)
-  const users = useSelector(state => state.userReducer.items)
-  const usersSearch = useSelector(state => state.userReducer.itemsSearch)
-  const pending = useSelector(state => state.userReducer.loading)
+  const alert = useSelector(state => state.alert);
+  const users = useSelector(state => state.userReducer.items);
+  const usersSearch = useSelector(state => state.userReducer.itemsSearch);
+  const pending = useSelector(state => state.userReducer.loading);
   const dispatch = useDispatch();
   const columns =
     [
       {
-        name: 'Username',
+        name: "Username",
         selector: row => row.username
       },
       {
-        name: 'Email',
+        name: "Email",
         selector: row => row.email
       },
       {
-        name: 'Phone Number',
+        name: "Phone Number",
         selector: row => row.phoneNumber
       },
       {
-        name: 'Full Name',
+        name: "Full Name",
         selector: row => row.fullname
       },
       {
-        name: 'Address',
+        name: "Address",
         selector: row => row.address
       },
       {
-        name: 'Role',
+        name: "Role",
         selector: row => row.roles
       },
       {
         buttons: true,
         cell: (column) =>
-        (<>
-          <Button onClick={() => handleEdit(column)}>Edit</Button>
-          <Button onClick={() => handleDelete(column)}>Delete</Button>
+          (<>
+              <Button onClick={() => handleEdit(column)}>Edit</Button>
+              <Button onClick={() => handleDelete(column)}>Delete</Button>
 
-        </>
-        ),
+            </>
+          ),
         ignoreRowClick: true,
-        allowOverflow: true,
-      },
-  ]
+        allowOverflow: true
+      }
+    ];
   useEffect(() => {
-    dispatch(userActions.getAll())
-   
-  }, [dispatch])
+    dispatch(userActions.getAll());
+
+  }, [dispatch]);
 
   function handleDelete(user) {
     const id = user._id;
-    dispatch(userActions.delete(id))
+    dispatch(userActions.delete(id));
   }
+
   const handleEdit = (user) => {
-    setIsAddModal(false)
-    handleOpenModal()
-    setEditableUser(user)
-  }
+    setIsAddModal(false);
+    handleOpenModal();
+    setEditableUser(user);
+  };
   const handleAdd = () => {
-    setIsAddModal(true)
-    handleOpenModal()
+    setIsAddModal(true);
+    handleOpenModal();
     setEditableUser(null);
-  }
+  };
   const handleChange = ({ selectedRows }) => {
     setSelectedUsers(selectedRows);
   };
   const handleDeleteMany = () => {
     if (selectedUsers.length > 0) {
       selectedUsers.forEach((value) => {
-        handleDelete(value)
-      })
+        handleDelete(value);
+      });
     } else {
-      dispatch(alertActions.error("Chưa chọn user để xóa"))
+      dispatch(alertActions.error("Chưa chọn user để xóa"));
     }
-  }
+  };
 
   const handleOpenModal = () => {
-    setIsOpenModal(!isOpenModal)
-  }
+    setIsOpenModal(!isOpenModal);
+  };
   const handleSearch = (e) => {
     const { value } = e.target;
     dispatch(userActions.searchByEmail(searchBy, value));
-  }
+  };
   const handleSearchBy = (e) => {
     const { value } = e.target;
-    setSearchBy(value)
-  }
+    setSearchBy(value);
+  };
   const handleFocus = () => {
     setIsSearch(true);
-  }
+  };
 
   return (
     <div>
-      <Header />
       <div className="mt-5 mx-5">
-        <Link to='/admin/users-manager/garbage'>Thùng rác của tôi</Link>
+        <Link to="/admin/users-manager/garbage">Thùng rác của tôi</Link>
         <div className="text-right mb-5">
           <Button onClick={() => handleAdd()}>Add</Button>
           <Button onClick={() => handleDeleteMany()}>Delete</Button>
@@ -123,7 +123,7 @@ function UsersManager(props) {
           onChange={(e) => handleSearch(e)}
           onFocus={(e) => handleFocus(e)}
           name="keySearch"
-          placeholder={'Search by ' + searchBy}
+          placeholder={"Search by " + searchBy}
           type="text" />
         <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
           <option value="email" defaultChecked>Email</option>
@@ -131,7 +131,7 @@ function UsersManager(props) {
           <option value="fullname">Full Name</option>
         </select>
         <DataTable
-          title='User Store'
+          title="User Store"
           columns={columns}
           data={isSearch ? usersSearch : users}
           theme="dark"
@@ -158,7 +158,7 @@ function UsersManager(props) {
       }
 
     </div>
-  )
+  );
 }
 
-export default UsersManager 
+export default UsersManager;

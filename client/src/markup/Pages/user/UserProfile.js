@@ -4,7 +4,6 @@ import Footer from './../Layout/Footer';
 import { Link } from 'react-router-dom';
 import { TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
-import { useSelector } from "react-redux";
 
 
 const bg3 = require('./../../images/banner/bnr1.jpg');
@@ -12,9 +11,6 @@ const bg3 = require('./../../images/banner/bnr1.jpg');
 function ListingDetails(props) {
     const [activeTab, setActiveTab] = useState('1');
 
-    const user = useSelector(state=>state.authentication.user)
-
-    console.log(user);
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
@@ -25,11 +21,11 @@ function ListingDetails(props) {
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
-                        <h1 className="text-white">Profiles</h1>
+                        <h1 className="text-white">Add Listing</h1>
                         <div className="breadcrumb-row">
                             <ul className="list-inline">
                                 <li><Link to={''}>Home</Link></li>
-                                <li>Profile</li>
+                                <li>Add Listing</li>
                             </ul>
                         </div>
                     </div>
@@ -43,19 +39,11 @@ function ListingDetails(props) {
                         </div>
                         <div className="listing-info">
                             <div className="listing-info-left">
-                                <h3 className="title">{user.fullname}</h3>
-                                {user.role==='host' &&
-                                  <p>You're Host, create some room to book here</p>
-                                }
+                                <h3 className="title">Listing Directory</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                             </div>
                             <div className="listing-info-right text-center">
-                                <Link to={''} className="site-button red mr-3"><i className="la la-heart-o m-r5"></i>  Favorite </Link>
-                                {user.role!=='host' &&
-                                  <Link className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  To be Host </Link>
-                                }
-                                {user.role==='host' &&
-                                  <Link className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  Manager Room </Link>
-                                }
+                                <Link to={''} className="site-button gray mr-3"><i className="la la-heart-o m-r5"></i>  Favorite </Link>
                                 <div className="dropdown dropdown-btn">
                                     <button className="site-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i className="la la-share m-r5"></i>  Share

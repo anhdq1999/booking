@@ -1,3 +1,4 @@
+
 import { alertActions } from 'actions';
 import { history } from 'helpers';
 import About from 'markup/Pages/About';
@@ -40,7 +41,6 @@ import './plugins/slick/slick.min.css';
 
 
 
-
 function App() {
 
   const dispatch = useDispatch();
@@ -49,15 +49,16 @@ function App() {
     history.listen((location, action) => {
       dispatch(alertActions.clear());
     }, []);
-  })
+  });
 
   return (
 
     <div className="App">
 
-      <Router history={history} basename="/" >
+      <Router history={history} basename="/">
         <div className="page-wraper">
           <Switch>
+
             <Route path={['/', 'home']} exact component={Homepage} />
             <Route path='/login' exact component={Login2} />
             <Route path='/register' exact component={Register} />
@@ -86,13 +87,13 @@ function App() {
             <Route path='/profile' exact component={ListingDetails} />
             <Route path='/admin/rooms-manager' exact component={RoomsManager} />
             <Route path='/admin/rooms-manager/garbage' exact component={GarbageRoom} />
+
           </Switch>
         </div>
       </Router>
     </div>
-  )
+  );
 }
-
 
 
 export default App;
