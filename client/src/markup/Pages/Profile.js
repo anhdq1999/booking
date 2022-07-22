@@ -4,17 +4,36 @@ import Footer from './../Layout/Footer';
 import { Link } from 'react-router-dom';
 import { TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+ import { mailService } from "../../services";
+ import { alertActions } from "../../actions";
 
 
 const bg3 = require('./../../images/banner/bnr1.jpg');
 
 function ListingDetails(props) {
+
+    const [isAgreeHost,setIsAgreeHost]=useState(false);
+    const user = useSelector(state=>state.authentication.user)
+    const alert = useSelector(state=>state.alert)
+    const dispatch = useDispatch();
+
+    const handleClickTobeHost = e =>{
+        setIsAgreeHost(!isAgreeHost)
+    }
+
+    const handleSubmitTobeHost=e=>{
+        mailService.sendMail({to:user.email})
+          .then(
+          res => dispatch(alertActions.success(res.message))
+        )
+    }
+
+
+
     const [activeTab, setActiveTab] = useState('1');
 
-    const user = useSelector(state=>state.authentication.user)
 
-    console.log(user);
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
@@ -51,7 +70,8 @@ function ListingDetails(props) {
                             <div className="listing-info-right text-center">
                                 <Link to={''} className="site-button red mr-3"><i className="la la-heart-o m-r5"></i>  Favorite </Link>
                                 {user.role!=='host' &&
-                                  <Link className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  To be Host </Link>
+                                  <Link className="site-button blue mr-3"
+                                        onClick={() => { toggle('7'); }}><i className="la la-heart-o m-r5"></i>  To be Host </Link>
                                 }
                                 {user.role==='host' &&
                                   <Link className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  Manager Room </Link>
@@ -77,7 +97,7 @@ function ListingDetails(props) {
                         </li>
                         <li>
                             <Link className={classnames({ active: activeTab === '2' })}
-                                onClick={() => { toggle('2'); }}><i className="la la-file-text"></i><span>Description</span>
+                                  onClick={() => { toggle('2'); }}><i className="la la-star-o"></i><span>Reviews</span>
                             </Link>
                         </li>
                         <li>
@@ -101,8 +121,10 @@ function ListingDetails(props) {
                             </Link>
                         </li>
                         <li>
+
+
                             <Link className={classnames({ active: activeTab === '7' })}
-                                onClick={() => { toggle('7'); }}><i className="la la-star-o"></i><span>Reviews</span>
+                                  onClick={() => { toggle('7'); }}><i className="la la-file-text"></i><span>To be Host</span>
                             </Link>
                         </li>
                     </ul>
@@ -1057,175 +1079,6 @@ function ListingDetails(props) {
                         </TabPane>
                         <TabPane tabId="2">
                             <div className="row">
-                                <div className="col-xl-12">
-                                    <div className="content-box">
-                                        <div className="content-header">
-                                            <h3 className="title">description</h3>
-                                        </div>
-                                        <div className="content-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,</p>
-                                            <p>eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="3">
-                            <div className="row">
-                                <div className="col-xl-12">
-                                    <div className="content-box">
-                                        <div className="content-header">
-                                            <h3 className="title">listing features</h3>
-                                        </div>
-                                        <div className="content-body">
-                                            <ul className="icon-box-list list-col-4">
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-life-buoy"></i>
-                                                    </div>
-                                                    <span>Expert</span>
-                                                </Link></li>
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-cutlery"></i>
-                                                    </div>
-                                                    <span>Restaurant</span>
-                                                </Link></li>
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-shopping-cart"></i>
-                                                    </div>
-                                                    <span>Shopping</span>
-                                                </Link></li>
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-line-chart"></i>
-                                                    </div>
-                                                    <span>State Street</span>
-                                                </Link></li>
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-lemon-o"></i>
-                                                    </div>
-                                                    <span>Tea Tasting</span>
-                                                </Link></li>
-                                                <li><Link to={''} className="icon-box-info">
-                                                    <div className="icon-cell bg-gray">
-                                                        <i className="la la-wifi"></i>
-                                                    </div>
-                                                    <span>Wifi</span>
-                                                </Link></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="4">
-                            <div className="row">
-                                <div className="col-xl-12">
-                                    <div className="content-box">
-                                        <div className="content-header">
-                                            <h3 className="title">photos</h3>
-                                        </div>
-                                        <div className="content-body">
-                                            <div className="widget widget_gallery gallery-grid-4 lightgallery">
-                                                <ul>
-                                                    <li>
-                                                        <span className="check-km" title="Light Gallery Grid 1">
-                                                            <img src={require('./../../images/gallery/img1.jpg')} alt="" />
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span className="check-km" title="Light Gallery Grid 1">
-                                                            <img src={require('./../../images/gallery/img2.jpg')} alt="" />
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span className="check-km" title="Light Gallery Grid 1">
-                                                            <img src={require('./../../images/gallery/img3.jpg')} alt="" />
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span className="check-km" title="Light Gallery Grid 1">
-                                                            <img src={require('./../../images/gallery/img4.jpg')} alt="" />
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="5">
-                            <div className="row">
-                                <div className="col-xl-12">
-                                    <div className="content-box">
-                                        <div className="content-header">
-                                            <h3 className="title">videos</h3>
-                                        </div>
-                                        <div className="content-body">
-                                            <div className="widget widget_video video-grid-4">
-                                                <ul>
-                                                    <li>
-                                                        <div className="dlab-post-thum video-bx">
-                                                            <img src={require('./../../images/gallery/pic1.jpg')} alt="" />
-                                                            <div className="video-play-icon">
-                                                                <Link to={''} className="popup-youtube video"><i className="la la-play"></i></Link>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="6">
-                            <div className="row">
-                                <div className="col-xl-12">
-                                    <div className="content-box">
-                                        <div className="content-header">
-                                            <h3 className="title">events</h3>
-                                        </div>
-                                        <div className="content-body">
-                                            <div className="row">
-                                                <div className="col-lg-4">
-                                                    <div className="listing-bx event-listing m-b30">
-                                                        <div className="listing-media">
-                                                            <Link to={''}>
-                                                                <img src={require('./../../images/gallery/pic1.jpg')} alt="" />
-                                                            </Link>
-                                                        </div>
-                                                        <div className="listing-info">
-                                                            <h3 className="title"><Link to={''}>Moments To Remember From Directory</Link></h3>
-                                                            <ul className="event-meta">
-                                                                <li className="event-date"><span className="text-primary">SEP</span> <strong>04</strong></li>
-                                                                <li>Tuesday 08:00</li>
-                                                                <li>Sydney NSW, Australia</li>
-                                                                <li>44 people interested</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="event-bottom">
-                                                            <ul>
-                                                                <li className="event-hosted"><span>Hosted By </span> <Link to={''}>John Smith</Link></li>
-                                                                <li><Link to={''}><i className="la la-star-o"></i></Link></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="7">
-                            <div className="row">
                                 <div className="col-xl-8">
 
                                     <div className="comments-review-area">
@@ -1613,6 +1466,189 @@ function ListingDetails(props) {
                                 </div>
                             </div>
                         </TabPane>
+                        <TabPane tabId="3">
+                            <div className="row">
+                                <div className="col-xl-12">
+                                    <div className="content-box">
+                                        <div className="content-header">
+                                            <h3 className="title">listing features</h3>
+                                        </div>
+                                        <div className="content-body">
+                                            <ul className="icon-box-list list-col-4">
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-life-buoy"></i>
+                                                    </div>
+                                                    <span>Expert</span>
+                                                </Link></li>
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-cutlery"></i>
+                                                    </div>
+                                                    <span>Restaurant</span>
+                                                </Link></li>
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-shopping-cart"></i>
+                                                    </div>
+                                                    <span>Shopping</span>
+                                                </Link></li>
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-line-chart"></i>
+                                                    </div>
+                                                    <span>State Street</span>
+                                                </Link></li>
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-lemon-o"></i>
+                                                    </div>
+                                                    <span>Tea Tasting</span>
+                                                </Link></li>
+                                                <li><Link to={''} className="icon-box-info">
+                                                    <div className="icon-cell bg-gray">
+                                                        <i className="la la-wifi"></i>
+                                                    </div>
+                                                    <span>Wifi</span>
+                                                </Link></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tabId="4">
+                            <div className="row">
+                                <div className="col-xl-12">
+                                    <div className="content-box">
+                                        <div className="content-header">
+                                            <h3 className="title">photos</h3>
+                                        </div>
+                                        <div className="content-body">
+                                            <div className="widget widget_gallery gallery-grid-4 lightgallery">
+                                                <ul>
+                                                    <li>
+                                                        <span className="check-km" title="Light Gallery Grid 1">
+                                                            <img src={require('./../../images/gallery/img1.jpg')} alt="" />
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span className="check-km" title="Light Gallery Grid 1">
+                                                            <img src={require('./../../images/gallery/img2.jpg')} alt="" />
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span className="check-km" title="Light Gallery Grid 1">
+                                                            <img src={require('./../../images/gallery/img3.jpg')} alt="" />
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span className="check-km" title="Light Gallery Grid 1">
+                                                            <img src={require('./../../images/gallery/img4.jpg')} alt="" />
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tabId="5">
+                            <div className="row">
+                                <div className="col-xl-12">
+                                    <div className="content-box">
+                                        <div className="content-header">
+                                            <h3 className="title">videos</h3>
+                                        </div>
+                                        <div className="content-body">
+                                            <div className="widget widget_video video-grid-4">
+                                                <ul>
+                                                    <li>
+                                                        <div className="dlab-post-thum video-bx">
+                                                            <img src={require('./../../images/gallery/pic1.jpg')} alt="" />
+                                                            <div className="video-play-icon">
+                                                                <Link to={''} className="popup-youtube video"><i className="la la-play"></i></Link>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tabId="6">
+                            <div className="row">
+                                <div className="col-xl-12">
+                                    <div className="content-box">
+                                        <div className="content-header">
+                                            <h3 className="title">events</h3>
+                                        </div>
+                                        <div className="content-body">
+                                            <div className="row">
+                                                <div className="col-lg-4">
+                                                    <div className="listing-bx event-listing m-b30">
+                                                        <div className="listing-media">
+                                                            <Link to={''}>
+                                                                <img src={require('./../../images/gallery/pic1.jpg')} alt="" />
+                                                            </Link>
+                                                        </div>
+                                                        <div className="listing-info">
+                                                            <h3 className="title"><Link to={''}>Moments To Remember From Directory</Link></h3>
+                                                            <ul className="event-meta">
+                                                                <li className="event-date"><span className="text-primary">SEP</span> <strong>04</strong></li>
+                                                                <li>Tuesday 08:00</li>
+                                                                <li>Sydney NSW, Australia</li>
+                                                                <li>44 people interested</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div className="event-bottom">
+                                                            <ul>
+                                                                <li className="event-hosted"><span>Hosted By </span> <Link to={''}>John Smith</Link></li>
+                                                                <li><Link to={''}><i className="la la-star-o"></i></Link></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tabId="7">
+                            <div className="row">
+                                <div className="col-xl-12">
+                                    <div className="content-box">
+                                        <div className="content-header">
+                                            <h3 className="title">To be Host</h3>
+                                        </div>
+                                        <div className="content-body blue">
+                                            <p>If you want to find customer easily, to be my host</p>
+                                            <p>If you want to find customer easily, to be my host</p>
+                                            <div className="box-content">
+                                                  {alert.message &&
+                                                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                                                  }
+                                                <div className="input-block">
+                                                <input id="rule" className="form-control" type="checkbox"
+                                                       checked={isAgreeHost}
+                                                onClick={handleClickTobeHost}/>
+                                                <label htmlFor="rule">I agree with your rules</label>
+                                                </div>
+                                            <button
+                                              className={isAgreeHost?"site-button blue":"site-button gray"}
+                                              onClick={handleSubmitTobeHost}
+                                              disabled={!isAgreeHost}>Get Host</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
+
                     </TabContent>
                 </div>
             </div>

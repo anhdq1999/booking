@@ -65,6 +65,6 @@ function restoreUser(id) {
     return axiosClient.post(url);
 }
 function getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return JSON.parse(localStorage.getItem('user'));
 }
 
