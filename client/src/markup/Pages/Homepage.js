@@ -4,7 +4,7 @@ import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import TopPlaces from './../Element/TopPlaces';
+import TopPlaces from '../Element/TopPlaces/TopPlaces';
 import Footer from './../Layout/Footer';
 import Header from './../Layout/Header';
 import Slick from './Slick';
@@ -32,8 +32,6 @@ const content = [
 ];
 
 const bg1 = require('images/background/bg1.jpg');
-// const bg3 = require('images/background/bg3.jpg');
-
 function Homepage(props) {
     const provinces = useSelector(state => state.addressReducer.provinces)
     const districts = useSelector(state => state.addressReducer.districts)

@@ -13,9 +13,7 @@ const bg3 = require("../../../images/banner/bnr1.jpg");
 
 function HostListingDetails(props) {
   const [activeTab, setActiveTab] = useState("1");
-  // const dispatch = useDispatch();
   const user = useSelector((state) => state.authentication.user);
-
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
