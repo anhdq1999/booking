@@ -1,7 +1,7 @@
 const nodeMailer = require("nodemailer");
 
 class SendMailController {
-  send = async (email, subject, text, html) => {
+  send = async (emailTo, subject, text) => {
     const transporter = nodeMailer.createTransport({
       service: "gmail",
       auth: {
@@ -10,14 +10,10 @@ class SendMailController {
       }
     });
     const mailOption = {
-      // from: "18130006@st.hcmuaf.edu.vn",
-      // to: email,
-      // subject: subject,
-      // html : html
       from: "18130006@st.hcmuaf.edu.vn",
-      to: "anhdq.1999@gmail.com",
-      subject: "Sending Email using Node.js",
-      html: "<h1>Welcome</h1><p>That was easy!</p>"
+      to: emailTo,
+      subject: subject,
+      html: text
     };
     await transporter.sendMail(mailOption, (err, info) => {
       if (err) {
