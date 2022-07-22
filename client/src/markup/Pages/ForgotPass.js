@@ -26,7 +26,7 @@ function ForgotPass(props) {
                                         </div>
                                         <div class="form-group-bx">
                                             <div class="form-group input-form">
-                                                <label>Email Id</label>
+                                                <label>Username</label>
                                                 <input name="dzName" required="" class="form-control" placeholder="info123@example.com" type="text" />
                                             </div>
                                         </div>
