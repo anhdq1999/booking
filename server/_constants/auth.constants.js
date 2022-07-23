@@ -47,6 +47,13 @@ const authConstants = {
       success: "Password has been reset",
       failure: "RESET_PASSWORD failure"
     }
+  },
+  CHANGE_PASSWORD: {
+    action: "CHANGE_PASSWORD",
+    message: {
+      success: "Change password successfully",
+      failure: "Change password failure"
+    }
   }
 
 };

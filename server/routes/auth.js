@@ -7,6 +7,7 @@ const authController = require("../controllers/AuthenticationController");
 // desc: register
 // access: Public
 router.post("/register", authController.register);
+router.post("/change-password", authController.changePassword);
 router.post("/login", authController.login);
 router.post("/register-verify", authController.verify);
 router.post("/forgot", authController.forgotPassword);

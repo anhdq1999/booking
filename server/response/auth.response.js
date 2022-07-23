@@ -126,6 +126,24 @@ const RESET_PASSWORD = {
     };
   }
 };
+const CHANGE_PASSWORD = {
+  SUCCESS: (data) => {
+    return {
+      success: true,
+      action: _constants.auth.CHANGE_PASSWORD.action,
+      message: _constants.auth.CHANGE_PASSWORD.message.success,
+      data: data
+    };
+  },
+  FAILURE: (error) => {
+    return {
+      success: false,
+      action: _constants.auth.CHANGE_PASSWORD.action,
+      message: `${_constants.auth.CHANGE_PASSWORD.message.failure}, ${error}`,
+      data: null
+    };
+  }
+};
 
-const UserResponse = { REGISTER, LOGIN, EDIT_USER, JWT, VERIFY, FORGET_PASSWORD, RESET_PASSWORD };
+const UserResponse = { REGISTER, LOGIN, EDIT_USER, JWT, VERIFY, FORGET_PASSWORD, RESET_PASSWORD, CHANGE_PASSWORD };
 module.exports = UserResponse;

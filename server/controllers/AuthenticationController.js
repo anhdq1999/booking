@@ -64,8 +64,7 @@ class AuthenticationController {
         });
         try {
           const updateUser = await User.findOneAndUpdate({ email: user.email }, {
-            isVerify: true,
-            verifyLink: null
+            isVerify: true, verifyLink: null
           }, { new: true });
           return res.status(200).json(response.auth.VERIFY.SUCCESS(updateUser));
         } catch (e) {
@@ -99,8 +98,7 @@ class AuthenticationController {
       const updateUsers = await User.findOneAndUpdate({ _id: user._id }, { resetLink: token }, { new: true });
       const subject = `Booking | This is email RESET password`;
       // http://localhost:8080/auth/forgot-active?id=1234567&q=123124
-      const text =
-        `
+      const text = `
           <form action="http://localhost:8080/auth/forgot-active?i=${user._id}&f=${token}" method="post">
       <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8"
        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
@@ -187,13 +185,31 @@ class AuthenticationController {
         const hash_password = bcrypt.hashSync(newPassword, 10);
         try {
           const userUpdate = await User.findOneAndUpdate({ _id: i }, {
-            hash_password,
-            resetLink: null
+            hash_password, resetLink: null
           }, { new: true });
           return res.status(200).json(response.auth.RESET_PASSWORD.SUCCESS(userUpdate));
         } catch (error) {
           return res.status(400).json(response.auth.RESET_PASSWORD.FAILURE(error));
         }
+      }
+    }
+  };
+
+  changePassword = async (req, res) => {
+    const { username, password, newPassword } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE("Not found User by username : " + username));
+    } else {
+      if (!user.comparePassword(password)) {
+        return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE("Old password is invalid "));
+      }
+      try {
+        const hashNewPassword = bcrypt.hashSync(newPassword, 10);
+        const userUpdate = await User.findOneAndUpdate({ username }, { hash_password: hashNewPassword }, { new: true });
+        return res.status(200).json(response.auth.CHANGE_PASSWORD.SUCCESS(userUpdate));
+      } catch (e) {
+        return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE(e));
       }
     }
   };
