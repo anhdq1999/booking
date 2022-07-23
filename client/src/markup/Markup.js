@@ -23,7 +23,7 @@ import Homepage from './Pages/Homepage';
 import Homepage2 from './Pages/Homepage2';
 import Hotel from './Pages/Hotel';
 import HotelBooking from './Pages/HotelBooking';
-import ListingDetails from './Pages/ListingDetails';
+import ListingDetails from './Pages/Profile';
 import { Login2 } from './Pages/Login2';
 import Packages from './Pages/Packages';
 import Place from './Pages/Place';

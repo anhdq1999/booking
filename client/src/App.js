@@ -17,7 +17,7 @@ import Error404 from 'markup/Pages/Error';
 import Homepage2 from 'markup/Pages/Homepage2';
 import Hotel from 'markup/Pages/Hotel';
 import HotelBooking from 'markup/Pages/HotelBooking';
-import ListingDetails from 'markup/Pages/ListingDetails';
+import ListingDetails from 'markup/Pages/Profile';
 import Packages from 'markup/Pages/Packages';
 import Place from 'markup/Pages/Place';
 import PortfolioGrid2 from 'markup/Pages/PortfolioGrid2';
@@ -83,7 +83,7 @@ function App() {
             <Route path='/portfolio2' exact component={PortfolioGrid2} />
             <Route path='/contact' exact component={Contacts} />
             <Route path='/popup' exact component={Popupss} />
-            <Route path='/listing' exact component={ListingDetails} />
+            <Route path='/profile' exact component={ListingDetails} />
             <Route path='/admin/rooms-manager' exact component={RoomsManager} />
             <Route path='/admin/rooms-manager/garbage' exact component={GarbageRoom} />
           </Switch>
