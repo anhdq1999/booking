@@ -9,6 +9,7 @@ const districtRouter = require('./district');
 const wardRouter = require('./ward');
 const blogRouter = require('./blog');
 const categoryRouter = require('./categories');
+const mailRouter=require('./mail')
 
 const { authJwt } = require('../middlewares');
 const { isAdmin } = require('../middlewares/auth.middlewares.js');
@@ -39,11 +40,11 @@ function route(app) {
     app.use('/districts', districtRouter);
 
     app.use('/wards', wardRouter);
-
-
     app.use('/blogs',blogRouter)
 
     app.use('/categories', categoryRouter);
+
+    app.use('/mail',mailRouter)
 
 
     app.get('/', (req, res) => {

@@ -111,6 +111,11 @@ export function roomReducer(state = initialState, action) {
             return {
                 ...state
             }
+        case roomConstants.GETBYHOSTID_SUCCESS :
+            state.items = action.rooms;
+            return {
+               ...state
+            }
         default:
             return state
     }

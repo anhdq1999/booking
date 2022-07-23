@@ -66,7 +66,7 @@ function Register(props) {
         let isValidated = true;
         stateArr.forEach((value) =>{
             if  (value.errorMessage.length > 0 || value.value.length === 0)
-            isValidated = false; return;
+            isValidated = false;
         })
         setIsValidationForm(isValidated)
     }

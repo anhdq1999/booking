@@ -1,106 +1,108 @@
-import { alertActions, roomActions, userActions } from 'actions';
-import Header from 'markup/Layout/Header';
-import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button, Label } from 'reactstrap';
-import RoomModal from './RoomModal';
+import { alertActions, roomActions, userActions } from "actions";
+import Header from "markup/Layout/Header";
+import React, { useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Button, Label } from "reactstrap";
+import RoomModal from "./RoomModal";
 
 function RoomsManager(props) {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const [editableRoom, setEditableRoom] = useState([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAddModal, setIsAddModal] = useState([]);
-  const [isSearch, setIsSearch] = useState(false)
+  const [isSearch, setIsSearch] = useState(false);
   const [searchBy, setSearchBy] = useState("name");
   const alert = useSelector(state => state.alert);
-  const rooms = useSelector(state => state.roomReducer.items)
-  const roomsSearch = useSelector(state => state.roomReducer.itemsSearch)
-  const pending = useSelector(state => state.roomReducer.loading)
+  const rooms = useSelector(state => state.roomReducer.items);
+  const roomsSearch = useSelector(state => state.roomReducer.itemsSearch);
+  const pending = useSelector(state => state.roomReducer.loading);
+  const user = useSelector((state) => state.authentication.user);
+
   const dispatch = useDispatch();
   const columns = [
     {
-      name: 'Room Name',
+      name: "Room Name",
       selector: row => row.name
     },
     {
-      name: 'Host',
+      name: "Host",
       selector: row => row.host
     },
     {
-      name: 'Type',
+      name: "Type",
       selector: row => row.category
     },
     {
-      name: 'Price',
+      name: "Price",
       selector: row => row.price
     },
     {
       buttons: true,
       cell: (column) =>
-      (<>
-        <Button onClick={() => handleEdit(column)}>Edit</Button>
-        <Button onClick={() => handleDelete(column)}>Delete</Button>
-      </>
-      ),
+        (<>
+            <Button onClick={() => handleEdit(column)}>Edit</Button>
+            <Button onClick={() => handleDelete(column)}>Delete</Button>
+          </>
+        ),
       ignoreRowClick: true,
-      allowOverflow: true,
+      allowOverflow: true
     }
-
-  ]
+  ];
   useEffect(() => {
-    dispatch(roomActions.getAll())
-    dispatch(userActions.getAll())
-  }, [dispatch]);
+    dispatch(roomActions.getByHostId(user.id));
+    dispatch(userActions.getAll());
+  }, [dispatch, user.id]);
 
   function handleDelete(rooms) {
     const id = rooms._id;
-    dispatch(roomActions.delete(id))
+    dispatch(roomActions.delete(id));
   }
+
   const handleDeleteMany = () => {
     if (selectedRooms.length > 0) {
       selectedRooms.forEach((value) => {
-        handleDelete(value)
-      })
+        handleDelete(value);
+      });
     } else {
-      dispatch(alertActions.error("Chưa chọn room để xóa"))
+      dispatch(alertActions.error("Chưa chọn room để xóa"));
     }
-  }
+  };
   const handleChange = ({ selectedRows }) => {
-    setSelectedRooms(selectedRows)
+    setSelectedRooms(selectedRows);
   };
 
   const handleOpenModal = () => {
-    setIsOpenModal(!isOpenModal)
-  }
+    setIsOpenModal(!isOpenModal);
+  };
   const handleAdd = () => {
-    setIsAddModal(true)
+    setIsAddModal(true);
     setEditableRoom();
-    handleOpenModal()
-  }
+    handleOpenModal();
+  };
   const handleEdit = (room) => {
-    setIsAddModal(false)
-    setEditableRoom(room)
-    handleOpenModal()
-  }
+    setIsAddModal(false);
+    setEditableRoom(room);
+    handleOpenModal();
+  };
   const handleSearch = (e) => {
     const { value } = e.target;
     dispatch(roomActions.search(searchBy, value));
-  }
+  };
   const handleSearchBy = (e) => {
     const { value } = e.target;
-    setSearchBy(value)
-  }
+    setSearchBy(value);
+  };
   const handleFocus = () => {
     setIsSearch(true);
-  }
+  };
   return (
     <div>
       <Header />
       <div className="mt-5 mx-5">
 
-        <Link to='/admin/rooms-manager/garbage'>Thùng rác của tôi</Link>
+        <Link to="/admin/rooms-manager/garbage">Thùng rác của tôi</Link>
 
         <div className="text-right mb-5">
           <Button onClick={() => handleAdd()}>Add</Button>
@@ -114,13 +116,13 @@ function RoomsManager(props) {
           onChange={(e) => handleSearch(e)}
           onFocus={(e) => handleFocus(e)}
           name="keySearch"
-          placeholder={'Search by ' + searchBy}
+          placeholder={"Search by " + searchBy}
           type="text" />
         <select style={{ marginLeft: "5px", height: "30px" }} onChange={(e) => handleSearchBy(e)}>
           <option value="name" defaultChecked>Name</option>
         </select>
         <DataTable
-          title='Room Store'
+          title="Room Store"
           columns={columns}
           data={isSearch ? roomsSearch : rooms}
           theme="dark"
@@ -146,7 +148,7 @@ function RoomsManager(props) {
         ></RoomModal>
       }
     </div>
-  )
+  );
 }
 
-export default RoomsManager
+export default RoomsManager;
