@@ -1,8 +1,8 @@
 const slugGenerator = require('mongoose-slug-generator/lib/slug-generator');
-const { $where } = require('../models/Rooms');
 const Room = require('../models/Rooms');
 const RESPONSE = require('../response');
 const { room } = require('../_constants');
+const fs = require('fs');
 class RoomController {
     //[GET] /:id
     show(req, res, next) {
@@ -76,8 +76,7 @@ class RoomController {
     }
     // [GET] /rooms/store
     store(req, res, next) {
-        let limit =req.query.limit
-        console.log(limit);
+        let limit = req.query.limit
         Room.find({}).limit(limit)
             .then((rooms) => {
                 res.status(200).json(RESPONSE.ROOM.GETALL.SUCCESS(rooms));

@@ -1,5 +1,6 @@
 const Ward = require('../models/Wards');
 const data = require('../data/ward.json')
+
 const getByDistrictCode = (req, res, next) => {
     const parent_code = req.params.code;
     Ward.find({ parent_code })
