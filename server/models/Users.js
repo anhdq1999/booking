@@ -36,9 +36,11 @@ const User = new Schema({
   isVerify: {
     type: Boolean, require: true, default: false
   },
-  OTP: {
-    type: String, require: true,
-    trim: true
+  resetLink: {
+    type: String, default: null
+  },
+  verifyLink:{
+    type: String, default : null
   }
 }, {
   timestamps: true
