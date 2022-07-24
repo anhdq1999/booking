@@ -12,7 +12,7 @@ const REGISTER = {
     return {
       success: true,
       action: _constants.auth.REGISTER_CONSTANTS.action,
-      message: `${_constants.auth.REGISTER_CONSTANTS.message.failure}, ${error}`,
+      message: `${_constants.auth.REGISTER_CONSTANTS.message.failure}`,
       data: null
     };
   }
@@ -31,7 +31,7 @@ const LOGIN = {
     return {
       success: false,
       action: _constants.auth.LOGIN_CONSTANTS.action,
-      message: `${_constants.auth.LOGIN_CONSTANTS.message.failure}, ${error}`,
+      message: error,
       data: null
     };
   }
@@ -49,7 +49,7 @@ const EDIT_USER = {
     return {
       success: false,
       action: _constants.auth.EDIT_USER_CONSTANTS.action,
-      message: `${_constants.auth.EDIT_USER_CONSTANTS.message.failure}, ${error}`,
+      message: `${_constants.auth.EDIT_USER_CONSTANTS.message.failure}`,
       data: null
     };
   }

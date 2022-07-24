@@ -23,7 +23,7 @@ const User = new Schema({
     type: String, require: true,
     trim: true
   },
-  fullname: {
+  fullName: {
     type: String, require: true,
     trim: true
   },

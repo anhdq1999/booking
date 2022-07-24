@@ -119,6 +119,7 @@ export function userReducer(state = initialState, action) {
       // remove deleted user from state
       state.items = state.items.filter(user => user._id !== action.id)
       return { ...state };
+
     case userConstants.DELETE_FAILURE:
       // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
       return {

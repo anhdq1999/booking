@@ -71,7 +71,7 @@ function Header(props) {
                     </li>
 
                   }
-                  <li><Link to={"/profile"} className="site-button-link">{user.fullname}</Link></li>
+                  <li><Link to={"/profile"} className="site-button-link">{user.fullName}</Link></li>
                   <li><Link to={"/"} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
 
                 </ul>

@@ -8,10 +8,9 @@ import Footer from 'markup/Layout/Footer';
 import { useDispatch } from 'react-redux';
 import { alertActions } from 'actions';
 
-function Routes() {
+function Routes(props) {
 
     const dispatch = useDispatch();
-
     useEffect(() => {
         history.listen((location, action) => {
             dispatch(alertActions.clear());

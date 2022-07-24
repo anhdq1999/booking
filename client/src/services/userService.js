@@ -13,8 +13,22 @@ export const userService = {
     removeUser,
     restoreUser,
     getCurrentUser,
+    registerVertified,
+    forgot,
+    resetPassword
 };
-
+function resetPassword(data){
+    const url = "/auth/reset-password";
+    return axiosClient.post(url, data);
+}
+function forgot(email){
+    const url = "/auth/forgot";
+    return axiosClient.post(url, email);
+}
+function registerVertified(e,v){
+    const url = "/auth/register-verify";
+    return axiosClient.post(url, {e, v});
+}
 function login(username, password) {
     const url = "/auth/login";
     return axiosClient.post(url, username, password);
