@@ -15,7 +15,7 @@ class AuthenticationController {
       const token = jwt.sign({ email: req.body.email }, process.env.JWT_SECRET_KEY_VERIFY, { expiresIn: "1d" });
       const subject = `Booking | This is email verify account`;
       const text = `
-         <form action="http://localhost:8080/auth/register-verify?e=${req.body.email}&v=${token}" method="post">
+         <form action="http://localhost:3000/auth/register-verify?e=${req.body.email}&v=${token}" method="post">
           <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
           <div style="margin:50px auto;width:70%;padding:20px 0">
           <div style="border-bottom:1px solid #eee">
@@ -97,9 +97,9 @@ class AuthenticationController {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY_FORGOT_PASS, { expiresIn: "5m" });
       const updateUsers = await User.findOneAndUpdate({ _id: user._id }, { resetLink: token }, { new: true });
       const subject = `Booking | This is email RESET password`;
-      // http://localhost:8080/auth/forgot-active?id=1234567&q=123124
+      // http://localhost:3000/auth/forgot-active?id=1234567&q=123124
       const text = `
-          <form action="http://localhost:8080/auth/forgot-active?i=${user._id}&f=${token}" method="post">
+          <form action="http://localhost:3000/auth/forgot-active?i=${user._id}&f=${token}" method="post">
       <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8"
        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
   <tr>
