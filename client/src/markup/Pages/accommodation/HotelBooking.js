@@ -174,7 +174,7 @@ function HotelBooking(props) {
                                                     <div className="tour-price">
                                                         <span>Per Room Per Night</span>
                                                         <h2 className="price">{roomsService.formatPrice(room.price)}</h2>
-                                                        <h4 className="actual-price">400,000,000 VND</h4>
+                                                        <h4 className="actual-price">{roomsService.formatPrice(room.price*1.5)}</h4>
                                                     </div>
                                                     <div className="m-t20 m-b30">
                                                         <Link to='/remove' className="site-button red">Remove</Link>

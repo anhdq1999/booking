@@ -36,7 +36,7 @@ function PublicRoutes() {
             <Route path='/about' exact component={About} />
             <Route path='/hotel' exact component={Hotel} />
             <Route path='/booking/:id' exact component={BookingDetails} />
-            <Route path='/packages/:province' exact component={Accommodation} />
+            <Route path={['/accommodation/:province','/accommodation']} exact component={Accommodation} />
             <Route path='/error' exact component={Error404} />
             <Route path='/forgot' exact component={ForgotPass} />
             <Route path='/hotelbooking/:id' exact component={HotelBooking} />

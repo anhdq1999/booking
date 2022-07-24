@@ -109,7 +109,7 @@ function UsersManager(props) {
 
   return (
     <div>
-      <div className="mt-5 mx-5 mb-5">
+      <div className="data mt-5 mx-5 mb-5">
         <Link to="/admin/users-manager/garbage">Thùng rác của tôi</Link>
         <div className="text-right mb-5">
           <Button onClick={() => handleAdd()}>Add</Button>
