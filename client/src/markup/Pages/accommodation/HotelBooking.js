@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
-import BookNowModal from './book-now-modal/BookNowModal';
+import BookNowModal from 'markup/Pages/book-now-modal/BookNowModal';
 import { roomActions } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
@@ -11,7 +9,7 @@ import { roomsService } from 'services';
 import GoogleMaps from "simple-react-google-maps"
 
 
-const bg3 = require('./../../images/banner/bnr1.jpg');
+const bg3 = require('images/banner/bnr1.jpg');
 function HotelBooking(props) {
     const id = props.match.params.id;
     const room = useSelector(state => state.roomReducer.item)
@@ -33,7 +31,6 @@ function HotelBooking(props) {
     const { country, province, district, street } = room.address || {}
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -132,7 +129,7 @@ function HotelBooking(props) {
                                         </form>
 
                                         <div className="m-t30">
-                                            <img src={require('./../../images/add/add-bnr.jpg')} className="d-md-none d-xl-block d-lg-block" alt="" />
+                                            <img src={require('images/add/add-bnr.jpg')} className="d-md-none d-xl-block d-lg-block" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -202,8 +199,6 @@ function HotelBooking(props) {
 
                 </div>
             }
-
-            <Footer />
         </div>
     )
 }

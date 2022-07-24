@@ -83,7 +83,7 @@ function Garbage(props) {
     }
   }
   return (
-    <div className="mt-5 mx-5">
+    <div className="mt-5 mx-5 mb-5">
       <Link to="/admin/users-manager">Quay lại</Link>
       <div className="text-right mb-5">
         <Button onClick={() => handleRestoreMany()}>Restore</Button>

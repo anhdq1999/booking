@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const bg3 = require('./../../images/background/bg5.jpg');
 
@@ -13,7 +14,7 @@ function Error404(props) {
                         <h2 className="dz_error text-secondry">404</h2>
                         <h3>OOPS!</h3>
                         <h4>Page Not Found</h4>
-                        <a href="index.html" className="site-button">Back To Home</a>
+                        <Link to={'/'}  className="site-button">Back To Home</Link>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6">
                         <img src={require('./../../images/collage.png')} alt="" />

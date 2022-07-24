@@ -5,9 +5,7 @@ import 'react-animated-slider/build/horizontal.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TopPlaces from '../Element/TopPlaces/TopPlaces';
-import Footer from './../Layout/Footer';
-import Header from './../Layout/Header';
-import Slick from './Slick';
+import Slick from 'markup/Pages/component-part/Slick';
 
 
 const content = [
@@ -50,7 +48,6 @@ function Homepage(props) {
     }
     return (
         <div>
-            <Header />
             <div className="page-content">
                 <Slider className="slider-wrapper" infinite autoplay>
                     {content.map((item, index) => (
@@ -127,7 +124,6 @@ function Homepage(props) {
                 <TopPlaces />
                 <Slick />
             </div>
-            <Footer />
         </div>
     )
 
