@@ -1,4 +1,4 @@
-input[type=checkbox]{
+.data input[type=checkbox]{
     opacity: 1;
 }
 .result-image{
