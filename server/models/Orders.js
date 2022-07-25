@@ -47,12 +47,6 @@ const orderSchema = new Schema(
             type: String,
             required: true,
         },
-        // paymentResult: {
-        //   id: String,
-        //   status: String,
-        //   update_time: String,
-        //   email_address: String
-        // },
         paidAt: { type: Date },
         refundAt: { type: Date },
         status: {
