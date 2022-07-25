@@ -24,7 +24,7 @@ function route(app) {
         next();
     });
 
-    app.use("/users", [authJwt.verifyToken, authJwt.isAdmin], userRouter);
+    app.use("/users", userRouter);
 
     app.use("/auth", authRouter);
 
