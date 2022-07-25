@@ -7,22 +7,37 @@ import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from "reactstrap";
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import { userService } from 'services';
+import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { orderActions } from 'actions';
 
 const schema = yup.object().shape({
 
 })
 export default function BookNowModal(props) {
+    const room = props.room
+
+    const dispatch = useDispatch()
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
     const [value, setValue] = useState([null, null]);
 
-    const onSubmit = (data) => {
-        console.log(value);
-        console.log(data);
-    }
 
+    const onSubmit = (data) => {
+        let user = userService.getCurrentUser()
+        let checkInDate = new Date(value[0]).toUTCString()
+        let checkOutDate = new Date(value[1]).toUTCString()
+        data.dates = {
+            checkInDate,
+            checkOutDate
+        }
+        data.room = room;
+        data.user = user.id;
+        dispatch(orderActions.initBookNowItem(data));
+    }
     function toggle() {
         return props.toggle()
     }
@@ -41,13 +56,14 @@ export default function BookNowModal(props) {
                 <ModalBody>
                     <h5 className="text-center">Enter your contact details and we will plan the best holiday suiting all your requirements.</h5>
                     <form id="bookNowModal" onSubmit={handleSubmit(onSubmit)}>
-                        <div className="text-center">
+                        <div className="row" style={{ "justifyContent": "space-around" }}>
                             <div className="form-group">
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns}
                                     localeText={{ start: 'Check-in', end: 'Check-out' }}
                                 >
                                     <DateRangePicker
+
                                         value={value}
                                         onChange={(newValue) => {
                                             setValue(newValue);
@@ -64,29 +80,6 @@ export default function BookNowModal(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <input
-                                            className="form-control"
-                                            placeholder="Your Name"
-                                            type="text"
-                                            {...register("customerName")}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <input
-                                            className="form-control"
-                                            placeholder="Your Phone Number"
-                                            type="text"
-                                            {...register("customerPhone")} />
-                                    </div>
-                                </div>
-                            </div>
                             <div className="col-md-4">
                                 <div className="quantity btn-quantity">
                                     <input

@@ -24,6 +24,11 @@ function Accommodation(props) {
     const [currentData, setCurrentData] = useState([]);
 
     console.log(province);
+
+    useEffect(() => {
+        dispatch(roomActions.getAll())
+    }, [dispatch])
+
     useEffect(() => {
         if (province) dispatch(roomActions.getByProvince(province))
         else dispatch(roomActions.getAll())
