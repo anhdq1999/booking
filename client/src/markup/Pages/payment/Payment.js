@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import PaypalCheckoutButton from "./PaypalCheckoutButton";
 
 const bg3 = require('images/banner/bnr1.jpg');
 
@@ -62,6 +63,7 @@ function Payment(props) {
 
                                 <div className="text-center">
                                     <button className="btn bg-green mr-5">Pay Now</button>
+                                    <PaypalCheckoutButton product={item} />
                                     <button className="btn bg-red">Ok with pay after</button>
                                 </div>
                             </form>
