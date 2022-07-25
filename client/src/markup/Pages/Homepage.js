@@ -65,7 +65,7 @@ function Homepage(props) {
                         <form className="row">
                             <div className="col-md-4 col-sm-6 col-6 col-lg-2 form-group">
                                 <label>Country</label>
-                                <select className="form-control" readonly>
+                                <select className="form-control" readOnly>
                                     <option>Việt Nam</option>
                                 </select>
                             </div>
