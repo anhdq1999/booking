@@ -10,9 +10,13 @@ import Error404 from 'markup/Pages/Error';
 import ForgotPass from 'markup/Pages/forgot/ForgotPass';
 import ResetPassword from 'markup/Pages/forgot/ResetPassword';
 import Homepage from 'markup/Pages/Homepage';
+import GarbageRoom from 'markup/Pages/host/room-manager/GarbageRoom';
+import RoomsManager from 'markup/Pages/host/room-manager/RoomsManager';
 import Login2 from 'markup/Pages/login/Login2';
 import Order from 'markup/Pages/order/Order';
+import OrderCreateSuccess from 'markup/Pages/order/OrderCreateSuccess';
 import Payment from 'markup/Pages/payment/Payment';
+import Profile from 'markup/Pages/Profile';
 import Register from 'markup/Pages/register/Register-react-hook-form';
 import RegisterVertified from 'markup/Pages/register/Register-vertifed';
 import Register2 from 'markup/Pages/register/Register2';
@@ -47,6 +51,11 @@ function PublicRoutes() {
             <Route path='/reset-password/:id&:token' exact component={ResetPassword} />
             <Route path='/order' exact component={Order} />
             <Route path='/payment' exact component={Payment} />
+            <Route path='/order/success' exact component={OrderCreateSuccess} />
+            <Route path='/profile' exact component={Profile} />
+            <Route path='/host/rooms-manager' exact component={RoomsManager} />
+            <Route path='/host/rooms-manager/garbage' exact component={GarbageRoom} />
+
         </Switch>
     )
 }

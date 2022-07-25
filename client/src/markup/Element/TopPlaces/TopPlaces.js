@@ -45,7 +45,7 @@ function TopPlaces(props) {
           <div className="col-lg-4 col-md-6 col-sm-6 m-b30 card-container" key={index}>
             <div className="dlab-box">
               <div className="dlab-media">
-                <Link to={"./booking"}>
+                <Link to={`/hotelbooking/${item._id}`}>
                   <Image cloudName="dmtwoqysj" publicId={item.image}>
                     <Transformation width="400" height="250" gravity="south" crop="fill" />
                   </Image>
@@ -56,15 +56,16 @@ function TopPlaces(props) {
                 </div>
               </div>
               <div className="dlab-info p-a20 border-1 text-center">
-                <h4 className="dlab-title m-t0"><Link to={"./booking"}>{item.name}</Link></h4>
+                <h4 className="dlab-title m-t0"><Link to={`/hotelbooking/${item._id}`}>{item.name}</Link></h4>
 
                 <p className="description-top-place">{item.description}</p>
 
                 <div className="tr-btn-info">
-                  <Link to={"./booking"} className="site-button radius-no"><i className="fa fa-location-arrow"
-                                                                              aria-hidden="true"></i> Japan</Link>
-                  <Link to={"./booking"} className="site-button bg-primary-dark radius-no"><i
-                    className="fa fa-info-circle" aria-hidden="true"></i> Relax </Link>
+
+                  <Link to={`/hotelbooking/${item._id}`} className="site-button bg-primary-dark radius-no"><i
+                    className="fa fa-info-circle" aria-hidden="true"></i> Book Now </Link>
+                  <Link to={'/accommodation'} className="site-button radius-no"><i
+                    className="fa fa-info-circle" aria-hidden="true"></i> More </Link>
                 </div>
               </div>
             </div>

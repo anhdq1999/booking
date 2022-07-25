@@ -83,6 +83,7 @@ export default function UserModal(props) {
         setValue("roles", data.roles)
     }
     function handleAdd(data) {
+        console.log(data);
         dispatch(userActions.create(data))
     }
     function handleEdit(data) {

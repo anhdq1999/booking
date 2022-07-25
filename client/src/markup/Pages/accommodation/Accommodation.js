@@ -10,7 +10,7 @@ const bg3 = require('images/banner/bnr1.jpg');
 function Accommodation(props) {
 
     const province = props.match.params.province;
-    console.log(province);
+console.log(province);
 
 
     const roomsByProvince = useSelector(state => state.roomReducer.itemsByProvince)
@@ -41,7 +41,7 @@ function Accommodation(props) {
     }, [roomsByProvince])
 
     useEffect(() => {
-        if (rooms) setData(rooms)
+        setData(rooms)
     }, [rooms])
 
     useEffect(() => {

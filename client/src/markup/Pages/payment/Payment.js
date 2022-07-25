@@ -1,15 +1,35 @@
+import { orderActions } from "actions";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { roomsService } from "services";
 import PaypalCheckoutButton from "./PaypalCheckoutButton";
 
 const bg3 = require('images/banner/bnr1.jpg');
 
 function Payment(props) {
+    const dispatch = useDispatch();
+    
+
     const item = useSelector(state => state.orderReducer.item)
     useEffect(() => {
-        console.log(item);
+        
     }, [item])
+
+    const handleSubmitPayAfter = () => {
+        let data=item
+        data.taxPrice = 0;
+        data.paymentMethod = "Offline"
+        data.status = "UNPAID"
+        data.user = data.user.id
+        data.price = item.room.price
+        data.room = item.room._id
+        console.log(data);
+        dispatch(orderActions.create(data));
+    }
+
+
+    if (!item.user) return <Redirect to='/accommodation' />
     return (
         <>
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
@@ -30,47 +50,80 @@ function Payment(props) {
                 <div className="container">
 
                     <div className="border bg-light">
-                        <div className="text-left m-5">
-                            <button className="btn bg-primary"><i className="fa fa-arrow-left"></i></button>
-
-                            <h5 className="mt-3 mb-3"> Enter this fill to completed ordering</h5>
-                            <form >
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Full Name:</label>
-                                    <div className="col-sm-6">
-                                        <input className="form-control" placeholder="Phan Thành Đoan" type="text" />
+                        <div style={{ color: 'black' }}>
+                            <div className="email" style={{ maxWidth: '480px', margin: '1rem auto', borderRadius: '10px', borderTop: '#d74034 2px solid', borderBottom: '#d74034 2px solid', boxShadow: '0 2px 18px rgba(0, 0, 0, 0.2)', padding: '1.5rem', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                <div className="email-head" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.2)', paddingBottom: '1rem' }}>
+                                    <div className="head-img" style={{ maxWidth: '240px', padding: '0 0.5rem', display: 'block', margin: '0 auto', fontWeight: 'bolder', textAlign: 'center' }}>
+                                        TRIPPER | Booking
                                     </div>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Phone:</label>
-                                    <div className="col-sm-6">
-                                        <input className="form-control" placeholder="0862083141" type="text" />
+                                <div className="email-body">
+                                    <div className="body-text" style={{ padding: '2rem 0 1rem', textAlign: 'center', fontSize: '1.15rem' }}>
+                                        <div className="body-greeting" style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
+                                            Hi, {item.user.fullName || item.user.username}!
+                                        </div>
+                                        Your order has been successfully completed and delivered to You!
+                                    </div>
+                                    <div className="body-table" style={{ textAlign: 'left' }}>
+                                        <table style={{ width: '100%', fontSize: '1.1rem', padding: '10px' }}>
+                                            <tbody><tr>
+                                                <td>Room name:</td>
+                                                <td style={{ textAlign: 'right', paddingBottom: '15px', color: 'red' }}> {item.room.name}</td>
+                                            </tr>
+                                                <tr>
+                                                    <td>Price:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.room.price}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Check in:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.dates.checkInDate}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Check out:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.dates.checkOutDate}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Customer name:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.customerName}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Customer phone :</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.customerPhone}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Adults:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.adults}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Childs</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.child}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Infants</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.infants}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px', color: 'red' }}><strong>{roomsService.formatPrice(item.totalPrice + (item.taxPrice || 0))}</strong></td>
+                                                </tr>
+                                            </tbody></table>
+                                    </div>
+                                    <div className="body-text bottom-text" style={{ padding: '2rem 0 1rem', textAlign: 'center', fontSize: '0.8rem' }}>
+                                        Thank You
                                     </div>
                                 </div>
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Email:</label>
-                                    <div className="col-sm-6">
-                                        <input className="form-control" placeholder="thanhdoan161222@gmail.com" type="text" />
-                                    </div>
-                                </div>
 
-                                <div className="form-group row">
-                                    <label className="col-sm-3 col-form-label">Room Name</label>
-                                    <div className="col-sm-6">
-                                        <input className="form-control" readOnly placeholder="Home stay của Doan" type="text" />
-                                    </div>
-                                </div>
-
-                                <div className="text-center">
-                                    <button className="btn bg-green mr-5">Pay Now</button>
-                                    <PaypalCheckoutButton product={item} />
-                                    <button className="btn bg-red">Ok with pay after</button>
-                                </div>
-                            </form>
-
-
-
+                            </div>
                         </div>
+
+
+                        <div className="text-center">
+    
+                            <PaypalCheckoutButton product={item} />
+                            <button className="btn bg-red" onClick={handleSubmitPayAfter}>Ok with pay after</button>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

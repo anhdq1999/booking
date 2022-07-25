@@ -1,7 +1,6 @@
 import { orderConstants } from "_constants";
 
 const initialState = {
-    item: {}
 }
 
 export function orderReducer(state = initialState, action) {

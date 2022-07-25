@@ -3,6 +3,7 @@ const User = require("../models/Users");
 const Room = require("../models/Rooms");
 const Mail = require("../mail/SendMail");
 const response = require("../response");
+const Orders = require("../models/Orders");
 
 class OrderController {
 
@@ -129,14 +130,12 @@ class OrderController {
   create = async (req, res) => {
     const orderRequest = req.body;
     const newOrder = new Order(orderRequest);
-    console.log(req.body);
     try {
       const orderSaved = await newOrder.save();
       const userOrder = await User.findOne({ _id: orderSaved.user });
       const room = await Room.findOne({ _id: orderSaved.room });
       const subject = `Invoice Order room ${orderSaved.customerName}'s`;
       const text = this.paymentForm(userOrder, orderSaved, room)
-
       await Mail.send(userOrder.email, subject, text);
       return res.status(200).json(response.ORDER.CREATE.SUCCESS(orderSaved));
     } catch (error) {
@@ -289,7 +288,28 @@ class OrderController {
         });
       });
   }
-
+  deleteAll(req, res, next) {
+    Order.delete({})
+      .then(() => {
+        res.status(200).json({
+          action: "delete all order ",
+          success: true,
+          message: `delete all order successfully`,
+          data: null
+        });
+      })
+  }
+  removeAll(req, res, next) {
+    Order.remove({})
+      .then(() => {
+        res.status(200).json({
+          action: "remove all order ",
+          success: true,
+          message: `remove all order successfully`,
+          data: null
+        });
+      })
+  }
 }
 
 module.exports = new OrderController();

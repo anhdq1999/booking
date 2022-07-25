@@ -1,4 +1,5 @@
 import { history } from "helpers";
+import { orderService } from "services";
 import { orderConstants } from "_constants";
 
 export const orderActions = {
@@ -30,7 +31,18 @@ function initOrder(data) {
 }
 function create(data) {
     return dispatch => {
+        orderService.create(data)
+            .then(res => {
+                if (res.success) {
+                    history.push('/order/success')
+                    console.log(res);
+                } else {
+                }
+            })
+            .catch(err => {
+                console.log(err.message);
 
+            })
     }
 }
 function getAll(data) {

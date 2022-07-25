@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const bg3 = require('./../../images/banner/bnr1.jpg');
 
-function ListingDetails(props) {
+function Profile(props) {
 
     const [isAgreeHost,setIsAgreeHost]=useState(false);
     const user = useSelector(state=>state.authentication.user)
@@ -60,7 +60,7 @@ function ListingDetails(props) {
                         </div>
                         <div className="listing-info">
                             <div className="listing-info-left">
-                                <h3 className="title">{user.fullname}</h3>
+                                <h3 className="title">{user.fullName}</h3>
                                 {user.role==='host' &&
                                   <p>You're Host, create some room to book here</p>
                                 }
@@ -1653,4 +1653,4 @@ function ListingDetails(props) {
         </div>
     );
 }
-export default ListingDetails;
+export default Profile;

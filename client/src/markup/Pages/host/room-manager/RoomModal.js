@@ -221,7 +221,7 @@ export default function RoomModal(props) {
                                 <Label > Host Room: </Label>
                                 <select className="form-control" id='host' {...register("host")}>
                                     {users && users.map((item, index) => (
-                                        <option key={item._id} value={item._id}>{item.fullname}</option>
+                                        <option key={item._id} value={item._id}>{item.fullName}</option>
                                     ))
                                     }
                                 </select>

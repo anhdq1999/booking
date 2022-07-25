@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import { roomsService, userService } from "services";
+import {  userService } from "services";
 
 const bg3 = require('images/banner/bnr1.jpg');
 
@@ -23,8 +23,14 @@ function Order(props) {
     }, [bookNowItem, setValue])
     if (!bookNowItem) return <Redirect to='/accommodation' />
     const onSubmit = (data) => {
-        data.room = bookNowItem.room._id;
-        data.user = user.id;
+        data.room = bookNowItem.room
+        data.user = user;
+        data.child = parseInt(bookNowItem.child, 10)
+        data.adults = parseInt(bookNowItem.adults, 10)
+        data.infants = parseInt(bookNowItem.infants, 10)
+        data.totalPrice = parseInt(data.totalPrice, 10)
+        data.dates.checkInDate = new Date(bookNowItem.dates.checkInDate).toLocaleDateString('en-CA') 
+        data.dates.checkOutDate = new Date(bookNowItem.dates.checkOutDate).toLocaleDateString('en-CA') 
         dispatch(orderActions.initOrder(data))
     }
 
@@ -91,13 +97,19 @@ function Order(props) {
                                                     <input className="form-control" {...register("customerPhone")} placeholder="Enter your number" type="text" />
                                                 </div>
                                             </div>
+
                                             <div className="form-group row">
                                                 <label className="col-sm-3 col-form-label">Email:</label>
                                                 <div className="col-sm-6">
                                                     <input className="form-control" defaultValue={user.email} placeholder="Enter your email" type="text" />
                                                 </div>
                                             </div>
-
+                                            <div className="form-group row">
+                                                <label className="col-sm-3 col-form-label">Notes:</label>
+                                                <div className="col-sm-6">
+                                                    <input className="form-control" {...register("notes")} placeholder="Enter your note" type="text" />
+                                                </div>
+                                            </div>
                                             <div className="form-group row">
                                                 <label className="col-sm-3 col-form-label">Room Name</label>
                                                 <div className="col-sm-6">
@@ -107,7 +119,7 @@ function Order(props) {
                                             <div className="form-group row">
                                                 <label className="col-sm-3 col-form-label">Total Price</label>
                                                 <div className="col-sm-6">
-                                                    <input className="form-control" readOnly {...register("toltalPrice")} defaultValue={roomsService.formatPrice(bookNowItem.room.price)} type="text" />
+                                                    <input className="form-control" readOnly {...register("totalPrice")} defaultValue={bookNowItem.room.price} type="text" />
                                                 </div>
                                             </div>
 
