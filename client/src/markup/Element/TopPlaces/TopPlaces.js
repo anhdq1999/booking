@@ -22,14 +22,6 @@ function TopPlaces(props) {
       </div>
       <div className="row d-flex">
         <div className="col-md-8 col-sm-8 col-lg-9 form-group align-self-center text-left">
-          {/*<button className="site-button m-b5 mr-1">Home Stay</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Hotel</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Resort</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Phan Thiết</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Nha Trang</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Vũng Tàu</button>*/}
-          {/*<button className="site-button m-b5 mr-1">TP Hồ Chí Minh</button>*/}
-          {/*<button className="site-button m-b5 mr-1">Hà Nội</button>*/}
         </div>
         <div className="col-md-4 col-sm-4 col-lg-3 form-group">
           <select className="form-control">

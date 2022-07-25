@@ -4,3 +4,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.dlab-title{
+    display: -webkit-box;
+    -webkit-line-clamp: 1it ;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+}
