@@ -3,7 +3,7 @@ const urlDatabase = process.env.DB_URL;
 const option = {
     socketTimeoutMS: 30000,
     keepAlive: true,
-    reconnectTries: 30000
+    reconnectTries: 30000,
 };
 
 function connect() {

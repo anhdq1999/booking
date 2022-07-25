@@ -18,7 +18,7 @@ generateToken = (user) => {
 
 verifyToken = (req, res, next) => {
     let token = req.headers['x-access-token'];
-    
+
     if (!token) {
         return res.status(403).send({
             message: 'No token provided!',
@@ -27,7 +27,7 @@ verifyToken = (req, res, next) => {
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
-                message: 'Unauthorized!',
+                message: 'UnAuthorized!',
             });
         }
         req.userId = decoded.data._id;
@@ -35,41 +35,41 @@ verifyToken = (req, res, next) => {
     });
 };
 isAdmin = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'admin') {
             next();
-            return;
+
         } else {
             res.status(403).send({
-                message: "Require Admin Role!"
+                message: 'Require Admin Role!',
             });
-            return;
+
         }
     });
 };
 isUserRole = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'user') {
             next();
-            return;
+
         } else {
             res.status(403).send({
-                message: "Require User Role!"
+                message: 'Require User Role!',
             });
-            return;
+
         }
     });
 };
 isHost = (req, res, next) => {
-    User.findById({ _id: req.userId }).then(user => {
+    User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'host') {
             next();
-            return;
+
         } else {
             res.status(403).send({
-                message: "Require Host Role!"
+                message: 'Require Host Role!',
             });
-            return;
+
         }
     });
 };
@@ -79,6 +79,6 @@ const authJwt = {
     verifyToken,
     isAdmin,
     isUserRole,
-    isHost
+    isHost,
 };
 module.exports = authJwt;

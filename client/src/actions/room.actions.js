@@ -1,68 +1,298 @@
-import { roomConstants } from '_constants';
-import { roomsService } from 'services/roomsService';
-import { alertActions } from './index';
+import { roomConstants } from "_constants";
+import { roomsService } from "services/roomsService";
+import { alertActions } from "./index";
 
 export const roomActions = {
-    getAll,
-    getAllDeleted,
-    delete: _delete
+  getAll,
+  getAllDeleted,
+  getById,
+  restore,
+  remove,
+  create,
+  update,
+  delete: _delete,
+  groupByProvince,
+  getByProvince,
+  search,
+  getByHostId
+
 };
-function getAllDeleted() {
-    return dispatch => {
-        dispatch(request());
-        roomsService.getAllDeleted()
-            .then(
-                rooms => {
-                    if (rooms.length>0) {
-                        dispatch(success(rooms))
-                    } else {
-                        dispatch(failure())
-                    }
-                }
-            ).catch(error => dispatch(failure(error)));
-    };
 
-    function request() { return { type: roomConstants.GETALL_REQUEST } }
-    function success(rooms) { return { type: roomConstants.GETALL_SUCCESS, rooms } }
-    function failure(error) { return { type: roomConstants.GETALL_FAILURE, error } }
+
+function search(type, key) {
+  return dispatch => {
+    switch (type) {
+      case "name":
+        dispatch(searchByName(key));
+        return;
+      default:
+        dispatch(searchByName(key));
+    }
+  };
+
+  function searchByName(key) {
+    return { type: roomConstants.SEARCH_BY_NAME, key };
+  }
+
+
 }
-function getAll() {
-    return dispatch => {
-        dispatch(request());
-        roomsService.getAll()
-            .then(
-                room => {
-                    if (room.length>0) {
-                        dispatch(success(room))
-                    } else {
-                        dispatch(failure())
-                    }
-                }
-            ).catch(error => dispatch(failure(error)));
-    };
 
-    function request() { return { type: roomConstants.GETALL_REQUEST } }
-    function success(room) { return { type: roomConstants.GETALL_SUCCESS, room } }
-    function failure(error) { return { type: roomConstants.GETALL_FAILURE, error } }
+function getById(id) {
+  return dispatch => {
+    roomsService.getById(id).then(res => {
+      if (res.success) {
+        dispatch(success(res.data));
+      } else {
+        dispatch(failure(res.message));
+      }
+    });
+  };
+
+  function success(room) {
+    return { type: roomConstants.GETBYID_SUCCESS, room };
+  }
+
+  function failure(error) {
+    return { type: roomConstants.GETBYID_FAILURE, error };
+  }
+}
+
+function getByHostId(id) {
+  return dispatch => {
+    roomsService.getByHostId(id).then(res => {
+      if (res.success) {
+        dispatch(success(res.data));
+      }
+    });
+  };
+
+  function success(rooms) {
+    return { type: roomConstants.GETBYHOSTID_SUCCESS, rooms };
+  }
+}
+
+function getAllDeleted() {
+  return dispatch => {
+    dispatch(request());
+    roomsService.getAllDeleted()
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(res.data));
+            dispatch(alertActions.success(res.message));
+          } else {
+            dispatch(failure());
+            dispatch(alertActions.error(res.message));
+          }
+        }
+      ).catch(error => dispatch(failure(error)));
+  };
+
+  function request() {
+    return { type: roomConstants.GETALLDELETED_REQUEST };
+  }
+
+  function success(rooms) {
+    return { type: roomConstants.GETALLDELETED_SUCCESS, rooms };
+  }
+
+  function failure(error) {
+    return { type: roomConstants.GETALLDELETED_FAILURE, error };
+  }
+}
+
+function getAll(limit) {
+  return dispatch => {
+    dispatch(request());
+    roomsService.getAll(limit)
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(res.data));
+            dispatch(alertActions.success(res.message));
+          } else {
+            dispatch(failure());
+            dispatch(alertActions.error(res.message));
+          }
+        }
+      ).catch(error => dispatch(failure(error)));
+  };
+
+  function request() {
+    return { type: roomConstants.GETALL_REQUEST };
+  }
+
+  function success(rooms) {
+    return { type: roomConstants.GETALL_SUCCESS, rooms };
+  }
+
+  function failure(error) {
+    return { type: roomConstants.GETALL_FAILURE, error };
+  }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
-    return dispatch => {
-        dispatch(request(id));
-        roomsService.deleteUser(id)
-            .then(
-                res => {
-                    dispatch(success(id));
-                    alertActions.success(res.message)
-                },
-                error => {
-                    dispatch(failure(id, error));
-                }
-            );
-    };
+  return dispatch => {
+    dispatch(request(id));
+    roomsService.deleteRoom(id)
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(id));
+            dispatch(alertActions.success(res.message));
+          } else {
+            dispatch(failure(id));
+            dispatch(alertActions.error(res.message));
+          }
+        }
+      ).catch(error => dispatch(failure(error)));
+  };
 
-    function request(id) { return { type: roomConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: roomConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: roomConstants.DELETE_FAILURE, id, error } }
+  function request(id) {
+    return { type: roomConstants.DELETE_REQUEST, id };
+  }
+
+  function success(id) {
+    return { type: roomConstants.DELETE_SUCCESS, id };
+  }
+
+  function failure(id, error) {
+    return { type: roomConstants.DELETE_FAILURE, id, error };
+  }
+}
+
+function create(room) {
+  return dispatch => {
+    dispatch(request(room));
+    roomsService.create(room)
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(res.data));
+            dispatch(alertActions.success("Create room successful"));
+          } else {
+            dispatch(failure(res.message));
+            dispatch(alertActions.error(res.message));
+          }
+        })
+      .catch(
+        error => {
+          dispatch(failure(error));
+          dispatch(alertActions.error(error.message));
+        }
+      );
+  };
+
+  function request(room) {
+    return { type: roomConstants.CREATE_REQUEST, room };
+  }
+
+  function success(room) {
+    return { type: roomConstants.CREATE_SUCCESS, room };
+  }
+
+  function failure(error) {
+    return { type: roomConstants.CREATE_FAILURE, error };
+  }
+}
+
+function update(room, data) {
+  return dispatch => {
+    dispatch(request(room));
+    roomsService.update(room._id, data)
+      .then(res => {
+        if (res.success) {
+          dispatch(success(res.data));
+          console.log(res.data);
+          dispatch(alertActions.success(res.message));
+        }
+      }).catch(error => {
+      dispatch(failure(error));
+      dispatch(alertActions.error(error.message));
+    });
+  };
+
+  function request(room) {
+    return { type: roomConstants.UPDATE_REQUEST, room };
+  }
+
+  function success(room) {
+    return { type: roomConstants.UPDATE_SUCCESS, room };
+  }
+
+  function failure(error) {
+    return { type: roomConstants.UPDATE_FAILURE, error };
+  }
+}
+
+function remove(id) {
+  return dispatch => {
+    roomsService.removeRoom(id)
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(id));
+            dispatch(alertActions.success(res.message));
+          }
+        }
+      )
+      .catch(error => {
+        dispatch(alertActions.error(error.message));
+      });
+
+  };
+
+  function success(id) {
+    return { type: roomConstants.REMOVE_SUCCESS, id };
+  }
+}
+
+function restore(id) {
+  return dispatch => {
+    roomsService.restoreRoom(id)
+      .then(
+        res => {
+          if (res.success) {
+            dispatch(success(id));
+            dispatch(alertActions.success(res.message));
+          }
+        }
+      )
+      .catch(error => {
+        dispatch(alertActions.error(error.message));
+      });
+
+  };
+
+  function success(id) {
+    return { type: roomConstants.RESTORE_SUCCESS, id };
+  }
+}
+
+function groupByProvince() {
+  return dispatch => {
+    roomsService.groupByProvince()
+      .then(rooms => {
+        dispatch(success(rooms));
+      });
+  };
+
+  function success(rooms) {
+    return { type: roomConstants.GROUP_BY_PROVINCE_SUCCESS, rooms };
+  }
+}
+
+function getByProvince(province) {
+  return dispatch => {
+    roomsService.getByProvince(province)
+      .then(rooms => {
+        console.log(rooms);
+        dispatch(success(rooms));
+      });
+  };
+
+  function success(rooms) {
+    return { type: roomConstants.GET_BY_PROVINCE_SUCCESS, rooms };
+  }
 }

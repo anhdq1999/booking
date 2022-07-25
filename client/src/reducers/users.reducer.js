@@ -1,43 +1,76 @@
 import { userConstants } from '_constants';
 const initialState = {
+  itemsSearch: [],
+  itemsDeleted: [],
   items: [],
-  editUser: {},
-  createUser: {}
+  item: {},
+  editUser: null,
+  createUser: {},
+  keySearch: null
 }
 export function userReducer(state = initialState, action) {
-  let items = state.items
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
+      state.loading = true;
       return {
-        loading: true
-
+        ...state
       };
     case userConstants.GETALL_SUCCESS:
+      state.items = action.users
+      state.loading = false
       return {
-        items: action.users,
-        loading: false
+        ...state
+
+      };
+    case userConstants.GETBYID_FAILURE:
+      return {
+        error: action.error,
+        ...state
+      };
+    case userConstants.GETBYID_SUCCESS:
+      state.item = action.user
+      return {
+        ...state
       };
     case userConstants.GETALL_FAILURE:
       return {
-        error: action.error
+        error: action.error,
+        ...state
       };
     case userConstants.GETALL_DELETED_REQUEST:
+      state.itemsDeleted = action.users
+      state.loading = true
       return {
-        loading: true
+        ...state
       };
     case userConstants.GETALL_DELETED_SUCCESS:
+      state.itemsDeleted = action.users
+      state.loading = false
       return {
-        loading: false,
-        items: action.users
+        ...state
       };
+
     case userConstants.GETALL_DELETED_FAILURE:
       return {
-        error: action.error
+        error: action.error,
+        ...state
       };
-    case userConstants.GETALL_REQUEST:
-      return {
-        loading: true
+    case userConstants.SEARCH_BY_EMAIL:
 
+      state.itemsSearch = state.items.filter(u => u.email.toLowerCase().includes((action.key).toLowerCase()));
+      return {
+        ...state
+      };
+    case userConstants.SEARCH_BY_USERNAME:
+
+      state.itemsSearch = state.items.filter(u => u.username.toLowerCase().includes((action.key).toLowerCase()));
+      return {
+        ...state
+      };
+    case userConstants.SEARCH_BY_FULLNAME:
+      state.itemsSearch = state.items.filter(u => u.fullname.toLowerCase().includes((action.key).toLowerCase()));
+      return {
+        ...state
       };
     case userConstants.CREATE_REQUEST:
       state.createUser = action.user
@@ -45,35 +78,37 @@ export function userReducer(state = initialState, action) {
         ...state
       };
     case userConstants.CREATE_SUCCESS:
-      items.push(action.user);
-      items=items.filter(user => user._id !=='')
+      state.items.push(action.user);
+      state.createUser = {}
       return {
         ...state,
-        items,
-        createUser: {}
       };
 
     case userConstants.UPDATE_REQUEST:
+      state.editUser = action.user
       return {
         ...state,
-        editUser: action.user,
+      };
+    case userConstants.UPDATE_CANCEL:
+      state.editUser = action.user
+      return {
+        ...state,
       };
     case userConstants.UPDATE_SUCCESS:
-      const editUserIndex = items.findIndex(user => user._id === action.user._id)
-      items[editUserIndex] = action.user
-      items = items.filter(user => user._id !== "")
+      state.editUser = action.user;
+      const editUserIndex = state.items.findIndex(user => user._id === action.user._id)
+      state.items[editUserIndex] = action.user
+      state.items = state.items.filter(user => user._id !== "")
       return {
         ...state,
-        items,
-        editUser: action.user,
       };
     case userConstants.RESTORE_SUCCESS:
-      items = items.filter(user => user._id !== action.id)
-      return { ...state, items };
+      state.items = state.items.filter(user => user._id !== action.id)
+      return { ...state };
     case userConstants.REMOVE_SUCCESS:
 
-      items = items.filter(user => user._id !== action.id)
-      return { ...state, items };
+      state.items = state.items.filter(user => user._id !== action.id)
+      return { ...state };
 
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
@@ -82,21 +117,13 @@ export function userReducer(state = initialState, action) {
       };
     case userConstants.DELETE_SUCCESS:
       // remove deleted user from state
-      items = items.filter(user => user._id !== action.id)
-      return { ...state, items };
+      state.items = state.items.filter(user => user._id !== action.id)
+      return { ...state };
+
     case userConstants.DELETE_FAILURE:
       // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
       return {
         ...state,
-        items: state.items.map(user => {
-          if (user.id === action.id) {
-            // make copy of user without 'deleting:true' property
-            const { deleting, ...userCopy } = user;
-            // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
-          }
-          return user;
-        })
       };
     default:
       return state

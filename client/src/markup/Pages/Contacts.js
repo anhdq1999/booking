@@ -1,14 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import GoogleMaps from "simple-react-google-maps"
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
 
 const bg3 = require('./../../images/banner/bnr1.jpg');
 function Contacts(props) {
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -34,21 +31,21 @@ function Contacts(props) {
                                         <div className="icon-bx-xs border-1"> <Link className="icon-cell"><i className="ti-location-pin"></i></Link> </div>
                                         <div className="icon-content">
                                             <h6 className="text-uppercase m-tb0 dlab-tilte">Address:</h6>
-                                            <p>123 West Street, Melbourne Victoria 3000 Australia</p>
+                                            <p>Đại học Nông Lâm TP.HCM</p>
                                         </div>
                                     </li>
                                     <li className="icon-bx-wraper left  m-b30">
                                         <div className="icon-bx-xs border-1"> <Link className="icon-cell"><i className="ti-email"></i></Link> </div>
                                         <div className="icon-content">
                                             <h6 className="text-uppercase m-tb0 dlab-tilte">Email:</h6>
-                                            <p>info@example.com</p>
+                                            <p>dacn_hotelbooking@gmail.com</p>
                                         </div>
                                     </li>
                                     <li className="icon-bx-wraper left">
                                         <div className="icon-bx-xs border-1"> <Link className="icon-cell"><i className="ti-mobile"></i></Link> </div>
                                         <div className="icon-content">
                                             <h6 className="text-uppercase m-tb0 dlab-tilte">PHONE</h6>
-                                            <p>+61 3 8376 6284</p>
+                                            <p>+84862083141</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -107,18 +104,18 @@ function Contacts(props) {
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-12 d-lg-flex m-b30">
-                            <GoogleMaps
-                                apiKey={"AIzaSyAgDuz2Nd_tVY0H-h0xUimE25_-O85-mdM"}
-                                style={{ height: "500px", width: "100%" }}
-                                zoom={6}
-                                center={{ lat: 37.4224764, lng: -122.0842499 }}
-                                markers={{ lat: 37.4224764, lng: -122.0842499 }} //optional
-                            />
+                                <GoogleMaps
+                                    apiKey={"AIzaSyAgDuz2Nd_tVY0H-h0xUimE25_-O85-mdM"}
+                                    style={{ height: "500px", width: "100%" }}
+                                    zoom={6}
+                                    center={{ lat: 37.4224764, lng: -122.0842499 }}
+                                    markers={{ lat: 37.4224764, lng: -122.0842499 }} //optional
+                                />
+                            
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

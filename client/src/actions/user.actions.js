@@ -1,21 +1,119 @@
-import { userConstants } from '_constants';
-import { userService } from 'services';
-import { alertActions } from './index';
 import { history } from 'helpers';
+import { userService } from 'services';
+import { userConstants } from '_constants';
+import { alertActions } from './index';
 
+// data respone api 
+/* {
+    action:"",
+    success:boolean,
+    message:""
+    data:[] || {}
+}
+*/
 export const userActions = {
     login,
     logout,
     register,
     getAll,
+    getById,
     create,
     update,
+    updateRequest,
     getAllDeleted,
     delete: _delete,
     restore,
-    remove
+    searchByEmail,
+    remove,
+    registerVertified,
+    forgot,
+    resetPassword,
 };
+function resetPassword(data) {
+    return dispatch => {
+        userService.resetPassword(data)
+            .then(
+                res => {
+                    if (res.success) {
+                        history.push('/login');
+                        dispatch(alertActions.success(res.message))
+                    }
+                }
+            ).catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                }
+            )
+    }
+}
+function forgot(email) {
+    return dispatch => {
+        userService.forgot(email)
+            .then(res => {
+                if (res.success) {
+                    history.push('/login');
+                    dispatch(alertActions.success("Check mail to reset password"))
+                } else {
+                    dispatch(alertActions.error(res.message))
+                }
+            })
+            .catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                })
+    }
+}
+function registerVertified(e, v) {
+    return dispatch => {
+        userService.registerVertified(e, v).then(
+            res => {
+                if (res.success) {
+                    history.push('/login')
+                    dispatch(alertActions.success(res.message))
+                }
+            }
+        ).catch(
+            err => {
+                history.push('/login')
+                dispatch(alertActions.error(err.message))
+            })
+    }
+}
 
+function searchByEmail(type, key) {
+    return dispatch => {
+        switch (type) {
+            case "email":
+                dispatch(searchByEmail(key));
+                return;
+            case "username":
+                dispatch(searchByUsername(key));
+                return;
+            case "fullname":
+                dispatch(searchByFullname(key));
+                return;
+            default:
+                dispatch(searchByEmail(key));
+        }
+    }
+    function searchByEmail(key) { return { type: userConstants.SEARCH_BY_EMAIL, key } }
+    function searchByUsername(key) { return { type: userConstants.SEARCH_BY_USERNAME, key } }
+    function searchByFullname(key) { return { type: userConstants.SEARCH_BY_FULLNAME, key } }
+
+}
+function getById(id) {
+    return dispatch => {
+        dispatch(request(id))
+        userService.getById(id).then(res => {
+            if (res.success) dispatch(success(res.data))
+            else dispatch(failure(res.message))
+        }
+        )
+    }
+    function request(id) { return { type: userConstants.GETBYID_REQUEST, id } }
+    function success(user) { return { type: userConstants.GETBYID_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.GETBYID_FAILURE, error } }
+}
 function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
@@ -56,7 +154,7 @@ function register(user) {
                     if (res.success) {
                         dispatch(success());
                         history.push('/login');
-                        dispatch(alertActions.success('Registration successful'));
+                        dispatch(alertActions.success('Please check mail to vertified to login'));
                     } else {
                         dispatch(failure(res.message));
                         dispatch(alertActions.error(res.message))
@@ -82,7 +180,7 @@ function create(user) {
                 res => {
                     if (res.success) {
                         dispatch(success(res.data));
-                        dispatch(alertActions.success('Create user successful'));
+                        dispatch(alertActions.success(res.message));
                     } else {
                         dispatch(failure(res.message));
                         dispatch(alertActions.error(res.message))
@@ -100,6 +198,9 @@ function create(user) {
     function success(user) { return { type: userConstants.CREATE_SUCCESS, user } }
     function failure(error) { return { type: userConstants.CREATE_FAILURE, error } }
 }
+function updateRequest(user) {
+    return { type: userConstants.UPDATE_REQUEST, user }
+}
 function update(user, data) {
     return dispatch => {
         dispatch(request(user))
@@ -107,7 +208,6 @@ function update(user, data) {
             .then(res => {
                 if (res.success) {
                     dispatch(success(res.data))
-                    console.log(res.data);
                     dispatch(alertActions.success(res.message))
                 }
             }).catch(error => {
@@ -124,11 +224,15 @@ function getAllDeleted() {
         dispatch(request());
         userService.getAllDeleted()
             .then(
-                users => {
-                    if (users.length > 0) {
-                        dispatch(success(users))
+                res => {
+                    console.log(res);
+                    if (res.success) {
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
                         dispatch(failure())
+                        dispatch(alertActions.failure(res.message))
+
                     }
                 }
             ).catch(error => dispatch(failure(error)));
@@ -143,14 +247,20 @@ function getAll() {
         dispatch(request());
         userService.getAll()
             .then(
-                users => {
-                    if (users.length > 0) {
-                        dispatch(success(users))
+                res => {
+                    if (res.success) {
+                        dispatch(success(res.data))
+                        dispatch(alertActions.success(res.message))
                     } else {
                         dispatch(failure())
                     }
                 }
-            ).catch(error => dispatch(failure(error)));
+            ).catch(
+                error => {
+                    dispatch(failure(error))
+                    dispatch(alertActions.error(error.message))
+                }
+            );
     }
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }

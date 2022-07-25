@@ -1,13 +1,11 @@
 import React from 'react'
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
-import Slick2 from './Slick2';
+import Slick2 from 'markup/Pages/component-part/Slick2';
 import HomeBlog from './../Element/HomeBlog';
 import { Link } from 'react-router-dom';
 
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
-import Tab2 from './../Pages/Tab2';
+import Tab2 from 'markup/Pages/component-part/Tab2';
 
 const content = [
     {
@@ -49,8 +47,6 @@ function Homepage2(props) {
 
     return (
         <div>
-
-            <Header2 />
             <Slider className="slider-wrapper" {...settings}>
                 {content.map((item, index) => (
                     <div
@@ -312,30 +308,6 @@ function Homepage2(props) {
 
 
             </div>
-
-            <Footer />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             {/* <header className="site-header mo-left header header-2">
