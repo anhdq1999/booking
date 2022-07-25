@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import {  userService } from "services";
+import { userService } from "services";
 
 const bg3 = require('images/banner/bnr1.jpg');
 
@@ -24,13 +24,14 @@ function Order(props) {
     if (!bookNowItem) return <Redirect to='/accommodation' />
     const onSubmit = (data) => {
         data.room = bookNowItem.room
+        data.taxPrice = 1000
         data.user = user;
         data.child = parseInt(bookNowItem.child, 10)
         data.adults = parseInt(bookNowItem.adults, 10)
         data.infants = parseInt(bookNowItem.infants, 10)
-        data.totalPrice = parseInt(data.totalPrice, 10)
-        data.dates.checkInDate = new Date(bookNowItem.dates.checkInDate).toLocaleDateString('en-CA') 
-        data.dates.checkOutDate = new Date(bookNowItem.dates.checkOutDate).toLocaleDateString('en-CA') 
+        data.totalPrice = parseInt(data.totalPrice, 10) + data.taxPrice
+        data.dates.checkInDate = new Date(bookNowItem.dates.checkInDate).toLocaleDateString('en-CA')
+        data.dates.checkOutDate = new Date(bookNowItem.dates.checkOutDate).toLocaleDateString('en-CA')
         dispatch(orderActions.initOrder(data))
     }
 
@@ -60,23 +61,23 @@ function Order(props) {
                                         <div className="m-2">
                                             <div className="form-group">
                                                 <label>Childs</label>
-                                                <input className="form-control" defaultValue={bookNowItem.child} placeholder="3" {...register("child")} type="number" />
+                                                <input className="form-control" defaultValue={bookNowItem.child} placeholder="enter child" {...register("child")} type="number" />
                                             </div>
                                             <div className="form-group">
                                                 <label>Adults</label>
-                                                <input className="form-control" defaultValue={bookNowItem.adults} placeholder="3" {...register("adults")} type="number" />
+                                                <input className="form-control" defaultValue={bookNowItem.adults} placeholder="Ebter adults" {...register("adults")} type="number" />
                                             </div>
                                             <div className="form-group">
                                                 <label>Infants</label>
-                                                <input className="form-control" defaultValue={bookNowItem.infants} placeholder="3" {...register("infants")} type="number" />
+                                                <input className="form-control" defaultValue={bookNowItem.infants} placeholder="Enter infants" {...register("infants")} type="number" />
                                             </div>
                                             <div className="form-group">
                                                 <label>Check in</label>
-                                                <input className="form-control" placeholder="3" {...register("dates.checkInDate")} type="date" />
+                                                <input className="form-control" placeholder="Enter checkInDate" {...register("dates.checkInDate")} type="date" />
                                             </div>
                                             <div className="form-group">
                                                 <label>Check out</label>
-                                                <input className="form-control" placeholder="3" {...register("dates.checkOutDate")} type="date" />
+                                                <input className="form-control" placeholder="Enter checkOutDate" {...register("dates.checkOutDate")} type="date" />
                                             </div>
                                         </div>
                                     </div>

@@ -56,6 +56,7 @@ export default function RoomModal(props) {
     const wards = useSelector(state => state.addressReducer.wards)
 
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (props.isAdd) {
             dispatch(addressActions.getAllProvince())

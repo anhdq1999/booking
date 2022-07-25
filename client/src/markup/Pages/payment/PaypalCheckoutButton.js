@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {PayPalScriptProvider, PayPalButtons} from "@paypal/react-paypal-js";
+import React, { useState } from 'react';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PaypalCheckoutButton = (props) => {
-  const {product} = props;
+  const { product } = props;
 
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
@@ -11,11 +11,11 @@ const PaypalCheckoutButton = (props) => {
     setPaidFor(true);
   }
 
-  if(paidFor){
+  if (paidFor) {
     alert("Thank You");
   }
 
-  if(error){
+  if (error) {
     alert(error);
   }
 
@@ -24,32 +24,31 @@ const PaypalCheckoutButton = (props) => {
       <PayPalButtons
         onClick={(data, actions) => {
           const hasAlreadyBoughtCourse = false;
-          if(hasAlreadyBoughtCourse){
+          if (hasAlreadyBoughtCourse) {
             setError("You Already bough this course");
             return actions.reject();
-          }else{
+          } else {
             return actions.resolve();
           }
         }}
-        createOrder = {(data, actions) => {
+        createOrder={(data, actions) => {
           return actions.order.create({
             purchase_units: [
               {
-                description: product.des,
                 amount: {
-                  value: product.price,
+                  value: (product.totalPrice / 23000),
                 },
               },
             ],
           });
         }}
-        onApprove = { async (data, action) => {
+        onApprove={async (data, action) => {
           const order = await action.order.capture();
           console.log("order", order);
 
           handleApprove(data.orderID);
         }}
-        onCancel={() => {}}
+        onCancel={() => { }}
         onError={(err) => {
           setError(err);
           console.log("PayPal Checkout onError", err);

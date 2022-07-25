@@ -13,7 +13,9 @@ import { useDispatch } from 'react-redux';
 import { orderActions } from 'actions';
 
 const schema = yup.object().shape({
-
+    child: yup.string().required('child is required'),
+    adults: yup.string().required('adults is required'),
+    infants: yup.string().required('infants is required')
 })
 export default function BookNowModal(props) {
     const room = props.room
@@ -85,10 +87,13 @@ export default function BookNowModal(props) {
                                     <input
                                         id="demo_vertical2"
                                         className="form-control"
-                                        type="text"
+                                        type="number"
                                         name="demo_vertical2"
                                         {...register("adults")} />
                                     <span className="font-12">Adult (12yrs +)</span>
+                                    {errors?.adults &&
+                                        <div className="alert-warning text-center">{errors.adults?.message}</div>
+                                    }
                                 </div>
                             </div>
                             <div className="col-md-4">
@@ -96,10 +101,14 @@ export default function BookNowModal(props) {
                                     <input
                                         id="demo_vertical2"
                                         className="form-control"
-                                        type="text"
+                                        type="number"
                                         name="demo_vertical2"
                                         {...register("child")} />
+
                                     <span className="font-12">Child (2-12yrs)</span>
+                                    {errors?.child &&
+                                        <div className="alert-warning text-center">{errors.child?.message}</div>
+                                    }
                                 </div>
                             </div>
                             <div className="col-md-4">
@@ -107,10 +116,13 @@ export default function BookNowModal(props) {
                                     <input
                                         id="demo_vertical2"
                                         className="form-control"
-                                        type="text"
+                                        type="number"
                                         name="demo_vertical2"
                                         {...register("infants")} />
                                     <span className="font-12">Infant (0-2yrs)</span>
+                                    {errors?.infants &&
+                                        <div className="alert-warning text-center">{errors.infants?.message}</div>
+                                    }
                                 </div>
                             </div>
                         </div>

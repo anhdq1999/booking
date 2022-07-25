@@ -9,16 +9,14 @@ const bg3 = require('images/banner/bnr1.jpg');
 
 function Payment(props) {
     const dispatch = useDispatch();
-    
 
     const item = useSelector(state => state.orderReducer.item)
     useEffect(() => {
-        
+
     }, [item])
 
     const handleSubmitPayAfter = () => {
-        let data=item
-        data.taxPrice = 0;
+        let data = item
         data.paymentMethod = "Offline"
         data.status = "UNPAID"
         data.user = data.user.id
@@ -87,7 +85,7 @@ function Payment(props) {
                                                     <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.customerName}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Customer phone :</td>
+                                                    <td>Customer phone:</td>
                                                     <td style={{ textAlign: 'right', paddingBottom: '15px' }}>{item.customerPhone}</td>
                                                 </tr>
                                                 <tr>
@@ -104,7 +102,11 @@ function Payment(props) {
                                                 </tr>
                                                 <tr>
                                                     <td>Total:</td>
-                                                    <td style={{ textAlign: 'right', paddingBottom: '15px', color: 'red' }}><strong>{roomsService.formatPrice(item.totalPrice + (item.taxPrice || 0))}</strong></td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px', color: 'red' }}><strong>{roomsService.formatPrice(item.taxPrice || 0)}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total:</td>
+                                                    <td style={{ textAlign: 'right', paddingBottom: '15px', color: 'red' }}><strong>{roomsService.formatPrice(item.totalPrice)}</strong></td>
                                                 </tr>
                                             </tbody></table>
                                     </div>
@@ -118,9 +120,9 @@ function Payment(props) {
 
 
                         <div className="text-center">
-    
+
                             <PaypalCheckoutButton product={item} />
-                            <button className="btn bg-red" onClick={handleSubmitPayAfter}>Ok with pay after</button>
+                            <button className="btn bg-red" onClick={handleSubmitPayAfter}>Pay after</button>
                         </div>
 
 
