@@ -225,7 +225,6 @@ function getAllDeleted() {
         userService.getAllDeleted()
             .then(
                 res => {
-                    console.log(res);
                     if (res.success) {
                         dispatch(success(res.data))
                         dispatch(alertActions.success(res.message))

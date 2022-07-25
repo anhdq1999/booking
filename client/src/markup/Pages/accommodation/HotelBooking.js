@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import BookNowModal from 'markup/Pages/book-now-modal/BookNowModal';
 import { roomActions } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
-import { roomsService } from 'services';
+import { roomsService, userService } from 'services';
 import GoogleMaps from "simple-react-google-maps"
 
 
 const bg3 = require('images/banner/bnr1.jpg');
 function HotelBooking(props) {
+    const user = userService.getCurrentUser();
     const id = props.match.params.id;
     const room = useSelector(state => state.roomReducer.item)
     const dispatch = useDispatch();
@@ -18,11 +19,11 @@ function HotelBooking(props) {
         dispatch(roomActions.getById(id))
     }, [dispatch, id])
     const [isOpenModal, setIsOpenModal] = useState(false);
+    if (isOpenModal && !user) return (<Redirect to='/login' />)
 
     const handleOpenModal = () => {
         setIsOpenModal(!isOpenModal)
     }
-    console.log(room);
     const settings = {
         dots: false,
         slidesToShow: 1,
@@ -30,6 +31,7 @@ function HotelBooking(props) {
     };
     const { country, province, district, street } = room.address || {}
     return (
+
         <div>
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
@@ -174,7 +176,7 @@ function HotelBooking(props) {
                                                     <div className="tour-price">
                                                         <span>Per Room Per Night</span>
                                                         <h2 className="price">{roomsService.formatPrice(room.price)}</h2>
-                                                        <h4 className="actual-price">400,000,000 VND</h4>
+                                                        <h4 className="actual-price">{roomsService.formatPrice(room.price * 1.5)}</h4>
                                                     </div>
                                                     <div className="m-t20 m-b30">
                                                         <Link to='/remove' className="site-button red">Remove</Link>
@@ -190,10 +192,10 @@ function HotelBooking(props) {
                                 </div>
                             </div>
                         </div>
-
                         <BookNowModal
                             isOpen={isOpenModal}
                             toggle={handleOpenModal}
+                            room={room}
                         />
                     </div>
 

@@ -1,5 +1,4 @@
 
-import About from 'markup/Pages/About';
 import Accommodation from 'markup/Pages/accommodation/Accommodation';
 import BookingDetails from 'markup/Pages/accommodation/BookingDetails';
 import Hotel from 'markup/Pages/accommodation/Hotel';
@@ -11,7 +10,13 @@ import Error404 from 'markup/Pages/Error';
 import ForgotPass from 'markup/Pages/forgot/ForgotPass';
 import ResetPassword from 'markup/Pages/forgot/ResetPassword';
 import Homepage from 'markup/Pages/Homepage';
+import GarbageRoom from 'markup/Pages/host/room-manager/GarbageRoom';
+import RoomsManager from 'markup/Pages/host/room-manager/RoomsManager';
 import Login2 from 'markup/Pages/login/Login2';
+import Order from 'markup/Pages/order/Order';
+import OrderCreateSuccess from 'markup/Pages/order/OrderCreateSuccess';
+import Payment from 'markup/Pages/payment/Payment';
+import Profile from 'markup/Pages/Profile';
 import Register from 'markup/Pages/register/Register-react-hook-form';
 import RegisterVertified from 'markup/Pages/register/Register-vertifed';
 import Register2 from 'markup/Pages/register/Register2';
@@ -33,10 +38,9 @@ function PublicRoutes() {
             <Route path='/register' exact component={Register} />
             <Route path='/register2' exact component={Register2} />
             <Route path='/forgot' exact component={ForgotPass} />
-            <Route path='/about' exact component={About} />
             <Route path='/hotel' exact component={Hotel} />
             <Route path='/booking/:id' exact component={BookingDetails} />
-            <Route path='/packages/:province' exact component={Accommodation} />
+            <Route path={['/accommodation/:province', '/accommodation']} exact component={Accommodation} />
             <Route path='/error' exact component={Error404} />
             <Route path='/forgot' exact component={ForgotPass} />
             <Route path='/hotelbooking/:id' exact component={HotelBooking} />
@@ -45,6 +49,13 @@ function PublicRoutes() {
             <Route path='/contact' exact component={Contacts} />
             <Route path='/register-verify/:e&:v' exact component={RegisterVertified} />
             <Route path='/reset-password/:id&:token' exact component={ResetPassword} />
+            <Route path='/order' exact component={Order} />
+            <Route path='/payment' exact component={Payment} />
+            <Route path='/order/success' exact component={OrderCreateSuccess} />
+            <Route path='/profile' exact component={Profile} />
+            <Route path='/host/rooms-manager' exact component={RoomsManager} />
+            <Route path='/host/rooms-manager/garbage' exact component={GarbageRoom} />
+
         </Switch>
     )
 }

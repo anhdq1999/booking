@@ -77,8 +77,8 @@ const columns = [
   }
 
   return (
-    <div className="mt-5 mx-5">
-      <Link to="/admin/rooms-manager">Quay lại</Link>
+    <div className="mt-5 mx-5 mb-5">
+      <Link to="/host/rooms-manager">Quay lại</Link>
       <div className="text-right mb-5">
         <Button onClick={() => handleRestoreMany()}>Restore</Button>
         <Button onClick={() => handleDeleteMany()}>Delete</Button>

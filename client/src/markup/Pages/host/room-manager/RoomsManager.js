@@ -50,7 +50,7 @@ function RoomsManager(props) {
     }
   ];
   useEffect(() => {
-    dispatch(roomActions.getByHostId(user.id));
+    dispatch(roomActions.getAll());
     dispatch(userActions.getAll());
   }, [dispatch, user.id]);
 
@@ -98,9 +98,9 @@ function RoomsManager(props) {
   };
   return (
     <div>
-      <div className="mt-5 mx-5 mb-5">
+      <div className="data mt-5 mx-5 mb-5">
 
-        <Link to="/admin/rooms-manager/garbage">Thùng rác của tôi</Link>
+        <Link to="/host/rooms-manager/garbage">Thùng rác của tôi</Link>
 
         <div className="text-right mb-5">
           <Button onClick={() => handleAdd()}>Add</Button>

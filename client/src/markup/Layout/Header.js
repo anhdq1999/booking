@@ -42,12 +42,8 @@ function Header(props) {
             <div className="dlab-topbar-left">
               <ul>
                 <li>
-                  <Link to={"/hotel"} className="site-button-link"> Hotels </Link>
+                  <Link to={"/accommodation"} className="site-button-link"> Accommodation </Link>
                 </li>
-                <li>
-                  <Link className="site-button-link" to={"/place"}>Places</Link>
-                </li>
-                <li><Link className="site-button-link" to={"/packages"}>Packages</Link></li>
               </ul>
             </div>
             <div className="dlab-topbar-right top-login">
@@ -67,13 +63,12 @@ function Header(props) {
                   {
                     user.role === "host" &&
                     <li>
-                      <Link to={"/host/manager"} className="site-button-link">Manager</Link>
+                      <Link to={"/host/manager"} className="site-button-link">My Host</Link>
                     </li>
 
                   }
                   <li><Link to={"/profile"} className="site-button-link">{user.fullName}</Link></li>
                   <li><Link to={"/"} onClick={() => handleLogout()} className="site-button-link">Logout</Link></li>
-
                 </ul>
               }
             </div>
@@ -97,14 +92,8 @@ function Header(props) {
               id="navbarNavDropdown">
               <ul className="nav navbar-nav">
                 <li><Link to={""}>Home</Link></li>
-                <li><Link to={"/about"}> About Us </Link></li>
-                <li><Link to={"/hotel"}>HoteL</Link></li>
-                <li><Link to="/">Blog <i className="fa fa-chevron-down"></i></Link>
-                  <ul className="sub-menu">
-                    <li><Link to={"/blogleftsidebar"} className="dez-page">Left Image Sidebar</Link></li>
-                    <li><Link to={"/blogdetails"} className="dez-page">Blog Details</Link></li>
-                  </ul>
-                </li>
+                <li><Link to={"/accommodation"}>HoteL</Link></li>
+                <li><Link to="/blogleftsidebar">Blog</Link></li>
                 <li><Link to={"/contact"} className="dez-page">Contact Us</Link></li>
               </ul>
             </div>

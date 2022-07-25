@@ -1,85 +1,135 @@
-import React from 'react'
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useState } from 'react'
+import { DateRangePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
+import { AdapterDateFns } from '@mui/x-date-pickers-pro/AdapterDateFns';
+import { useForm } from 'react-hook-form';
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from "reactstrap";
+import * as yup from 'yup';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import { userService } from 'services';
+import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { orderActions } from 'actions';
 
-// const schema = yup.object().shape({
-
-// })
+const schema = yup.object().shape({
+    child: yup.string().required('child is required'),
+    adults: yup.string().required('adults is required'),
+    infants: yup.string().required('infants is required')
+})
 export default function BookNowModal(props) {
-    // const { register, handleSubmit, formState: { errors } } = useForm({
-    //     resolver: yupResolver(schema)
-    // })
+    const room = props.room
 
+    const dispatch = useDispatch()
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    })
+    const [value, setValue] = useState([null, null]);
+
+
+    const onSubmit = (data) => {
+        let user = userService.getCurrentUser()
+        let checkInDate = new Date(value[0]).toUTCString()
+        let checkOutDate = new Date(value[1]).toUTCString()
+        data.dates = {
+            checkInDate,
+            checkOutDate
+        }
+        data.room = room;
+        data.user = user.id;
+        dispatch(orderActions.initBookNowItem(data));
+    }
     function toggle() {
         return props.toggle()
     }
 
     return (
-
         <div>
             <Modal
                 className="max-w800"
                 isOpen={props.isOpen}
                 toggle={() => toggle()}
             >
-                <ModalHeader>
-                    <h5 className="modal-title" id="exampleModalLabel">Get the Best Holiday Planned by Experts!</h5>
+                <ModalHeader className="modal-title"
+                    id="exampleModalLabel">
+                    Get the Best Holiday Planned by Experts!
                 </ModalHeader>
                 <ModalBody>
                     <h5 className="text-center">Enter your contact details and we will plan the best holiday suiting all your requirements.</h5>
-                    <form className="row">
-                        <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
+                    <form id="bookNowModal" onSubmit={handleSubmit(onSubmit)}>
+                        <div className="row" style={{ "justifyContent": "space-around" }}>
                             <div className="form-group">
-                                <div className="input-group">
-                                    <input  required="" className="form-control" placeholder="" type="date" />
-                                </div>
-                                <span className="font-12">From</span>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-6 col-xl-6 col-sm-6 col-6">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input  required="" className="form-control" placeholder="" type="date" />
-                                </div>
-                                <span className="font-12">To</span>
+                                <LocalizationProvider
+                                    dateAdapter={AdapterDateFns}
+                                    localeText={{ start: 'Check-in', end: 'Check-out' }}
+                                >
+                                    <DateRangePicker
 
+                                        value={value}
+                                        onChange={(newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                        renderInput={(startProps, endProps) => (
+                                            <React.Fragment>
+                                                <TextField {...startProps} />
+                                                <Box sx={{ mx: 2 }}> to </Box>
+                                                <TextField {...endProps} />
+                                            </React.Fragment>
+                                        )}
+                                    />
+                                </LocalizationProvider>
                             </div>
                         </div>
-                        <div className="col-md-6">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input required="" className="form-control" placeholder="Your Name" type="text" />
+                        <div className="row">
+                            <div className="col-md-4">
+                                <div className="quantity btn-quantity">
+                                    <input
+                                        id="demo_vertical2"
+                                        className="form-control"
+                                        type="number"
+                                        name="demo_vertical2"
+                                        {...register("adults")} />
+                                    <span className="font-12">Adult (12yrs +)</span>
+                                    {errors?.adults &&
+                                        <div className="alert-warning text-center">{errors.adults?.message}</div>
+                                    }
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input  required="" className="form-control" placeholder="Your Phone Number" type="text" />
+                            <div className="col-md-4">
+                                <div className="quantity btn-quantity">
+                                    <input
+                                        id="demo_vertical2"
+                                        className="form-control"
+                                        type="number"
+                                        name="demo_vertical2"
+                                        {...register("child")} />
+
+                                    <span className="font-12">Child (2-12yrs)</span>
+                                    {errors?.child &&
+                                        <div className="alert-warning text-center">{errors.child?.message}</div>
+                                    }
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
-                                <span className="font-12">Adult (12yrs +)</span>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
-                                <span className="font-12">Child (2-12yrs)</span>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="quantity btn-quantity">
-                                <input id="demo_vertical2" className="form-control" type="text" name="demo_vertical2" />
-                                <span className="font-12">Infant (0-2yrs)</span>
+                            <div className="col-md-4">
+                                <div className="quantity btn-quantity">
+                                    <input
+                                        id="demo_vertical2"
+                                        className="form-control"
+                                        type="number"
+                                        name="demo_vertical2"
+                                        {...register("infants")} />
+                                    <span className="font-12">Infant (0-2yrs)</span>
+                                    {errors?.infants &&
+                                        <div className="alert-warning text-center">{errors.infants?.message}</div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <button type="submit" className="site-button">Submit</button>
+                    <button type="submit" form="bookNowModal" className="site-button">Submit</button>
                     <Button
                         color="primary" onClick={() => toggle()}>
                         Cancel

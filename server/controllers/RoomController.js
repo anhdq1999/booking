@@ -1,3 +1,4 @@
+
 const slugGenerator = require("mongoose-slug-generator/lib/slug-generator");
 const { $where } = require("../models/Rooms");
 const Room = require("../models/Rooms");
@@ -32,7 +33,6 @@ class RoomController {
         });
       });
   }
-
   getByUserId(req, res, next) {
     const _userId = req.params.hostId;
     Room.find({ host: _userId }).then((rooms) => {

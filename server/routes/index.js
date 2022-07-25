@@ -45,7 +45,10 @@ function route(app) {
     app.use("/categories", categoryRouter);
 
     app.use("/mail", mailRouter);
+
     app.use("/payment", paymentRouter);
+    
+    app.use("/uploads",uploadImgRouter)
 
 
     app.get("/", (req, res) => {
