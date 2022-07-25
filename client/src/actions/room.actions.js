@@ -14,11 +14,46 @@ export const roomActions = {
   groupByProvince,
   getByProvince,
   search,
-  getByHostId
+  getByHostId,
+  sortByPrice,
+  filterByCategory
 
 };
+function filterByCategory(type) {
+  console.log(type);
+  return dispatch => {
+    if (type.length > 0) dispatch(filter(type))
+    else dispatch(noFilter(type))
+  }
+  function filter(type) {
+    return { type: roomConstants.FILTER_SUCCESS, payload: type };
+  }
+  function noFilter(type) {
+    return { type: roomConstants.NO_FILTER_SUCCESS, payload: type };
+  }
+}
+function sortByPrice(type) {
+  return dispatch => {
+    switch (type) {
+      case "increase":
+        dispatch(increase())
+        return;
+      case "decrease":
+        dispatch(decrease())
+        return;
+      default:
+        dispatch(increase())
+    }
 
 
+    function increase() {
+      return { type: roomConstants.INCREASE_SORT_SUCCESS };
+    }
+    function decrease() {
+      return { type: roomConstants.DECREASE_SORT_SUCCESS };
+    }
+  }
+}
 function search(type, key) {
   return dispatch => {
     switch (type) {
@@ -208,9 +243,9 @@ function update(room, data) {
           dispatch(alertActions.success(res.message));
         }
       }).catch(error => {
-      dispatch(failure(error));
-      dispatch(alertActions.error(error.message));
-    });
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.message));
+      });
   };
 
   function request(room) {
