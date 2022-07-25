@@ -6,7 +6,7 @@
 }
 .dlab-title{
     display: -webkit-box;
-    -webkit-line-clamp: 1it ;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
 
