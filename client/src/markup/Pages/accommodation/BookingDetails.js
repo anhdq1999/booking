@@ -1,50 +1,48 @@
 import React, { useEffect } from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { roomActions } from 'actions';
 
 
 const tourDay = [
     {
-        image: require('./../../images/our-work/pic1.jpg'),
+        image: require('images/our-work/pic1.jpg'),
         day: 1,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
 
     },
     {
-        image: require('./../../images/our-work/pic2.jpg'),
+        image: require('images/our-work/pic2.jpg'),
         day: 2,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
 
     },
     {
-        image: require('./../../images/our-work/pic3.jpg'),
+        image: require('images/our-work/pic3.jpg'),
         day: 3,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
 
     },
     {
-        image: require('./../../images/our-work/pic4.jpg'),
+        image: require('images/our-work/pic4.jpg'),
         day: 4,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
 
     },
     {
-        image: require('./../../images/our-work/pic5.jpg'),
+        image: require('images/our-work/pic5.jpg'),
         day: 5,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
 
     },
     {
-        image: require('./../../images/our-work/pic6.jpg'),
+        image: require('images/our-work/pic6.jpg'),
         day: 6,
         title: 'Arrival in London',
         desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
@@ -52,7 +50,7 @@ const tourDay = [
     },
 ]
 
-const bg3 = require('./../../images/banner/bnr1.jpg');
+const bg3 = require('images/banner/bnr1.jpg');
 
 function BookingDetails(props) {
     const id = props.match.params.id;
@@ -69,7 +67,6 @@ function BookingDetails(props) {
     };
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -129,7 +126,7 @@ function BookingDetails(props) {
                                         </div>
                                     </div>
                                     <div className="m-t50">
-                                        <img src={require('./../../images/add/add-bnr.jpg')} className="d-md-none d-xl-block d-lg-block" alt="" />
+                                        <img src={require('images/add/add-bnr.jpg')} className="d-md-none d-xl-block d-lg-block" alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -323,7 +320,6 @@ function BookingDetails(props) {
                 </div>
 
             </div>
-            <Footer />
         </div>
     )
 }

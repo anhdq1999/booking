@@ -3,12 +3,8 @@ import { Image, Transformation } from 'cloudinary-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Footer from './../Layout/Footer';
-import Header2 from './../Layout/Header2';
 
 const bg3 = require('images/banner/bnr1.jpg');
-
-// const villa = require('images/homestay/pic15.jpg')
 
 function Hotel(props) {
     const dispatch = useDispatch();
@@ -20,7 +16,6 @@ function Hotel(props) {
 
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -64,7 +59,6 @@ function Hotel(props) {
                     </div>
                 </div>
             }
-            <Footer />
         </div >
     )
 }

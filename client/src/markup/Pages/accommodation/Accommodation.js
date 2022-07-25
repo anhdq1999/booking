@@ -4,11 +4,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { roomsService } from 'services';
-import Footer from './../Layout/Footer';
-import Header2 from './../Layout/Header2';
 
-const bg3 = require('./../../images/banner/bnr1.jpg');
-function Packages(props) {
+const bg3 = require('images/banner/bnr1.jpg');
+function Accommodation(props) {
     const province = props.match.params.province;
     const dispatch = useDispatch();
     const rooms = useSelector(state => state.roomReducer.itemsByProvince)
@@ -17,7 +15,6 @@ function Packages(props) {
     }, [dispatch, province])
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -64,8 +61,7 @@ function Packages(props) {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }
-export default Packages;
+export default Accommodation;

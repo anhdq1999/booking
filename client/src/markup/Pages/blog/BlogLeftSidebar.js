@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
+
 
 const leftImg = [
     {
-        image: require('./../../images/blog/grid/pic1.jpg'),
+        image: require('images/blog/grid/pic1.jpg'),
         date: 'September 10, 2017',
         author: 'Demongo',
         comment: '5k',
@@ -14,7 +13,13 @@ const leftImg = [
 
     },
     {
-        image: require('./../../images/blog/grid/pic2.jpg'),
+        image: require('images/blog/grid/pic2.jpg'),
+        title: 'WADA to investigate fresh Russian Olympic doping claims',
+        desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
+
+    },
+    {
+        image: require('images/blog/grid/pic3.jpg'),
         date: 'September 10, 2017',
         author: 'Demongo',
         comment: '5k',
@@ -23,16 +28,7 @@ const leftImg = [
 
     },
     {
-        image: require('./../../images/blog/grid/pic3.jpg'),
-        date: 'September 10, 2017',
-        author: 'Demongo',
-        comment: '5k',
-        title: 'WADA to investigate fresh Russian Olympic doping claims',
-        desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model.',
-
-    },
-    {
-        image: require('./../../images/blog/grid/pic4.jpg'),
+        image: require('images/blog/grid/pic4.jpg'),
         date: 'September 10, 2017',
         author: 'Demongo',
         comment: '5k',
@@ -43,12 +39,11 @@ const leftImg = [
 ]
 
 
-const bg3 = require('./../../images/banner/bnr1.jpg');
+const bg3 = require('images/banner/bnr1.jpg');
 function BlogLeftSidebar(props) {
 
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -121,7 +116,7 @@ function BlogLeftSidebar(props) {
                                     <h6 className="widget-title style-1">Recent Posts</h6>
                                     <div className="widget-post-bx">
                                         <div className="widget-post clearfix">
-                                            <div className="dlab-post-media"> <img src={require('./../../images/blog/recent-blog/pic1.jpg')} width="200" height="143" alt="" /> </div>
+                                            <div className="dlab-post-media"> <img src={require('images/blog/recent-blog/pic1.jpg')} width="200" height="143" alt="" /> </div>
                                             <div className="dlab-post-info">
                                                 <div className="dlab-post-header">
                                                     <h6 className="post-title"><Link>World’s largest Muslim group denounces Islamist extremism</Link></h6>
@@ -135,7 +130,7 @@ function BlogLeftSidebar(props) {
                                             </div>
                                         </div>
                                         <div className="widget-post clearfix">
-                                            <div className="dlab-post-media"> <img src={require('./../../images/blog/recent-blog/pic2.jpg')} width="200" height="160" alt="" /> </div>
+                                            <div className="dlab-post-media"> <img src={require('images/blog/recent-blog/pic2.jpg')} width="200" height="160" alt="" /> </div>
                                             <div className="dlab-post-info">
                                                 <div className="dlab-post-header">
                                                     <h6 className="post-title"><Link>Five Solomon islands swallowed by the sea</Link></h6>
@@ -149,7 +144,7 @@ function BlogLeftSidebar(props) {
                                             </div>
                                         </div>
                                         <div className="widget-post clearfix">
-                                            <div className="dlab-post-media"> <img src={require('./../../images/blog/recent-blog/pic3.jpg')} width="200" height="160" alt="" /> </div>
+                                            <div className="dlab-post-media"> <img src={require('images/blog/recent-blog/pic3.jpg')} width="200" height="160" alt="" /> </div>
                                             <div className="dlab-post-info">
                                                 <div className="dlab-post-header">
                                                     <h6 className="post-title"><Link>U.S. destroyer sails near disputed Chinese island</Link></h6>
@@ -168,12 +163,12 @@ function BlogLeftSidebar(props) {
                                 <div className="widget widget_gallery gallery-grid-3">
                                     <h6 className="widget-title style-1">Our services</h6>
                                     <ul>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic2.jpg')} alt="" /></Link></div></li>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic1.jpg')} alt="" /></Link></div></li>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic5.jpg')} alt="" /></Link></div></li>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic7.jpg')} alt="" /></Link></div></li>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic8.jpg')} alt="" /></Link></div></li>
-                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('./../../images/gallery/pic9.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic2.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic1.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic5.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic7.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic8.jpg')} alt="" /></Link></div></li>
+                                        <li><div className="dlab-post-thum"><Link className="dlab-img-overlay1 dlab-img-effect zoom-slow"><img src={require('images/gallery/pic9.jpg')} alt="" /></Link></div></li>
                                     </ul>
                                 </div>
 
@@ -206,7 +201,6 @@ function BlogLeftSidebar(props) {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

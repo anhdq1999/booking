@@ -1,8 +1,7 @@
 import React from 'react'
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
+
 
 
 const aboutBlog = [
@@ -84,7 +83,6 @@ function About(props) {
     };
     return (
         <div>
-            <Header2 />
             <div className="dlab-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(" + bg3 + ")", backgroundSize: 'cover' }}>
                 <div className="container">
                     <div className="dlab-bnr-inr-entry">
@@ -205,7 +203,6 @@ function About(props) {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 

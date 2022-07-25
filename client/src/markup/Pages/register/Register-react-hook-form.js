@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     email: yup
         .string()
         .required("Email is required"),
-    fullname: yup
+    fullName: yup
         .string()
         .required("Full name is required"),
     sex: yup
@@ -78,7 +78,7 @@ function Register(props) {
                                                 <input
                                                     className="form-control"
                                                     placeholder="Full Name"
-                                                    {...register("fullname")}
+                                                    {...register("fullName")}
                                                     type="text" />
                                                 {errors?.fullname &&
                                                     <div className="alert-warning text-center">{errors.fullname?.message}</div>

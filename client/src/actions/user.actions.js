@@ -24,8 +24,62 @@ export const userActions = {
     delete: _delete,
     restore,
     searchByEmail,
-    remove
+    remove,
+    registerVertified,
+    forgot,
+    resetPassword,
 };
+function resetPassword(data) {
+    return dispatch => {
+        userService.resetPassword(data)
+            .then(
+                res => {
+                    if (res.success) {
+                        history.push('/login');
+                        dispatch(alertActions.success(res.message))
+                    }
+                }
+            ).catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                }
+            )
+    }
+}
+function forgot(email) {
+    return dispatch => {
+        userService.forgot(email)
+            .then(res => {
+                if (res.success) {
+                    history.push('/login');
+                    dispatch(alertActions.success("Check mail to reset password"))
+                } else {
+                    dispatch(alertActions.error(res.message))
+                }
+            })
+            .catch(
+                err => {
+                    dispatch(alertActions.error(err.message))
+                })
+    }
+}
+function registerVertified(e, v) {
+    return dispatch => {
+        userService.registerVertified(e, v).then(
+            res => {
+                if (res.success) {
+                    history.push('/login')
+                    dispatch(alertActions.success(res.message))
+                }
+            }
+        ).catch(
+            err => {
+                history.push('/login')
+                dispatch(alertActions.error(err.message))
+            })
+    }
+}
+
 function searchByEmail(type, key) {
     return dispatch => {
         switch (type) {
@@ -100,7 +154,7 @@ function register(user) {
                     if (res.success) {
                         dispatch(success());
                         history.push('/login');
-                        dispatch(alertActions.success('Registration successful'));
+                        dispatch(alertActions.success('Please check mail to vertified to login'));
                     } else {
                         dispatch(failure(res.message));
                         dispatch(alertActions.error(res.message))

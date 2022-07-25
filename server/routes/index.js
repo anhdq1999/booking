@@ -33,9 +33,7 @@ function route(app) {
   // app.use('/orders', [authJwt.verifyToken, authJwt.isAdmin], orderRouter);
   app.use("/orders", orderRouter);
 
-  app.use("/auth", authRouter);
 
-  app.use("/uploads", uploadImgRouter);
 
   app.use("/provinces", provinceRouter);
 
