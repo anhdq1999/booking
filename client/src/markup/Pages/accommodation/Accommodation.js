@@ -62,7 +62,7 @@ function Accommodation(props) {
                 <div className="container">
 
                     <div className="row packages">
-                        <div className="col-3 left">
+                        <div className="col-3">
                             <form className="for">
                                 <h2>Categories</h2>
                                 <ul>
@@ -104,7 +104,7 @@ function Accommodation(props) {
 
                             </form>
                         </div>
-                        <div className="col-9 row right">
+                        <div className="col-9 row">
                             {currentData && currentData.map((item, index) => (
                                 <div className="col-md-6 col-xl-3  col-sm-6 m-b20" key={index}>
                                     <div className="dlab-box">
@@ -133,15 +133,19 @@ function Accommodation(props) {
                                 </div>
                             ))
                             }
-                              <Paginator
-                                totalRecords={data.length}
-                                pageLimit={pageLimit}
-                                pageNeighbours={2}
-                                setOffset={setOffset}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                            />
+
                         </div>
+
+                    </div>
+                    <div className="row justify-content-around">
+                        <Paginator
+                            totalRecords={data.length}
+                            pageLimit={pageLimit}
+                            pageNeighbours={2}
+                            setOffset={setOffset}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
                     </div>
 
                 </div>
