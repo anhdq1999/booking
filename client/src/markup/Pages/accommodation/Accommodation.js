@@ -10,11 +10,10 @@ const bg3 = require('images/banner/bnr1.jpg');
 function Accommodation(props) {
 
     const province = props.match.params.province;
-console.log(province);
-
 
     const roomsByProvince = useSelector(state => state.roomReducer.itemsByProvince)
     const rooms = useSelector(state => state.roomReducer.items)
+    const roomsSort = useSelector(state => state.roomReducer.itemsSort)
 
     const dispatch = useDispatch();
 
@@ -25,7 +24,6 @@ console.log(province);
     const [data, setData] = useState([]);
     const [currentData, setCurrentData] = useState([]);
 
-    console.log(province);
 
     useEffect(() => {
         dispatch(roomActions.getAll())
@@ -37,16 +35,22 @@ console.log(province);
     }, [dispatch, province])
 
     useEffect(() => {
-        setData(roomsByProvince);
-    }, [roomsByProvince])
+        if (province) setData(roomsByProvince);
+        else setData(rooms)
+    }, [roomsByProvince, province, rooms])
 
     useEffect(() => {
-        setData(rooms)
-    }, [rooms])
+        console.log(roomsSort);
+        setData(roomsSort)
+    }, [roomsSort])
 
     useEffect(() => {
         setCurrentData(data.slice(offset, offset + pageLimit));
     }, [offset, data]);
+
+    const handleSortChange = (e) => {
+        dispatch(roomActions.sortByPrice(e.target.value))
+    }
 
 
     return (
@@ -71,42 +75,22 @@ console.log(province);
                     <div className="row packages">
                         <div className="col-3">
                             <form className="for">
-                                <h2>Categories</h2>
-                                <ul>
-                                    <li>
-                                        <div className="input-block">
-                                            <input id="homestay" type="checkbox" />
-                                            <label htmlFor="homestay">Homestay</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="input-block">
-                                            <input id="hotel" type="checkbox" />
-                                            <label htmlFor="hotel">Hotel</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="input-block">
-                                            <input id="resort" type="checkbox" />
-                                            <label htmlFor="resort">Resort</label>
-                                        </div>
-                                    </li>
-                                </ul>
+                                
+                        
                                 <h2>Price</h2>
                                 <ul>
                                     <li>
                                         <div className="input-block">
-                                            <input id="increase" name="price" type="radio" />
+                                            <input id="increase" name="price" value="increase" type="radio" onChange={handleSortChange} />
                                             <label htmlFor="increase">Low to high</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="input-block">
-                                            <input id="decrease" name="price" type="radio" />
+                                            <input id="decrease" name="price" value="decrease" type="radio" onChange={handleSortChange} />
                                             <label htmlFor="decrease">High to low</label>
                                         </div>
                                     </li>
-
                                 </ul>
 
                             </form>

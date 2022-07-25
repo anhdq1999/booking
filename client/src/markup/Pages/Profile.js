@@ -69,7 +69,7 @@ function Profile(props) {
                             <div className="listing-info-right text-center">
                                 <Link to={''} className="site-button red mr-3"><i className="la la-heart-o m-r5"></i>  Favorite </Link>
                                 {user.role !== 'host' &&
-                                    <Link className="site-button blue mr-3"
+                                    <Link  className="site-button blue mr-3"
                                         onClick={() => { toggle('7'); }}><i className="la la-heart-o m-r5"></i>  To be Host </Link>
                                 }
                                 {user.role === 'host' &&
@@ -91,12 +91,12 @@ function Profile(props) {
                     <ul className="listing-nav nav justify-content-center">
 
                         <li>
-                            <Link className={classnames({ active: activeTab === '2' })}
+                            <Link  className={classnames({ active: activeTab === '2' })}
                                 onClick={() => { toggle('2'); }}><i className="la la-list-alt"></i><span>My Details</span>
                             </Link>
                         </li>
                         <li>
-                            <Link className={classnames({ active: activeTab === '3' })}
+                            <Link  className={classnames({ active: activeTab === '3' })}
                                 onClick={() => { toggle('3'); }}><i className="la la-file-text"></i><span>To be Host</span>
                             </Link>
                         </li>

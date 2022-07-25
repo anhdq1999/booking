@@ -6,8 +6,10 @@ const initialState = {
     editRoom: null,
     itemsDeleted: [],
     itemsSearch: [],
-    itemsByProvince:[],
-    itemsTopPlaces:[]
+    itemsByProvince: [],
+    itemsTopPlaces: [],
+    itemsSort: [],
+    itemsFilter:[]
 }
 
 export function roomReducer(state = initialState, action) {
@@ -111,10 +113,33 @@ export function roomReducer(state = initialState, action) {
             return {
                 ...state
             }
-        case roomConstants.GETBYHOSTID_SUCCESS :
+        case roomConstants.GETBYHOSTID_SUCCESS:
             state.items = action.rooms;
             return {
-               ...state
+                ...state
+            }
+        case roomConstants.INCREASE_SORT_SUCCESS:
+            state.itemsSort = state.items.sort((a, b) => a.price - b.price);
+            state.itemsSort = state.itemsSort.filter(room => room._id !== action.id)
+            return {
+                ...state
+            }
+        case roomConstants.DECREASE_SORT_SUCCESS:
+            state.itemsSort = state.items.sort((a, b) => b.price - a.price);
+            state.itemsSort = state.itemsSort.filter(room => room._id !== action.id)
+            return {
+                ...state
+            }
+        case roomConstants.FILTER_SUCCESS:
+            console.log(action.payload);
+            state.itemsSort = state.items.filter(room => room.category === action.payload)
+            return {
+                ...state
+            }
+        case roomConstants.NO_FILTER_SUCCESS:
+            state.itemsSort = state.items.filter(room => room._id !== action.id)
+            return {
+                ...state
             }
         default:
             return state
