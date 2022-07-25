@@ -105,7 +105,7 @@ class AuthenticationController {
     const userEmail = await User.findOne({ email: req.body.email });
     const userName = await User.findOne({ username: req.body.username });
     if (userEmail && userName) {
-      return res.status(400).json(response.auth.REGISTER.FAILURE("Email or Username is exited"));
+      return res.status(200).json(response.auth.REGISTER.FAILURE("Email or Username is exited"));
     } else {
       const token = jwt.sign({ email: req.body.email }, process.env.JWT_SECRET_KEY_VERIFY, { expiresIn: "1d" });
       const subject = `Booking | This is email verify account`;
@@ -120,7 +120,7 @@ class AuthenticationController {
         const savedUser = await newUser.save();
         return res.status(200).json(response.auth.REGISTER.SUCCESS(savedUser));
       } catch (error) {
-        return res.status(400).json(response.auth.REGISTER.FAILURE(error));
+        return res.status(200).json(response.auth.REGISTER.FAILURE(error));
       }
     }
   };
@@ -129,15 +129,15 @@ class AuthenticationController {
     console.log(req.body);
     const { e, v } = req.body;;
     if (!e || !v) {
-      return res.status(400).json(response.auth.VERIFY.FAILURE("Bad request"));
+      return res.status(200).json(response.auth.VERIFY.FAILURE("Bad request"));
     } else {
       const user = await User.findOne({ email: e });
       if (!user) {
-        return res.status(400).json(response.auth.VERIFY.FAILURE("Not found user by email : " + e));
+        return res.status(200).json(response.auth.VERIFY.FAILURE("Not found user by email : " + e));
       } else {
-        if (v !== user.verifyLink) return res.status(400).json(response.auth.VERIFY.FAILURE("Incorrect link or it is expire"));
+        if (v !== user.verifyLink) return res.status(200).json(response.auth.VERIFY.FAILURE("Incorrect link or it is expire"));
         jwt.verify(v, process.env.JWT_SECRET_KEY_VERIFY, (err, data) => {
-          if (err) return res.status(400).json(response.auth.VERIFY.FAILURE("Incorrect link or it is expire"));
+          if (err) return res.status(200).json(response.auth.VERIFY.FAILURE("Incorrect link or it is expire"));
         });
         try {
           const updateUser = await User.findOneAndUpdate({ email: user.email }, {
@@ -145,7 +145,7 @@ class AuthenticationController {
           }, { new: true });
           return res.status(200).json(response.auth.VERIFY.SUCCESS(updateUser));
         } catch (e) {
-          return res.status(400).json(response.auth.VERIFY.FAILURE(e));
+          return res.status(200).json(response.auth.VERIFY.FAILURE(e));
         }
       }
     }
@@ -197,17 +197,17 @@ class AuthenticationController {
     const { newPassword, rePassword,id,token } = req.body;
     console.log(req.body);
     if (!id || !token) {
-      return res.status(400).json(response.auth.RESET_PASSWORD.FAILURE("Bad request"));
+      return res.status(200).json(response.auth.RESET_PASSWORD.FAILURE("Bad request"));
     } else {
       const user = await User.findOne({ _id: id });
       console.log(user);
       if (!user) {
-        return res.status(400).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
+        return res.status(200).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
       } else {
-        if (token !== user.resetLink) return res.status(400).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
+        if (token !== user.resetLink) return res.status(200).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
         jwt.verify(token, process.env.JWT_SECRET_KEY_FORGOT_PASS, (err, decodeData) => {
           if (err) {
-            return res.status(400).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
+            return res.status(200).json(response.auth.RESET_PASSWORD.FAILURE("Incorrect link or it is expire"));
           }
         });
         const hash_password = bcrypt.hashSync(newPassword, 10);
@@ -228,17 +228,17 @@ class AuthenticationController {
     const { username, password, newPassword } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE("Not found User by username : " + username));
+      return res.status(200).json(response.auth.CHANGE_PASSWORD.FAILURE("Not found User by username : " + username));
     } else {
       if (!user.comparePassword(password)) {
-        return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE("Old password is invalid "));
+        return res.status(200).json(response.auth.CHANGE_PASSWORD.FAILURE("Old password is invalid "));
       }
       try {
         const hashNewPassword = bcrypt.hashSync(newPassword, 10);
         const userUpdate = await User.findOneAndUpdate({ username }, { hash_password: hashNewPassword }, { new: true });
         return res.status(200).json(response.auth.CHANGE_PASSWORD.SUCCESS(userUpdate));
       } catch (e) {
-        return res.status(400).json(response.auth.CHANGE_PASSWORD.FAILURE(e));
+        return res.status(200).json(response.auth.CHANGE_PASSWORD.FAILURE(e));
       }
     }
   };
