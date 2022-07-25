@@ -1,5 +1,23 @@
 const constants = require('../_constants');
 
+const GETBYID= {
+    SUCCESS: (data) => {
+        return {
+            success: true,
+            action: constants.user.GET_BY_ID.action,
+            message: constants.user.GET_BY_ID.message.success,
+            data: data,
+        };
+    },
+    FAILURE: () => {
+        return {
+            success: false,
+            action: constants.user.GET_BY_ID.action,
+            message: constants.user.GET_BY_ID.message.failure,
+            data: null,
+        };
+    },
+};
 const GETALL = {
     SUCCESS: (data) => {
         return {
@@ -136,6 +154,7 @@ const RESTORE = {
 };
 
 const UserReponse = {
+    GETBYID,
     GETALL,
     GETALL_DELETED,
     CREATE,

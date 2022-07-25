@@ -50,10 +50,10 @@ const userConstants = {
         },
     },
     GET_BY_ID: {
-        action: 'RESTORE_USER',
+        action: 'GET_BY_ID',
         message: {
-            success: 'restore user successfully',
-            failure: 'restore user failed',
+            success: 'Get user by id successfully',
+            failure: 'Get user by id failed',
         },
     },
 };

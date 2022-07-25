@@ -2,10 +2,10 @@ const User = require('../models/Users');
 const bcrypt = require('bcrypt');
 const RES = require('../response');
 class UserController {
-    //[GET] /users/:username
+    //[GET] /users/:id
     show(req, res, next) {
         User.findOne({ _id: req.params.id })
-            .then((user) => res.json(user))
+            .then((user) => res.status(200).json(RES.USER.GETBYID.SUCCESS(user)))
             .catch(next);
     }
 
