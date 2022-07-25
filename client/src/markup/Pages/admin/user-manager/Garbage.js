@@ -8,7 +8,7 @@ import './styles.css';
 
 function Garbage(props) {
   const alert = useSelector(state => state.alert)
-  const users = useSelector(state => state.userReducer.items)
+  const users = useSelector(state => state.userReducer.itemsDeleted)
   const pending = useSelector(state => state.userReducer.loading)
   const dispatch = useDispatch();
   const [selectedUsers, setSelectedUsers] = useState([])
@@ -83,7 +83,7 @@ function Garbage(props) {
     }
   }
   return (
-    <div className="mt-5 mx-5">
+    <div className="data mt-5 mx-5 mb-5">
       <Link to="/admin/users-manager">Quay lại</Link>
       <div className="text-right mb-5">
         <Button onClick={() => handleRestoreMany()}>Restore</Button>

@@ -29,9 +29,8 @@ function route(app) {
 
     app.use('/rooms', roomRouter);
 
-    app.use('/orders', [authJwt.verifyToken, authJwt.isAdmin], orderRouter);
-
-    app.use('/auth', authRouter);
+    // app.use('/orders', [authJwt.verifyToken, authJwt.isAdmin], orderRouter);
+    app.use('/orders',  orderRouter);
 
     app.use('/uploads', uploadImgRouter);
 

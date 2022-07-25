@@ -23,7 +23,7 @@ const User = new Schema({
     type: String, require: true,
     trim: true
   },
-  fullname: {
+  fullName: {
     type: String, require: true,
     trim: true
   },
@@ -36,9 +36,11 @@ const User = new Schema({
   isVerify: {
     type: Boolean, require: true, default: false
   },
-  OTP: {
-    type: String, require: true,
-    trim: true
+  resetLink: {
+    type: String, default: null
+  },
+  verifyLink:{
+    type: String, default : null
   }
 }, {
   timestamps: true

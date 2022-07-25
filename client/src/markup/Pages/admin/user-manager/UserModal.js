@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     email: yup
         .string()
         .required("Email is required"),
-    fullname: yup
+    fullName: yup
         .string()
         .required("Full name is required"),
     sex: yup
@@ -72,7 +72,7 @@ export default function UserModal(props) {
     function setUserValue(data) {
         const date = new Date(data.dateOfBirth)
         const dateOfBirth = date.toLocaleDateString('en-CA') || "2000-12-16";
-        setValue("fullname", data.fullname)
+        setValue("fullname", data.fullName)
         setValue("username", data.username)
         setValue("email", data.email)
         setValue("password", data.email)
@@ -116,13 +116,12 @@ export default function UserModal(props) {
                                 </Label>
                                 <input
                                     className="form-control"
-                                    id="fullname"
-                                    name="fullname"
+
                                     type="text"
-                                    {...register("fullname")}
+                                    {...register("fullName")}
                                 />
                                 {errors?.fullname &&
-                                    <div className="alert-warning text-center">{errors.fullname?.message}</div>
+                                    <div className="alert-warning text-center">{errors.fullName?.message}</div>
                                 }
                             </Col>
                             <Col md={6}>

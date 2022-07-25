@@ -1,5 +1,4 @@
 import { alertActions, roomActions, userActions } from "actions";
-import Header from "markup/Layout/Header";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,17 +40,17 @@ function RoomsManager(props) {
     {
       buttons: true,
       cell: (column) =>
-        (<>
-            <Button onClick={() => handleEdit(column)}>Edit</Button>
-            <Button onClick={() => handleDelete(column)}>Delete</Button>
-          </>
-        ),
+      (<>
+        <Button onClick={() => handleEdit(column)}>Edit</Button>
+        <Button onClick={() => handleDelete(column)}>Delete</Button>
+      </>
+      ),
       ignoreRowClick: true,
       allowOverflow: true
     }
   ];
   useEffect(() => {
-    dispatch(roomActions.getByHostId(user.id));
+    dispatch(roomActions.getAll());
     dispatch(userActions.getAll());
   }, [dispatch, user.id]);
 
@@ -99,8 +98,7 @@ function RoomsManager(props) {
   };
   return (
     <div>
-      <Header />
-      <div className="mt-5 mx-5">
+      <div className="data mt-5 mx-5 mb-5">
 
         <Link to="/admin/rooms-manager/garbage">Thùng rác của tôi</Link>
 
