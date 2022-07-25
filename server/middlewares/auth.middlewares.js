@@ -38,7 +38,6 @@ isAdmin = (req, res, next) => {
     User.findById({ _id: req.userId }).then((user) => {
         if (user.roles === 'admin') {
             next();
-
         } else {
             res.status(403).send({
                 message: 'Require Admin Role!',
