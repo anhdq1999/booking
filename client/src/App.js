@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import './css/plugins.css';
 import './css/skin/skin-1.css';
@@ -14,9 +15,18 @@ import Routes from 'route/routes/Routes';
 function App() {
 
   return (
-    <div className="App">
-      <Routes/>
-    </div>
+
+    <PayPalScriptProvider
+      options={{ "client_id": process.env.PAYPAL_CLIENT_ID }}
+    >
+      <div className="App">
+        <Routes/>
+      </div>
+    </PayPalScriptProvider>
+
+
+
+
   );
 }
 

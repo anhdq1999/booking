@@ -1,7 +1,6 @@
 const Order = require("../models/Orders");
 const User = require("../models/Users");
 const Room = require("../models/Rooms");
-const OrderDetail = require("../models/OrderDetail");
 const Mail = require("../mail/SendMail");
 const response = require("../response");
 
@@ -274,7 +273,7 @@ class OrderController {
         });
       });
   }
- 
+
 }
 
 module.exports = new OrderController();
