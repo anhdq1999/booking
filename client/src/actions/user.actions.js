@@ -28,7 +28,18 @@ export const userActions = {
     registerVertified,
     forgot,
     resetPassword,
+    tobeHost
 };
+function tobeHost(data, newData) {
+    return dispatch => {
+        userService.update(data, newData).
+            then(res => {
+                userService.logout();
+                history.push('/login')
+                dispatch(alertActions.success("You are host now,please login again"))
+            })
+    }
+}
 function resetPassword(data) {
     return dispatch => {
         userService.resetPassword(data)
@@ -107,8 +118,7 @@ function getById(id) {
         userService.getById(id).then(res => {
             if (res.success) dispatch(success(res.data))
             else dispatch(failure(res.message))
-        }
-        )
+        })
     }
     function request(id) { return { type: userConstants.GETBYID_REQUEST, id } }
     function success(user) { return { type: userConstants.GETBYID_SUCCESS, user } }

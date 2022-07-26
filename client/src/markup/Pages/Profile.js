@@ -22,15 +22,13 @@ function Profile(props) {
     const handleClickTobeHost = e => {
         setIsAgreeHost(!isAgreeHost)
     }
-
     useEffect(() => {
         dispatch(userActions.getById(currentUser.id))
-    }, [dispatch, currentUser])
+    }, [dispatch, currentUser,user])
     const handleSubmitTobeHost = e => {
-        mailService.sendMail({ to: user.email })
-            .then(
-                res => dispatch(alertActions.success(res.message))
-            )
+        let newUser = user;
+        newUser.roles = 'host'
+        dispatch(userActions.tobeHost(user, newUser))
     }
     const [activeTab, setActiveTab] = useState('1');
 
@@ -68,12 +66,12 @@ function Profile(props) {
                             </div>
                             <div className="listing-info-right text-center">
                                 <Link to={''} className="site-button red mr-3"><i className="la la-heart-o m-r5"></i>  Favorite </Link>
-                                {user.role !== 'host' &&
-                                    <Link  className="site-button blue mr-3"
-                                        onClick={() => { toggle('7'); }}><i className="la la-heart-o m-r5"></i>  To be Host </Link>
+                                {user.roles !== 'host' &&
+                                    <Link className="site-button blue mr-3"
+                                        onClick={() => { toggle('3'); }}><i className="la la-heart-o m-r5"></i>  To be Host </Link>
                                 }
-                                {user.role === 'host' &&
-                                    <Link className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  Manager Room </Link>
+                                {user.roles === 'host' &&
+                                    <Link to={'/host/rooms-manager'} className="site-button blue mr-3"><i className="la la-heart-o m-r5"></i>  Manager Room </Link>
                                 }
                                 <div className="dropdown dropdown-btn">
                                     <button className="site-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,12 +89,12 @@ function Profile(props) {
                     <ul className="listing-nav nav justify-content-center">
 
                         <li>
-                            <Link  className={classnames({ active: activeTab === '2' })}
+                            <Link className={classnames({ active: activeTab === '2' })}
                                 onClick={() => { toggle('2'); }}><i className="la la-list-alt"></i><span>My Details</span>
                             </Link>
                         </li>
                         <li>
-                            <Link  className={classnames({ active: activeTab === '3' })}
+                            <Link className={classnames({ active: activeTab === '3' })}
                                 onClick={() => { toggle('3'); }}><i className="la la-file-text"></i><span>To be Host</span>
                             </Link>
                         </li>
@@ -117,23 +115,7 @@ function Profile(props) {
                                             <h3 className="title"> My Details</h3>
                                         </div>
                                         <div className="content-body blue">
-                                            <p>If you want to find customer easily, to be my host</p>
-                                            <p>If you want to find customer easily, to be my host</p>
-                                            <div className="box-content">
-                                                {alert.message &&
-                                                    <div className={`alert ${alert.type}`}>{alert.message}</div>
-                                                }
-                                                <div className="input-block">
-                                                    <input id="rule" className="form-control" type="checkbox"
-                                                        defaultChecked={isAgreeHost}
-                                                        onClick={handleClickTobeHost} />
-                                                    <label htmlFor="rule">I agree with your rules</label>
-                                                </div>
-                                                <button
-                                                    className={isAgreeHost ? "site-button blue" : "site-button gray"}
-                                                    onClick={handleSubmitTobeHost}
-                                                    disabled={!isAgreeHost}>Get Host</button>
-                                            </div>
+                                            <p>This my Details</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,23 +129,35 @@ function Profile(props) {
                                             <h3 className="title">To be Host</h3>
                                         </div>
                                         <div className="content-body blue">
-                                            <p>If you want to find customer easily, to be my host</p>
-                                            <p>If you want to find customer easily, to be my host</p>
-                                            <div className="box-content">
-                                                {alert.message &&
-                                                    <div className={`alert ${alert.type}`}>{alert.message}</div>
-                                                }
-                                                <div className="input-block">
-                                                    <input id="rule" className="form-control" type="checkbox"
-                                                        defaultChecked={isAgreeHost}
-                                                        onClick={handleClickTobeHost} />
-                                                    <label htmlFor="rule">I agree with your rules</label>
-                                                </div>
-                                                <button
-                                                    className={isAgreeHost ? "site-button blue" : "site-button gray"}
-                                                    onClick={handleSubmitTobeHost}
-                                                    disabled={!isAgreeHost}>Get Host</button>
-                                            </div>
+                                            {alert.message &&
+                                                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                                            }
+                                            {user.roles !== 'host' &&
+                                                <>
+                                                    <p>If you want to find customer easily, to be my host</p>
+                                                    <p>If you want to find customer easily, to be my host</p>
+                                                    <div className="box-content">
+                                                        {alert.message &&
+                                                            <div className={`alert ${alert.type}`}>{alert.message}</div>
+                                                        }
+                                                        <div className="input-block">
+                                                            <input id="rule" className="form-control" type="checkbox"
+                                                                defaultChecked={isAgreeHost}
+                                                                onClick={handleClickTobeHost} />
+                                                            <label htmlFor="rule">I agree with your rules</label>
+                                                        </div>
+                                                        <button
+                                                            className={isAgreeHost ? "site-button blue" : "site-button gray"}
+                                                            onClick={handleSubmitTobeHost}
+                                                            disabled={!isAgreeHost}>Get Host</button>
+                                                    </div>
+                                                </>
+                                            }
+                                            {user.roles === 'host' &&
+                                                <p>You are host now</p>
+                                            }
+
+
                                         </div>
                                     </div>
                                 </div>
