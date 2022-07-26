@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Label } from "reactstrap";
 import RoomModal from "./RoomModal";
+import { userService } from "../../../../services";
+import { Redirect } from "react-router-dom";
 
 function RoomsManager(props) {
   const [selectedRooms, setSelectedRooms] = useState([]);
@@ -18,7 +20,6 @@ function RoomsManager(props) {
   const roomsSearch = useSelector(state => state.roomReducer.itemsSearch);
   const pending = useSelector(state => state.roomReducer.loading);
   const user = useSelector((state) => state.authentication.user);
-
   const dispatch = useDispatch();
   const columns = [
     {
@@ -50,9 +51,10 @@ function RoomsManager(props) {
     }
   ];
   useEffect(() => {
-    dispatch(roomActions.getAll());
+    dispatch(roomActions.getByHostId(user.id));
     dispatch(userActions.getAll());
-  }, [dispatch, user.id]);
+  }, [dispatch, user]);
+  if(user.role!=='host') return(<Redirect to={'/'}/>);
 
   function handleDelete(rooms) {
     const id = rooms._id;

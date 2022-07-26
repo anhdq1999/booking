@@ -72,7 +72,7 @@ export default function UserModal(props) {
     function setUserValue(data) {
         const date = new Date(data.dateOfBirth)
         const dateOfBirth = date.toLocaleDateString('en-CA') || "2000-12-16";
-        setValue("fullname", data.fullName)
+        setValue("fullName", data.fullName)
         setValue("username", data.username)
         setValue("email", data.email)
         setValue("password", data.email)
@@ -112,7 +112,7 @@ export default function UserModal(props) {
                         }
                         <Row>
                             <Col md={6}>
-                                <Label for="fullname">
+                                <Label for="fullName">
                                     Full Name
                                 </Label>
                                 <input
