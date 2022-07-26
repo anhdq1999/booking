@@ -11,7 +11,7 @@ const blogRouter = require("./blog");
 const categoryRouter = require("./categories");
 const mailRouter = require("./mail");
 
-const paymentRouter = require("./payment");
+
 const { authJwt } = require("../middlewares");
 const { isAdmin } = require("../middlewares/auth.middlewares.js");
 
@@ -46,7 +46,6 @@ function route(app) {
 
     app.use("/mail", mailRouter);
 
-    app.use("/payment", paymentRouter);
     
     app.use("/uploads",uploadImgRouter)
 

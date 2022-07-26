@@ -135,7 +135,8 @@ class OrderController {
       const userOrder = await User.findOne({ _id: orderSaved.user });
       const room = await Room.findOne({ _id: orderSaved.room });
       const subject = `Invoice Order room ${orderSaved.customerName}'s`;
-      const text = this.paymentForm(userOrder, orderSaved, room)
+      const text = this.paymentForm(userOrder, orderSaved, room);
+      console.log(userOrder.email);
       await Mail.send(userOrder.email, subject, text);
       return res.status(200).json(response.ORDER.CREATE.SUCCESS(orderSaved));
     } catch (error) {

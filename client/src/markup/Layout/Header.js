@@ -57,13 +57,13 @@ function Header(props) {
                 <ul>
                   {user.role === "admin" &&
                     <li>
-                      <Link to={"/admin/home"} className="site-button-link">Admin</Link>
+                      <Link to={"/admin/users-manager"} className="site-button-link">Admin</Link>
                     </li>
                   }
                   {
                     user.role === "host" &&
                     <li>
-                      <Link to={"/host/manager"} className="site-button-link">My Host</Link>
+                      <Link to={"/host/rooms-manager"} className="site-button-link">My Host</Link>
                     </li>
 
                   }
