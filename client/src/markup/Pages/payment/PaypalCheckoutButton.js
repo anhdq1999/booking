@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import React, { useState, useEffect } from "react";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useDispatch, useSelector } from "react-redux";
+import { orderActions } from "../../../actions";
 
 const PaypalCheckoutButton = (props) => {
   const { product } = props;
 
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
+  const item = useSelector(state => state.orderReducer.item);
+
+  useEffect(() => {
+
+  }, [item]);
+
+  const handleSubmitCreate= () =>{
+    let data = item;
+    data.paymentMethod = "PAYPAL PAYMENT";
+    data.status = "PAID";
+    data.user = data.user.id;
+    data.price = item.room.price;
+    data.room = item.room._id;
+    dispatch(orderActions.create(data));
+  }
 
   const handleApprove = (orderId) => {
     setPaidFor(true);
-  }
+  };
+
 
   if (paidFor) {
+    handleSubmitCreate()
     alert("Thank You");
+
   }
 
   if (error) {
@@ -36,26 +58,25 @@ const PaypalCheckoutButton = (props) => {
             purchase_units: [
               {
                 amount: {
-                  value: (product.totalPrice / 23000),
-                },
-              },
-            ],
+                  value: (product.totalPrice / 23000)
+                }
+              }
+            ]
           });
         }}
         onApprove={async (data, action) => {
           const order = await action.order.capture();
-          console.log("order", order);
-
           handleApprove(data.orderID);
         }}
-        onCancel={() => { }}
+        onCancel={() => {
+        }}
         onError={(err) => {
           setError(err);
           console.log("PayPal Checkout onError", err);
         }}
       />
     </PayPalScriptProvider>
-  )
-}
+  );
+};
 
-export default PaypalCheckoutButton
+export default PaypalCheckoutButton;
